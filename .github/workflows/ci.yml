@@ -15,6 +15,27 @@ jobs:
   rspec:
     runs-on: ubuntu-latest
 
+    # Sets up the build environment.
+    env:
+      DATABASE_PORT:     5432
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres_password
+      DATABASE_URL:      localhost
+
+    services:
+      # Initialize a PostgreSQL service on postgres:5432.
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_PASSWORD: postgres_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
     # Downloads a copy of the code in your repository before running CI tests
     - uses: actions/checkout@v3
@@ -26,6 +47,14 @@ jobs:
         ruby-version: 3.2.2
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
         cache-version: 1
+
+    # Smoke check to ensure database connection is established.
+    - name: Query database
+      run: psql "postgresql://postgres:postgres_password@localhost:5432/postgres" -c 'SELECT 1;'
+
+    # Create the test database and set the schema.
+    - name: Set up Database
+      run: bundle exec rails db:create db:schema:load db:test:prepare
 
     # Run the RSpec tests.
     - name: Run Ruby tests
