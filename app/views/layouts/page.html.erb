@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lanyard</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= stylesheet_link_tag 'fontawesome/fontawesome.min', media: 'all' %>
+    <%= stylesheet_link_tag 'fontawesome/solid.min', media: 'all' %>
+
+    <%= csp_meta_tag %>
+  </head>
+
+  <body>
+    <%=
+      render(
+        Librum::Core::View::Layouts::Page.new(
+          alerts: flash.each.to_h,
+          title:  'Lanyard',
+          **(@result&.metadata&.fetch(:page, {}) || {})
+        )
+      ) do |component|
+    %>
+      <% component.with_before_content do %>
+        <%=
+          render(
+            Librum::Iam::View::Components::Authentication::CurrentSession.new(
+              session: @session
+            )
+          )
+        %>
+      <% end %>
+
+      <%= yield %>
+    <% end %>
+  </body>
+</html>

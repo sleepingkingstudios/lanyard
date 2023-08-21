@@ -58,5 +58,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'sleeping_king_studios-tasks', '~> 0.4', '>= 0.4.1'
+
   gem 'web-console' # Use console on exceptions pages
 end
