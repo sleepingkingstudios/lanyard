@@ -18,8 +18,8 @@
         Librum::Core::View::Layouts::Page.new(
           alerts:      flash.each.to_h,
           footer_text: 'Amare Et Sapere Vix Deo Conceditur',
-          title:       'Lanyard',
-          **(@result&.metadata&.fetch(:page, {}) || {})
+          navigation:  false,
+          title:       'Lanyard'
         )
       ) do
     %>
