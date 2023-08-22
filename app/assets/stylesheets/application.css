@@ -13,3 +13,26 @@
  *= require_tree .
  *= require_self
  */
+
+/* COMPONENTS */
+
+hr.is-fancy-hr {
+  border-top-style: solid;
+  border-top-width: 2px;
+  opacity: 1;
+  overflow: visible;
+}
+
+hr.is-fancy-hr:after {
+  content: ' ';
+
+  /* Display */
+  display: block;
+  border-top-style: solid;
+  border-top-width: 1px;
+  margin: 0 10px;
+
+  /* Positioning */
+  position: relative;
+  top: 2px;
+}
