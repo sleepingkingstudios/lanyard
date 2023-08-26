@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_21_144849) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_26_132041) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "slug", default: "", null: false
+    t.jsonb "data", default: {}, null: false
+    t.text "notes", default: "", null: false
+    t.string "status", default: "new", null: false
+    t.string "client_name", default: "", null: false
+    t.string "company_name", default: "", null: false
+    t.string "compensation_type", default: "unknown", null: false
+    t.string "contract_type", default: "unknown", null: false
+    t.string "job_title", default: "", null: false
+    t.string "location_type", default: "unknown", null: false
+    t.string "source", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "closed_at"
+    t.datetime "opened_at"
+    t.index ["slug"], name: "index_applications_on_slug", unique: true
+  end
 
   create_table "librum_iam_credentials", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type", null: false
