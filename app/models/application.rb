@@ -53,6 +53,9 @@ class Application < ApplicationRecord
   data_property :location
   data_property :time_zone
 
+  ### Associations
+  belongs_to :job_search
+
   ### Validations
   validates :compensation_type,
     inclusion: {
@@ -72,6 +75,13 @@ class Application < ApplicationRecord
       in:        LocationTypes.values
     },
     presence:  true
+  validates :slug,
+    format:     {
+      message: I18n.t('errors.messages.kebab_case'),
+      with:    /\A[a-z0-9]+(-[a-z0-9]+)*\z/
+    },
+    presence:   true,
+    uniqueness: true
   validates :source,
     inclusion: {
       allow_nil: true,
@@ -145,8 +155,10 @@ end
 #  status            :string           default("new"), not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  job_search_id     :uuid
 #
 # Indexes
 #
-#  index_applications_on_slug  (slug) UNIQUE
+#  index_applications_on_job_search_id_and_slug  (job_search_id,slug) UNIQUE
+#  index_applications_on_slug                    (slug) UNIQUE
 #

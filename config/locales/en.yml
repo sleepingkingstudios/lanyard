@@ -30,4 +30,12 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  errors:
+    messages:
+      kebab_case: 'must be in kebab-case'
+  lanyard:
+    errors:
+      models:
+        job_searches:
+          invalid_end_date: 'must be the last day of the month'
+          invalid_start_date: 'must be the first day of the month'

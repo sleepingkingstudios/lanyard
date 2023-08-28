@@ -8,6 +8,11 @@ RSpec.describe Application, type: :model do
 
   subject(:application) { described_class.new(attributes) }
 
+  shared_context 'with a job search' do
+    let(:job_search) { FactoryBot.create(:job_search) }
+    let(:attributes) { super().merge(job_search: job_search) }
+  end
+
   let(:attributes) do
     {
       slug:         '1982-07-09-encom-programmer',
@@ -221,6 +226,8 @@ RSpec.describe Application, type: :model do
   end
 
   include_contract 'should be a model'
+
+  include_contract 'should belong to', :job_search
 
   include_contract 'should define data property', :benefits, predicate: true
 
@@ -487,7 +494,9 @@ RSpec.describe Application, type: :model do
   end
 
   describe '#valid?' do
-    it { expect(application.valid?).to be true }
+    wrap_context 'with a job search' do
+      it { expect(application.valid?).to be true }
+    end
 
     include_contract 'should validate the inclusion of',
       :compensation_type,
@@ -499,10 +508,42 @@ RSpec.describe Application, type: :model do
       in:        described_class::ContractTypes.values,
       allow_nil: true
 
+    include_contract 'should validate the presence of',
+      :job_search,
+      message: 'must exist'
+
     include_contract 'should validate the inclusion of',
       :location_type,
       in:        described_class::LocationTypes.values,
       allow_nil: true
+
+    include_contract 'should validate the format of',
+      :slug,
+      message:     'must be in kebab-case',
+      matching:    {
+        'example'               => 'a lowercase string',
+        'example-slug'          => 'a kebab-case string',
+        'example-compound-slug' => # rubocop:disable Layout/HashAlignment
+          'a kebab-case string with multiple words',
+        '1st-example'           => 'a kebab-case string with digits'
+      },
+      nonmatching: {
+        'InvalidSlug'   => 'a string with capital letters',
+        'invalid slug'  => 'a string with whitespace',
+        'invalid_slug'  => 'a string with underscores',
+        '-invalid-slug' => 'a string with leading dash',
+        'invalid-slug-' => 'a string with trailing dash'
+      }
+
+    include_contract 'should validate the presence of',
+      :slug,
+      type: String
+
+    include_contract 'should validate the uniqueness of',
+      :slug,
+      attributes: lambda {
+        FactoryBot.attributes_for(:application, :with_job_search)
+      }
 
     include_contract 'should validate the inclusion of',
       :source,

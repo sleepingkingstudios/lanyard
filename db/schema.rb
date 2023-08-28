@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_26_132041) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_27_125817) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -31,7 +31,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_132041) do
     t.datetime "updated_at", null: false
     t.datetime "closed_at"
     t.datetime "opened_at"
+    t.uuid "job_search_id"
+    t.index ["job_search_id", "slug"], name: "index_applications_on_job_search_id_and_slug", unique: true
     t.index ["slug"], name: "index_applications_on_slug", unique: true
+  end
+
+  create_table "job_searches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "slug", default: "", null: false
+    t.date "start_date", null: false
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_job_searches_on_slug", unique: true
+    t.index ["start_date"], name: "index_job_searches_on_start_date", unique: true
   end
 
   create_table "librum_iam_credentials", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

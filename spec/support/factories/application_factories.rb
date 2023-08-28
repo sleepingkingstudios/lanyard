@@ -8,5 +8,9 @@ FactoryBot.define do
 
     slug   { "#{application_index}-0" }
     source { Application::Sources::OTHER }
+
+    trait(:with_job_search) do
+      job_search { FactoryBot.create(:job_search) }
+    end
   end
 end
