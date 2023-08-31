@@ -6,7 +6,7 @@ FactoryBot.define do
       sequence(:application_index) { |index| index }
     end
 
-    slug   { "#{application_index}-0" }
+    slug   { "application-#{application_index}" }
     source { Application::Sources::OTHER }
 
     trait(:with_job_search) do
