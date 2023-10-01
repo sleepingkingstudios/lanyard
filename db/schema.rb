@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_21_144849) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_30_185940) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "cycles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "slug", default: "", null: false
+    t.string "year", default: "", null: false
+    t.integer "season_index", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_cycles_on_name", unique: true
+    t.index ["slug"], name: "index_cycles_on_slug", unique: true
+    t.index ["year", "season_index"], name: "index_cycles_on_year_and_season_index", unique: true
+  end
 
   create_table "librum_iam_credentials", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type", null: false
