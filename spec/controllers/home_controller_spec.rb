@@ -23,18 +23,8 @@ RSpec.describe HomeController, type: :controller do
 
     include_contract 'should define middleware', lambda {
       be_a(Librum::Core::Actions::View::Middleware::PageNavigation)
-        .and have_attributes(navigation: described_class.navigation)
+        .and have_attributes(navigation: ViewController.navigation)
     }
-  end
-
-  describe '.navigation' do
-    let(:expected) { { icon: 'briefcase', label: 'Home' } }
-
-    it 'should define the class reader' do
-      expect(described_class)
-        .to define_reader(:navigation)
-        .with_value(expected)
-    end
   end
 
   describe '.resource' do

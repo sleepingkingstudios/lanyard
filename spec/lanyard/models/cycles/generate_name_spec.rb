@@ -42,8 +42,28 @@ RSpec.describe Lanyard::Models::Cycles::GenerateName do
       end
     end
 
-    describe 'with season_index: value' do
+    describe 'with season_index: an Integer' do
       let(:attributes) { super().merge('season_index' => 0) }
+
+      it 'should return a passing result' do
+        expect(command.call(attributes: attributes))
+          .to be_a_passing_result
+          .with_value('')
+      end
+
+      describe 'with year: value' do
+        let(:attributes) { super().merge('year' => 1996) }
+
+        it 'should return a passing result' do
+          expect(command.call(attributes: attributes))
+            .to be_a_passing_result
+            .with_value('Winter 1996')
+        end
+      end
+    end
+
+    describe 'with season_index: a String' do
+      let(:attributes) { super().merge('season_index' => '0') }
 
       it 'should return a passing result' do
         expect(command.call(attributes: attributes))

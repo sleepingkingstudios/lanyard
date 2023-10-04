@@ -25,7 +25,7 @@ module Lanyard::Models::Cycles
 
         next if index.nil?
 
-        Cycle::Seasons.keys[index].to_s
+        Cycle::Seasons.keys[index.to_i].to_s
       end
     end
   end

@@ -36,3 +36,13 @@ hr.is-fancy-hr:after {
   position: relative;
   top: 2px;
 }
+
+/* FORMS */
+
+.control > .select {
+  width: 100%;
+}
+
+.control > .select > select {
+  width: 100%;
+}
