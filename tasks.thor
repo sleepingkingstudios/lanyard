@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'config/environment'
+
 require 'sleeping_king_studios/tasks'
 
 lib_path = File.expand_path('./lib')
@@ -22,5 +24,6 @@ SleepingKingStudios::Tasks.configure do |config|
   end
 end
 
+load 'librum/iam/tasks.thor'
 load 'sleeping_king_studios/tasks/ci/tasks.thor'
 load 'sleeping_king_studios/tasks/file/tasks.thor'

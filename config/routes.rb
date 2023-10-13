@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     resource :session, only: %i[create destroy]
   end
 
+  resources :cycles
+
   get '*path',
     to:          'home#not_found',
     constraints: { path: /(?!api).*/ }
