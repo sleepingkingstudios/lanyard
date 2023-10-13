@@ -52,9 +52,11 @@ RSpec.describe CyclesController, type: :controller do
     end
     let(:permitted_attributes) do
       %w[
+        active
         name
         slug
         season_index
+        ui_eligible
         year
       ]
     end

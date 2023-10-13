@@ -25,6 +25,20 @@
     <div class="column">
       <%= render_form_field('cycle[year]') %>
     </div>
+
+    <div class="column">
+      <%= render_form_field('cycle[active]', type: :checkbox) %>
+    </div>
+
+    <div class="column">
+      <%=
+        render_form_field(
+          'cycle[ui_eligible]',
+          label: 'UI Eligible',
+          type: :checkbox
+        )
+      %>
+    </div>
   </div>
 
   <%= render_form_actions %>

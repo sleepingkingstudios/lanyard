@@ -3,7 +3,7 @@
 module Lanyard::View::Components::Cycles
   # Renders a table of Cycle records.
   class Table < Librum::Core::View::Components::Resources::Table
-    COLUMNS_FOR = lambda { |resource|
+    COLUMNS_FOR = lambda { |resource| # rubocop:disable Metrics/BlockLength
       [
         {
           key:   'name',
@@ -13,6 +13,15 @@ module Lanyard::View::Components::Cycles
               label: item.name
             )
           }
+        },
+        {
+          key:  'active',
+          type: :boolean
+        },
+        {
+          key:   'ui_eligible',
+          label: 'UI Eligible',
+          type:  :boolean
         },
         {
           key:   'actions',

@@ -61,6 +61,30 @@ RSpec.describe Lanyard::View::Components::Cycles::Block, type: :component do
               Winter
             </div>
           </div>
+
+          <div class="columns mb-0">
+            <div class="column is-2 has-text-weight-semibold mb-1">
+              Active
+            </div>
+
+            <div class="column">
+              <span class="icon has-text-danger">
+                <i class="fas fa-xmark"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="columns mb-0">
+            <div class="column is-2 has-text-weight-semibold mb-1">
+              UI Eligible
+            </div>
+
+            <div class="column">
+              <span class="icon has-text-danger">
+                <i class="fas fa-xmark"></i>
+              </span>
+            </div>
+          </div>
         </div>
       HTML
     end

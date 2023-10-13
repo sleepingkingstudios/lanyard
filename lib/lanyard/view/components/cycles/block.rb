@@ -10,6 +10,15 @@ module Lanyard::View::Components::Cycles
       {
         key:   'season',
         value: ->(item) { item.season.titleize }
+      },
+      {
+        key:  'active',
+        type: :boolean
+      },
+      {
+        key:   'ui_eligible',
+        label: 'UI Eligible',
+        type:  :boolean
       }
     ].freeze
     private_constant :FIELDS

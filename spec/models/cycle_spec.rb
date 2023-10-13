@@ -59,6 +59,29 @@ RSpec.describe Cycle, type: :model do
 
   include_contract 'should be a model'
 
+  describe '#active' do
+    include_contract 'should define attribute',
+      :active,
+      default: false,
+      value:   true
+  end
+
+  describe '#active?' do
+    include_examples 'should define predicate', :active?, false
+
+    context 'when initialized with active: false' do
+      let(:attributes) { super().merge(active: false) }
+
+      it { expect(cycle.active?).to be false }
+    end
+
+    context 'when initialized with active: true' do
+      let(:attributes) { super().merge(active: true) }
+
+      it { expect(cycle.active?).to be true }
+    end
+  end
+
   describe '#name' do
     include_contract 'should define attribute', :name, default: ''
   end
@@ -201,8 +224,33 @@ RSpec.describe Cycle, type: :model do
     include_contract 'should define attribute', :season_index
   end
 
+  describe '#ui_eligible' do
+    include_contract 'should define attribute',
+      :ui_eligible,
+      default: false,
+      value:   true
+  end
+
+  describe '#ui_eligible?' do
+    include_examples 'should define predicate', :ui_eligible?, false
+
+    context 'when initialized with ui_eligible: false' do
+      let(:attributes) { super().merge(ui_eligible: false) }
+
+      it { expect(cycle.ui_eligible?).to be false }
+    end
+
+    context 'when initialized with ui_eligible: true' do
+      let(:attributes) { super().merge(ui_eligible: true) }
+
+      it { expect(cycle.ui_eligible?).to be true }
+    end
+  end
+
   describe '#valid?' do
     it { expect(cycle).to be_valid }
+
+    include_contract 'should validate the presence of', :active
 
     include_contract 'should validate the presence of',   :name
 
@@ -232,6 +280,25 @@ RSpec.describe Cycle, type: :model do
 
     include_contract 'should validate the uniqueness of', :slug
 
+    include_contract 'should validate the presence of', :ui_eligible
+
+    include_contract 'should validate the presence of',
+      :year,
+      type: String
+
+    include_contract 'should validate the format of',
+      :year,
+      matching:    {
+        '0000' => 'a four-digit string'
+      },
+      nonmatching: {
+        '000A'  => 'a string with non-digit characters',
+        '000'   => 'a three-digit string',
+        '00000' => 'a five-digit string',
+        ' 0000' => 'a string with leading whitespace',
+        '0000 ' => 'a string with trailing whitespace'
+      }
+
     context 'when initialized with season: nil' do
       let(:attributes) do
         super()
@@ -260,22 +327,24 @@ RSpec.describe Cycle, type: :model do
       end
     end
 
-    include_contract 'should validate the presence of',
-      :year,
-      type: String
+    context 'when an active cycle exists' do
+      before(:example) { FactoryBot.create(:cycle, :active) }
 
-    include_contract 'should validate the format of',
-      :year,
-      matching:    {
-        '0000' => 'a four-digit string'
-      },
-      nonmatching: {
-        '000A'  => 'a string with non-digit characters',
-        '000'   => 'a three-digit string',
-        '00000' => 'a five-digit string',
-        ' 0000' => 'a string with leading whitespace',
-        '0000 ' => 'a string with trailing whitespace'
-      }
+      it { expect(cycle).to be_valid }
+
+      context 'when initialized with active: true' do
+        let(:attributes) { super().merge(active: true) }
+
+        it { expect(cycle.valid?).to be false }
+
+        it 'should validate the active state' do
+          expect(cycle)
+            .to have_errors
+            .on(:active)
+            .with_message('has already been taken')
+        end
+      end
+    end
   end
 
   describe '#year' do

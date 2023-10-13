@@ -25,9 +25,11 @@ class CyclesController < ViewController
           season_index: :desc
         },
         permitted_attributes: %w[
+          active
           name
           slug
           season_index
+          ui_eligible
           year
         ],
         resource_class:       Cycle,

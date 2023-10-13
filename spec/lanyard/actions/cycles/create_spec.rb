@@ -14,9 +14,11 @@ RSpec.describe Lanyard::Actions::Cycles::Create, type: :action do
   let(:resource) do
     Cuprum::Rails::Resource.new(
       permitted_attributes: %i[
+        active
         name
         season_index
         slug
+        ui_eligible
         year
       ],
       resource_class:       Cycle
@@ -33,8 +35,10 @@ RSpec.describe Lanyard::Actions::Cycles::Create, type: :action do
   end
   let(:expected_attributes) do
     {
-      'name' => 'Winter 1996',
-      'slug' => 'winter-1996'
+      'name'        => 'Winter 1996',
+      'slug'        => 'winter-1996',
+      'active'      => false,
+      'ui_eligible' => false
     }
   end
 

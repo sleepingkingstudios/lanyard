@@ -14,6 +14,12 @@ class Cycle < ApplicationRecord
   private_constant :INVERSE_SEASONS
 
   # Validations
+  validates :active,
+    inclusion:  {
+      in:      [true, false],
+      message: I18n.t('errors.messages.blank')
+    },
+    uniqueness: { if: ->(cycle) { cycle.active? } }
   validates :name,
     presence:   true,
     uniqueness: true
@@ -25,6 +31,11 @@ class Cycle < ApplicationRecord
     presence:   true,
     uniqueness: true
   validates :season, presence: true
+  validates :ui_eligible,
+    inclusion: {
+      in:      [true, false],
+      message: I18n.t('errors.messages.blank')
+    }
   validates :year,
     format:   {
       with: /\A\d{4}\z/
@@ -49,15 +60,18 @@ end
 # Table name: cycles
 #
 #  id           :uuid             not null, primary key
+#  active       :boolean          default(FALSE), not null
 #  name         :string           default(""), not null
 #  season_index :integer          not null
 #  slug         :string           default(""), not null
+#  ui_eligible  :boolean          default(FALSE), not null
 #  year         :string           default(""), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
 # Indexes
 #
+#  index_cycles_on_active                 (active) UNIQUE WHERE (active = true)
 #  index_cycles_on_name                   (name) UNIQUE
 #  index_cycles_on_slug                   (slug) UNIQUE
 #  index_cycles_on_year_and_season_index  (year,season_index) UNIQUE

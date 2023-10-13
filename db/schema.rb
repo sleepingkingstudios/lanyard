@@ -20,8 +20,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_30_185940) do
     t.string "slug", default: "", null: false
     t.string "year", default: "", null: false
     t.integer "season_index", null: false
+    t.boolean "active", default: false, null: false
+    t.boolean "ui_eligible", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["active"], name: "index_cycles_on_active", unique: true, where: "(active = true)"
     t.index ["name"], name: "index_cycles_on_name", unique: true
     t.index ["slug"], name: "index_cycles_on_slug", unique: true
     t.index ["year", "season_index"], name: "index_cycles_on_year_and_season_index", unique: true

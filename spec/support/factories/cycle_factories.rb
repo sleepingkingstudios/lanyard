@@ -13,8 +13,14 @@ FactoryBot.define do
     season_index do
       Cycle::Seasons.keys.map { |key| key.to_s.downcase }.index(season)
     end
-    year { cycle_index / 4 }
-    name { "#{season.titleize} #{year}" }
-    slug { "#{season}-#{year}" }
+    year        { cycle_index / 4 }
+    name        { "#{season.titleize} #{year}" }
+    slug        { "#{season}-#{year}" }
+    active      { false }
+    ui_eligible { false }
+
+    trait :active do
+      active { true }
+    end
   end
 end

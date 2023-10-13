@@ -91,6 +91,34 @@ RSpec.describe Lanyard::View::Components::Cycles::Form, type: :component do
                   </div>
                 </div>
               </div>
+
+              <div class="column">
+                <div class="field">
+                  <div class="control">
+                    <label class="checkbox" name="cycle[active]" for="cycle_active">
+                      <input autocomplete="off" name="cycle[active]" type="hidden" value="0">
+
+                      <input name="cycle[active]" type="checkbox" value="1" id="cycle_active">
+
+                      Active
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="column">
+                <div class="field">
+                  <div class="control">
+                    <label class="checkbox" name="cycle[ui_eligible]" for="cycle_ui_eligible">
+                      <input autocomplete="off" name="cycle[ui_eligible]" type="hidden" value="0">
+
+                      <input name="cycle[ui_eligible]" type="checkbox" value="1" id="cycle_ui_eligible">
+
+                      UI Eligible
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="field mt-5">
@@ -154,6 +182,34 @@ RSpec.describe Lanyard::View::Components::Cycles::Form, type: :component do
 
                   <div class="control">
                     <input id="cycle_year" name="cycle[year]" class="input" type="text" value="">
+                  </div>
+                </div>
+              </div>
+
+              <div class="column">
+                <div class="field">
+                  <div class="control">
+                    <label class="checkbox" name="cycle[active]" for="cycle_active">
+                      <input autocomplete="off" name="cycle[active]" type="hidden" value="0">
+
+                      <input name="cycle[active]" type="checkbox" value="1" id="cycle_active">
+
+                      Active
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="column">
+                <div class="field">
+                  <div class="control">
+                    <label class="checkbox" name="cycle[ui_eligible]" for="cycle_ui_eligible">
+                      <input autocomplete="off" name="cycle[ui_eligible]" type="hidden" value="0">
+
+                      <input name="cycle[ui_eligible]" type="checkbox" value="1" id="cycle_ui_eligible">
+
+                      UI Eligible
+                    </label>
                   </div>
                 </div>
               </div>

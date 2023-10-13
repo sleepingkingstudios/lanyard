@@ -39,6 +39,16 @@ hr.is-fancy-hr:after {
 
 /* FORMS */
 
+@media screen and (min-width: 769px) {
+  .field > .control:first-child {
+    padding-top: 2rem;
+  }
+
+  .control > .checkbox {
+    padding: 0.5rem 0;
+  }
+}
+
 .control > .select {
   width: 100%;
 }

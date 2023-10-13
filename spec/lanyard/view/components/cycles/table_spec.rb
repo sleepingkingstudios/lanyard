@@ -45,13 +45,17 @@ RSpec.describe Lanyard::View::Components::Cycles::Table, type: :component do
             <tr>
               <th>Name</th>
 
+              <th>Active</th>
+
+              <th>UI Eligible</th>
+
               <th> </th>
             </tr>
           </thead>
 
           <tbody>
             <tr>
-              <td colspan="2">There are no cycles matching the criteria.</td>
+              <td colspan="4">There are no cycles matching the criteria.</td>
             </tr>
           </tbody>
         </table>
@@ -74,6 +78,10 @@ RSpec.describe Lanyard::View::Components::Cycles::Table, type: :component do
               <tr>
                 <th>Name</th>
 
+                <th>Active</th>
+
+                <th>UI Eligible</th>
+
                 <th> </th>
               </tr>
             </thead>
@@ -84,6 +92,18 @@ RSpec.describe Lanyard::View::Components::Cycles::Table, type: :component do
                   <a class="has-text-link" href="/cycles/winter-1996" target="_self">
                     Winter 1996
                   </a>
+                </td>
+
+                <td>
+                  <span class="icon has-text-danger">
+                    <i class="fas fa-xmark"></i>
+                  </span>
+                </td>
+
+                <td>
+                  <span class="icon has-text-danger">
+                    <i class="fas fa-xmark"></i>
+                  </span>
                 </td>
 
                 <td>
@@ -99,6 +119,18 @@ RSpec.describe Lanyard::View::Components::Cycles::Table, type: :component do
                 </td>
 
                 <td>
+                  <span class="icon has-text-danger">
+                    <i class="fas fa-xmark"></i>
+                  </span>
+                </td>
+
+                <td>
+                  <span class="icon has-text-danger">
+                    <i class="fas fa-xmark"></i>
+                  </span>
+                </td>
+
+                <td>
                   [actions]
                 </td>
               </tr>
@@ -108,6 +140,18 @@ RSpec.describe Lanyard::View::Components::Cycles::Table, type: :component do
                   <a class="has-text-link" href="/cycles/autumn-2000" target="_self">
                     Autumn 2000
                   </a>
+                </td>
+
+                <td>
+                  <span class="icon has-text-danger">
+                    <i class="fas fa-xmark"></i>
+                  </span>
+                </td>
+
+                <td>
+                  <span class="icon has-text-danger">
+                    <i class="fas fa-xmark"></i>
+                  </span>
                 </td>
 
                 <td>
