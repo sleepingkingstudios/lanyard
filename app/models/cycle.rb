@@ -13,6 +13,9 @@ class Cycle < ApplicationRecord
   INVERSE_SEASONS = Seasons.keys.map { |key| key.to_s.downcase }.freeze
   private_constant :INVERSE_SEASONS
 
+  # Associations
+  has_many :roles, dependent: :nullify
+
   # Validations
   validates :active,
     inclusion:  {
