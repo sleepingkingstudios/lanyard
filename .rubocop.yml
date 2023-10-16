@@ -35,6 +35,9 @@ RSpec:
         - xinclude_examples
         - xwrap_examples
 
+FactoryBot/CreateList:
+  Enabled: false
+
 FactoryBot/SyntaxMethods:
   Enabled: false
 
