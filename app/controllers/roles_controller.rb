@@ -19,6 +19,8 @@ class RolesController < ViewController
   end
 
   def self.resource # rubocop:disable Metrics/MethodLength
+    components = Lanyard::View::Components::Roles
+
     @resource ||=
       Librum::Core::Resources::ViewResource.new(
         default_order:        { created_at: :desc },
@@ -43,7 +45,8 @@ class RolesController < ViewController
           status
           time_zone
         ],
-        resource_class:       Role
+        resource_class:       Role,
+        table_component:      components::Table
       )
   end
 

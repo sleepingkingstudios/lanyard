@@ -3,7 +3,7 @@
 module Lanyard::View::Components::Cycles
   # Renders a table of Cycle records.
   class Table < Librum::Core::View::Components::Resources::Table
-    COLUMNS_FOR = lambda { |resource| # rubocop:disable Metrics/BlockLength
+    COLUMNS = lambda { # rubocop:disable Metrics/BlockLength
       [
         {
           key:   'name',
@@ -24,24 +24,20 @@ module Lanyard::View::Components::Cycles
           type:  :boolean
         },
         {
-          key:   'actions',
-          label: ' ',
-          value: lambda { |item|
-            Librum::Core::View::Components::Resources::TableActions.new(
-              data:     item,
-              resource: resource
-            )
-          }
+          key:      'actions',
+          label:    ' ',
+          resource: resource,
+          type:     :actions
         }
       ].freeze
     }.freeze
-    private_constant :COLUMNS_FOR
+    private_constant :COLUMNS
 
     # @param data [Array<Cycle>] the table data to render.
     # @param resource [Cuprum::Rails::Resource] the controller resource.
     def initialize(data:, resource:)
       super(
-        columns:  COLUMNS_FOR.call(resource),
+        columns:  COLUMNS,
         data:     data,
         resource: resource
       )
