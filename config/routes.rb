@@ -9,6 +9,10 @@ Rails.application.routes.draw do
 
   resources :cycles
 
+  resources :roles
+
+  root to: 'roles#index'
+
   get '*path',
     to:          'home#not_found',
     constraints: { path: /(?!api).*/ }

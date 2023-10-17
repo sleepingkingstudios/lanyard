@@ -6,11 +6,10 @@ RSpec.describe "#{HomeController} routes", type: :routing do
   let(:controller) { 'home' }
 
   describe 'GET /' do
-    it 'should route to HomeController#not_found' do
+    it 'should route to RolesController#index' do
       expect(get: '/').to route_to(
-        controller: controller,
-        action:     'not_found',
-        path:       ''
+        controller: 'roles',
+        action:     'index'
       )
     end
   end

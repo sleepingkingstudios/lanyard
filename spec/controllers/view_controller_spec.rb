@@ -19,6 +19,10 @@ RSpec.describe ViewController, type: :controller do
         label: 'Home',
         items: [
           {
+            label: 'Roles',
+            url:   '/roles'
+          },
+          {
             label: 'Cycles',
             url:   '/cycles'
           }
