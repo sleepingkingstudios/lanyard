@@ -238,6 +238,8 @@ RSpec.describe Role, type: :model do
 
   include_contract 'should define data property', :benefits, predicate: true
 
+  include_contract 'should define data property', :benefits_details
+
   include_contract 'should define data property', :compensation
 
   include_contract 'should define data property', :contract_duration
@@ -245,6 +247,8 @@ RSpec.describe Role, type: :model do
   include_contract 'should define data property', :industry
 
   include_contract 'should define data property', :location
+
+  include_contract 'should define data property', :source_details
 
   include_contract 'should define data property', :time_zone
 

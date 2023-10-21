@@ -1,0 +1,119 @@
+<%= render_form do %>
+  <div class="box">
+    <div class="columns">
+      <div class="column">
+        <%= render_form_field('role[job_title]') %>
+      </div>
+
+      <div class="column">
+        <%= render_form_field('role[company_name]') %>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <%= render_cycle_field %>
+      </div>
+
+      <div class="column">
+        <%= render_form_field('role[client_name]') %>
+      </div>
+
+      <div class="column is-half">
+        <%= render_form_field('role[slug]') %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <h2 class="title is-4">Source</h2>
+
+    <div class="columns">
+      <div class="column">
+        <%= render_source_field %>
+      </div>
+
+      <div class="column is-three-quarters">
+        <%= render_form_field('role[source_details]') %>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <%= render_form_field('role[recruiter_name]') %>
+      </div>
+
+      <div class="column">
+        <%= render_form_field('role[agency_name]') %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <h2 class="title is-4">Contract</h2>
+
+    <div class="columns">
+      <div class="column">
+        <%= render_contract_buttons %>
+      </div>
+
+      <div class="column">
+        <%= render_form_field('role[contract_duration]') %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <h2 class="title is-4">Location</h2>
+
+    <div class="columns">
+      <div class="column is-half">
+        <%= render_location_buttons %>
+      </div>
+
+      <div class="column">
+        <%= render_form_field('role[location]') %>
+      </div>
+
+      <div class="column">
+        <%= render_form_field('role[time_zone]') %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <h2 class="title is-4">Compensation</h2>
+
+    <div class="columns">
+      <div class="column">
+        <%= render_compensation_buttons %>
+      </div>
+
+      <div class="column">
+        <%= render_form_field('role[compensation]') %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <h2 class="title is-4">Benefits</h2>
+
+    <div class="columns">
+      <div class="column is-one-quarter">
+        <%= render_form_field('role[benefits]', type: :checkbox) %>
+      </div>
+
+      <div class="column">
+        <%= render_form_field('role[benefits_details]') %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <%= render_form_field('role[industry]') %>
+
+    <%= render_form_field('role[notes]', type: :textarea) %>
+  </div>
+
+  <%= render_form_actions %>
+<% end %>

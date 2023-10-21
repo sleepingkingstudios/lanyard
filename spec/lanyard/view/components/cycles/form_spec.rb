@@ -5,15 +5,7 @@ require 'rails_helper'
 RSpec.describe Lanyard::View::Components::Cycles::Form, type: :component do
   subject(:form) { described_class.new(**constructor_options) }
 
-  let(:data) do
-    {
-      'cycle' => FactoryBot.build(
-        :cycle,
-        season: 'winter',
-        year:   '1999'
-      )
-    }
-  end
+  let(:data)   { {} }
   let(:action) { 'new' }
   let(:resource) do
     Cuprum::Rails::Resource.new(resource_class: Cycle)

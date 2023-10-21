@@ -69,6 +69,7 @@ RSpec.describe RolesController, type: :controller do
       %w[
         agency_name
         benefits
+        benefits_details
         client_name
         company_name
         compensation
@@ -84,6 +85,7 @@ RSpec.describe RolesController, type: :controller do
         recruiter_name
         slug
         source
+        source_details
         status
         time_zone
       ]

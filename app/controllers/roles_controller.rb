@@ -27,6 +27,7 @@ class RolesController < ViewController
         permitted_attributes: %w[
           agency_name
           benefits
+          benefits_details
           client_name
           company_name
           compensation
@@ -42,10 +43,12 @@ class RolesController < ViewController
           recruiter_name
           slug
           source
+          source_details
           status
           time_zone
         ],
         resource_class:       Role,
+        form_component:       components::Form,
         table_component:      components::Table
       )
   end

@@ -48,10 +48,12 @@ class Role < ApplicationRecord
 
   ### Attributes
   data_property :benefits, predicate: true
+  data_property :benefits_details
   data_property :compensation
   data_property :contract_duration
   data_property :industry
   data_property :location
+  data_property :source_details
   data_property :time_zone
 
   ### Associations
