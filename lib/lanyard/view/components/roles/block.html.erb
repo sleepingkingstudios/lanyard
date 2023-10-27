@@ -1,0 +1,39 @@
+<%=
+  render(
+    Librum::Core::View::Components::DataList.new(data: data, fields: core_fields)
+  )
+%>
+
+<h3 class="title is-4">Source</h3>
+
+<%=
+  render(
+    Librum::Core::View::Components::DataList.new(data: data, fields: source_fields)
+  )
+%>
+
+<% if data.recruiter_name.present? || data.agency_name.present? %>
+<h4 class="title is-5">Recruiter</h4>
+
+<%=
+  render(
+    Librum::Core::View::Components::DataList.new(data: data, fields: recruiter_fields)
+  )
+%>
+<% end %>
+
+<h3 class="title is-4">Compensation</h3>
+
+<%=
+  render(
+    Librum::Core::View::Components::DataList.new(data: data, fields: compensation_fields)
+  )
+%>
+
+<% if data.notes.present? %>
+<h3 class="title is-4">Notes</h3>
+
+<div class="content">
+  <%= data.notes %>
+</div>
+<% end %>

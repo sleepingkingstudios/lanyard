@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Lanyard::View::Components::Cycles
-  # Renders a single cycle record.
+  # Renders a single Cycle record.
   class Block < ViewComponent::Base
     FIELDS = [
       { key: 'name' }.freeze,

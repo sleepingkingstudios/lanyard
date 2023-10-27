@@ -59,6 +59,8 @@ RSpec.describe Cycle, type: :model do
 
   include_contract 'should be a model'
 
+  include_contract 'should have many', :roles
+
   describe '#active' do
     include_contract 'should define attribute',
       :active,
