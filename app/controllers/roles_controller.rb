@@ -48,6 +48,7 @@ class RolesController < ViewController
           time_zone
         ],
         resource_class:       Role,
+        block_component:      components::Block,
         form_component:       components::Form,
         table_component:      components::Table
       )
