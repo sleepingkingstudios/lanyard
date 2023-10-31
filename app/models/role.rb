@@ -41,9 +41,11 @@ class Role < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Enumerates role statuses.
   Statuses = SleepingKingStudios::Tools::Toolbox::ConstantMap.new(
-    CLOSED: 'closed',
-    NEW:    'new',
-    OPEN:   'open'
+    NEW:          'new',
+    APPLIED:      'applied',
+    INTERVIEWING: 'interviewing',
+    OFFERED:      'offered',
+    CLOSED:       'closed'
   ).freeze
 
   ### Attributes
@@ -145,16 +147,18 @@ end
 #
 #  id                :uuid             not null, primary key
 #  agency_name       :string           default(""), not null
+#  applied_at        :datetime
 #  client_name       :string           default(""), not null
 #  closed_at         :datetime
 #  company_name      :string           default(""), not null
 #  compensation_type :string           default("unknown"), not null
 #  contract_type     :string           default("unknown"), not null
 #  data              :jsonb            not null
+#  interviewing_at   :datetime
 #  job_title         :string           default(""), not null
 #  location_type     :string           default("unknown"), not null
 #  notes             :text             default(""), not null
-#  opened_at         :datetime
+#  offered_at        :datetime
 #  recruiter_name    :string           default(""), not null
 #  slug              :string           default(""), not null
 #  source            :string           default("unknown"), not null

@@ -29,7 +29,27 @@ RSpec.describe Lanyard::View::Components::Roles::Table, type: :component do
           company_name:  'Pewter City Civil Society',
           contract_type: Role::ContractTypes::CONTRACT,
           location_type: Role::LocationTypes::IN_PERSON,
-          status:        Role::Statuses::OPEN
+          status:        Role::Statuses::APPLIED
+        ),
+        FactoryBot.build(
+          :role,
+          cycle:         cycle,
+          slug:          'gate-guard',
+          job_title:     'Gate Guard',
+          company_name:  'Indigo Plateau Constabulary',
+          contract_type: Role::ContractTypes::CONTRACT_TO_HIRE,
+          location_type: Role::LocationTypes::IN_PERSON,
+          status:        Role::Statuses::INTERVIEWING
+        ),
+        FactoryBot.build(
+          :role,
+          cycle:         cycle,
+          slug:          'dragon-tamer',
+          job_title:     'Dragon Tamer',
+          company_name:  'Blackthorn City Gym',
+          contract_type: Role::ContractTypes::CONTRACT,
+          location_type: Role::LocationTypes::IN_PERSON,
+          status:        Role::Statuses::OFFERED
         ),
         FactoryBot.build(
           :role,
@@ -153,7 +173,7 @@ RSpec.describe Lanyard::View::Components::Roles::Table, type: :component do
                 </td>
 
                 <td>
-                  <span class="has-text-info">New</span>
+                  <span class="has-text-black">New</span>
                 </td>
 
                 <td>
@@ -191,7 +211,83 @@ RSpec.describe Lanyard::View::Components::Roles::Table, type: :component do
                 </td>
 
                 <td>
-                  <span class="has-text-success">Open</span>
+                  <span class="has-text-info">Applied</span>
+                </td>
+
+                <td>
+                  <a class="has-text-link" href="/cycles/winter-1996" target="_self">
+                    Winter 1996
+                  </a>
+                </td>
+
+                <td>
+                  [actions]
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="has-text-link" href="/roles/gate-guard" target="_self">
+                    Gate Guard
+                  </a>
+                </td>
+
+                <td>
+                  Indigo Plateau Constabula…
+                </td>
+
+                <td>
+                  <span class="icon has-text-success">
+                    <i class="fas fa-check"></i>
+                  </span>
+                </td>
+
+                <td>
+                  <span class="icon has-text-danger">
+                    <i class="fas fa-xmark"></i>
+                  </span>
+                </td>
+
+                <td>
+                  <span class="has-text-success">Interviewing</span>
+                </td>
+
+                <td>
+                  <a class="has-text-link" href="/cycles/winter-1996" target="_self">
+                    Winter 1996
+                  </a>
+                </td>
+
+                <td>
+                  [actions]
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <a class="has-text-link" href="/roles/dragon-tamer" target="_self">
+                    Dragon Tamer
+                  </a>
+                </td>
+
+                <td>
+                  Blackthorn City Gym
+                </td>
+
+                <td>
+                  <span class="icon has-text-success">
+                    <i class="fas fa-check"></i>
+                  </span>
+                </td>
+
+                <td>
+                  <span class="icon has-text-danger">
+                    <i class="fas fa-xmark"></i>
+                  </span>
+                </td>
+
+                <td>
+                  <span class="has-text-success">Offered</span>
                 </td>
 
                 <td>
