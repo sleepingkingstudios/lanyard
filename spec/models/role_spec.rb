@@ -236,6 +236,10 @@ RSpec.describe Role, type: :model do
 
   include_contract 'should belong to', :cycle
 
+  include_contract 'should have many', :events do
+    include_context 'with a cycle'
+  end
+
   include_contract 'should define data property', :benefits, predicate: true
 
   include_contract 'should define data property', :benefits_details

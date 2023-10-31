@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_14_214502) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_31_155058) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -52,6 +52,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_14_214502) do
     t.index ["email"], name: "index_librum_iam_users_on_email", unique: true
     t.index ["slug"], name: "index_librum_iam_users_on_slug", unique: true
     t.index ["username"], name: "index_librum_iam_users_on_username", unique: true
+  end
+
+  create_table "role_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type", default: "", null: false
+    t.string "slug", default: "", null: false
+    t.jsonb "data", default: {}, null: false
+    t.text "notes", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "role_id"
+    t.index ["role_id", "slug"], name: "index_role_events_on_role_id_and_slug", unique: true
+    t.index ["slug"], name: "index_role_events_on_slug", unique: true
   end
 
   create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

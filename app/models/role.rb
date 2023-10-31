@@ -3,7 +3,7 @@
 require 'sleeping_king_studios/tools/toolbox/constant_map'
 
 # Model class representing an application process for a role.
-class Role < ApplicationRecord
+class Role < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend Librum::Core::Models::DataProperties
 
   # Enumerates types of compensation for a role.
@@ -58,6 +58,7 @@ class Role < ApplicationRecord
 
   ### Associations
   belongs_to :cycle
+  has_many   :events, class_name: 'RoleEvent', dependent: :nullify
 
   ### Validations
   validates :compensation_type,
