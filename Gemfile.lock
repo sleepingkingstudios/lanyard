@@ -20,7 +20,7 @@ GIT
 
 GIT
   remote: https://github.com/sleepingkingstudios/librum-core
-  revision: 65fc85c8f9cc14826f90bf0db0dc0769680f517f
+  revision: 1933d368a91487e58ad1080a7f03b2f4d945d039
   branch: main
   specs:
     librum-core (0.1.0)
@@ -29,9 +29,11 @@ GIT
       cuprum-collections
       cuprum-rails
       diffy (~> 3.4.2)
+      importmap-rails (~> 1.2)
       pg (~> 1.5)
       rails (~> 7.0.4)
       stannum (~> 0.3)
+      stimulus-rails (~> 1.3)
       view_component (~> 3.0)
 
 GIT
@@ -301,6 +303,8 @@ GEM
       sprockets (>= 3.0.0)
     stannum (0.3.0)
       sleeping_king_studios-tools (~> 1.1.0)
+    stimulus-rails (1.3.0)
+      railties (>= 6.0.0)
     thor (1.2.2)
     timeout (0.4.0)
     tzinfo (2.0.6)
@@ -349,6 +353,7 @@ DEPENDENCIES
   sleeping_king_studios-tasks (~> 0.4, >= 0.4.1)
   sprockets-rails
   stannum (~> 0.3)
+  stimulus-rails
   view_component (~> 3.0)
   web-console
 
