@@ -4,7 +4,7 @@ require 'rails_helper'
 
 require 'support/action'
 
-RSpec.describe Lanyard::Actions::Roles::Concerns::GenerateSlug do
+RSpec.describe Lanyard::Actions::RoleEvents::Concerns::GenerateSlug do
   subject(:action) { described_class.new(action_name, repository: repository) }
 
   let(:action_name)     { :create }
@@ -12,11 +12,11 @@ RSpec.describe Lanyard::Actions::Roles::Concerns::GenerateSlug do
   let(:repository)      { Cuprum::Rails::Repository.new }
 
   example_class 'Spec::Action', Spec::Support::Action do |klass|
-    klass.prepend(Lanyard::Actions::Roles::Concerns::GenerateSlug) # rubocop:disable RSpec/DescribedClass
+    klass.prepend(Lanyard::Actions::RoleEvents::Concerns::GenerateSlug) # rubocop:disable RSpec/DescribedClass
   end
 
   describe '#call' do
-    let(:command_class) { Lanyard::Models::Roles::GenerateSlug }
+    let(:command_class) { Lanyard::Models::RoleEvents::GenerateSlug }
     let(:command) do
       instance_double(
         Librum::Core::Models::Attributes::GenerateSlug,

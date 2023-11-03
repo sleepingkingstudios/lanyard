@@ -2,36 +2,16 @@
 
 require 'rails_helper'
 
+require 'support/action'
+
 RSpec.describe Lanyard::Actions::Cycles::Concerns::GenerateName do
   subject(:action) { described_class.new(action_name) }
 
   let(:action_name)     { :create }
   let(:described_class) { Spec::Action }
 
-  example_class 'Spec::Action', Cuprum::Command do |klass|
+  example_class 'Spec::Action', Spec::Support::Action do |klass|
     klass.prepend(Lanyard::Actions::Cycles::Concerns::GenerateName) # rubocop:disable RSpec/DescribedClass
-
-    klass.define_method(:initialize) do |action|
-      @action = action
-    end
-
-    klass.attr_reader :action
-
-    klass.define_method(:create_entity) do |attributes:|
-      attributes
-    end
-
-    klass.define_method(:update_entity) do |attributes:|
-      attributes
-    end
-
-    klass.define_method(:process) do |attributes:|
-      if action == :create
-        create_entity(attributes: attributes)
-      else
-        update_entity(attributes: attributes)
-      end
-    end
   end
 
   describe '#call' do
