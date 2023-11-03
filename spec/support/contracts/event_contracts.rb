@@ -52,7 +52,7 @@ module Spec::Support::Contracts
 
         describe '#valid?' do
           wrap_context 'with a role' do
-            it { expect(event.valid?).to be true }
+            it { expect(subject.valid?).to be true }
           end
 
           include_contract 'should validate the presence of',
@@ -85,6 +85,84 @@ module Spec::Support::Contracts
             :slug,
             attributes:   -> { FactoryBot.attributes_for(:event, :with_role) },
             factory_name: :event
+        end
+      end
+    end
+
+    # Contract asserting the model class is a valid status event.
+    module ShouldBeAStatusEvent
+      extend RSpec::SleepingKingStudios::Contract
+
+      contract do |type:, **options|
+        include Spec::Support::Contracts::EventContracts
+
+        include_contract 'should be a role event', type: type
+
+        describe '#status' do
+          let(:expected_status) { options.fetch(:status) }
+
+          include_examples 'should define reader', :status
+
+          next unless options.key?(:status)
+
+          it { expect(subject.status).to be == expected_status }
+        end
+
+        describe '#update_status' do
+          let(:repository) { Cuprum::Rails::Repository.new }
+          let(:command) { subject.update_status(repository: repository) }
+          let(:command_class) do
+            Lanyard::Models::Roles::UpdateStatus
+          end
+
+          it 'should define the method' do
+            expect(subject)
+              .to respond_to(:update_status)
+              .with(0).arguments
+              .and_keywords(:repository)
+          end
+
+          next unless options.key?(:status)
+
+          it { expect(command).to be_a command_class }
+
+          it { expect(command.repository).to be repository }
+
+          it { expect(command.status).to be == subject.status }
+        end
+
+        describe '#valid_statuses' do
+          let(:expected_statuses) { options.fetch(:valid_statuses) }
+
+          include_examples 'should define reader', :valid_statuses
+
+          next unless options.key?(:valid_statuses)
+
+          it { expect(subject.valid_statuses).to be == expected_statuses }
+        end
+
+        describe '#validate_status_transition' do
+          let(:command) { subject.validate_status_transition }
+          let(:command_class) do
+            Lanyard::Models::Roles::ValidateStatusTransition
+          end
+          let(:expected_statuses) do
+            Set.new(subject.valid_statuses)
+          end
+
+          it 'should define the method' do
+            expect(subject)
+              .to respond_to(:validate_status_transition)
+              .with(0).arguments
+          end
+
+          next unless options.key?(:status) && options.key?(:valid_statuses)
+
+          it { expect(command).to be_a command_class }
+
+          it { expect(command.status).to be == subject.status }
+
+          it { expect(command.valid_statuses).to be == expected_statuses }
         end
       end
     end
