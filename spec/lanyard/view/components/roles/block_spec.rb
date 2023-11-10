@@ -87,7 +87,7 @@ RSpec.describe Lanyard::View::Components::Roles::Block, type: :component do
             </div>
 
             <div class="column">
-              <span class="has-text-info">New</span>
+              <span class="has-text-black">New</span>
             </div>
           </div>
 
@@ -257,7 +257,7 @@ RSpec.describe Lanyard::View::Components::Roles::Block, type: :component do
               </div>
 
               <div class="column">
-                <span class="has-text-info">New</span>
+                <span class="has-text-black">New</span>
               </div>
             </div>
 

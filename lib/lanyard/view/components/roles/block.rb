@@ -59,8 +59,10 @@ module Lanyard::View::Components::Roles
         color:     lambda { |item|
           case item.status
           when Role::Statuses::NEW
+            'black'
+          when Role::Statuses::APPLIED
             'info'
-          when Role::Statuses::OPEN
+          when Role::Statuses::INTERVIEWING, Role::Statuses::OFFERED
             'success'
           when Role::Statuses::CLOSED
             'danger'
