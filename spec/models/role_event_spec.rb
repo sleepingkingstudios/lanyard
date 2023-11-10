@@ -11,9 +11,10 @@ RSpec.describe RoleEvent, type: :model do
 
   let(:attributes) do
     {
-      slug:  '1982-07-09-event',
-      data:  {},
-      notes: <<~TEXT
+      slug:       '1982-07-09-event',
+      event_date: Date.new(1982, 7, 9),
+      data:       {},
+      notes:      <<~TEXT
         The computers and the programs will start thinking, and the people will stop!
       TEXT
     }

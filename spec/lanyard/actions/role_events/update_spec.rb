@@ -14,6 +14,7 @@ RSpec.describe Lanyard::Actions::RoleEvents::Update do
   let(:resource) do
     Cuprum::Rails::Resource.new(
       permitted_attributes: %i[
+        event_date
         role_id
         notes
         slug
@@ -26,19 +27,21 @@ RSpec.describe Lanyard::Actions::RoleEvents::Update do
     { 'role_id' => nil }
   end
   let(:valid_attributes) do
-    { 'notes' => 'This job rocks!' }
+    { 'event_date' => '1982-07-09', 'notes' => 'This job rocks!' }
   end
-  let(:current_time) { Time.current }
-  let(:timestamp)    { current_time.strftime('%Y-%m-%d') }
-  let(:event)        { FactoryBot.create(:event, :with_role) }
-
-  before(:example) { allow(Time).to receive(:current).and_return(current_time) }
+  let(:expected_attributes) do
+    { 'event_date' => Date.new(1982, 7, 9) }
+  end
+  let(:event) do
+    FactoryBot.create(:event, :with_role, event_date: Date.new(1982, 7, 9))
+  end
 
   include_contract 'update action contract',
-    existing_entity:    -> { event },
-    invalid_attributes: -> { invalid_attributes },
-    valid_attributes:   -> { valid_attributes },
-    primary_key_value:  -> { SecureRandom.uuid } \
+    existing_entity:     -> { event },
+    invalid_attributes:  -> { invalid_attributes },
+    valid_attributes:    -> { valid_attributes },
+    primary_key_value:   -> { SecureRandom.uuid },
+    expected_attributes: ->(hsh) { hsh.merge(expected_attributes) } \
   do
     describe 'with id: a slug' do
       let(:params) do
@@ -46,17 +49,16 @@ RSpec.describe Lanyard::Actions::RoleEvents::Update do
       end
 
       include_contract 'should update the entity',
-        existing_entity:  -> { event },
-        valid_attributes: -> { valid_attributes },
-        params:           -> { params }
+        existing_entity:     -> { event },
+        valid_attributes:    -> { valid_attributes },
+        params:              -> { params },
+        expected_attributes: ->(hsh) { hsh.merge(expected_attributes) }
     end
 
     describe 'with slug: an empty String' do
       let(:valid_attributes)    { super().merge({ 'slug' => '' }) }
-      let(:current_time)        { Time.current }
-      let(:timestamp)           { current_time.strftime('%Y-%m-%d') }
-      let(:expected_slug)       { "#{timestamp}-event" }
-      let(:expected_attributes) { { 'slug' => expected_slug } }
+      let(:expected_slug)       { "#{event.event_date.iso8601}-event" }
+      let(:expected_attributes) { super().merge('slug' => expected_slug) }
 
       include_contract 'should update the entity',
         existing_entity:     -> { event },
@@ -68,8 +70,9 @@ RSpec.describe Lanyard::Actions::RoleEvents::Update do
       let(:valid_attributes) { super().merge({ 'slug' => 'example-slug' }) }
 
       include_contract 'should update the entity',
-        existing_entity:  -> { event },
-        valid_attributes: -> { valid_attributes }
+        existing_entity:     -> { event },
+        valid_attributes:    -> { valid_attributes },
+        expected_attributes: ->(hsh) { hsh.merge(expected_attributes) }
     end
   end
 end

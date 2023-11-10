@@ -33,34 +33,29 @@ module Lanyard::Models::RoleEvents
         .tr('_', '-')
     end
 
-    def generate_ordinal(attributes)
-      ordinal_query(attributes)
+    def generate_ordinal(attributes, timestamp)
+      ordinal_query(attributes, timestamp)
         .count
         .nonzero?
     end
 
     def generate_slug_for(attributes)
-      segments = [
-        generate_timestamp,
+      timestamp = resolve_timestamp(attributes)
+      segments  = [
+        timestamp&.iso8601,
         generate_event_name(attributes),
-        generate_ordinal(attributes)
+        generate_ordinal(attributes, timestamp)
       ].compact
-
-      segments << role_index if segments.size == 1
 
       segments.join('-')
     end
 
-    def generate_timestamp
-      Time.current.strftime('%Y-%m-%d')
-    end
-
-    def ordinal_query(attributes)
+    def ordinal_query(attributes, timestamp)
       events_collection
         .query
         .where do
           {
-            created_at: gte(Time.current.beginning_of_day),
+            event_date: timestamp,
             role_id:    attributes['role_id'],
             type:       attributes.fetch('type', '')
           }
@@ -73,6 +68,14 @@ module Lanyard::Models::RoleEvents
       validate_attributes!(attributes)
 
       generate_slug_for(attributes.stringify_keys)
+    end
+
+    def resolve_timestamp(attributes)
+      return if attributes['event_date'].blank?
+
+      attributes['event_date'].to_date
+    rescue Date::Error
+      nil
     end
 
     def validate_attributes!(attributes)

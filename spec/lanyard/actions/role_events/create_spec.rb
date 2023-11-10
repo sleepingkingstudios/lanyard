@@ -14,6 +14,7 @@ RSpec.describe Lanyard::Actions::RoleEvents::Create, type: :action do
   let(:resource) do
     Cuprum::Rails::Resource.new(
       permitted_attributes: %i[
+        event_date
         role_id
         slug
         type
@@ -23,27 +24,26 @@ RSpec.describe Lanyard::Actions::RoleEvents::Create, type: :action do
   end
   let(:role) { FactoryBot.create(:role, :with_cycle) }
   let(:invalid_attributes) do
-    { 'role_id' => nil }
+    { 'role_id' => role.id, 'event_date' => nil }
   end
   let(:valid_attributes) do
-    { 'role_id' => role.id }
+    { 'role_id' => role.id, 'event_date' => '1982-07-09' }
   end
-  let(:current_time)        { Time.current }
-  let(:timestamp)           { current_time.strftime('%Y-%m-%d') }
-  let(:expected_slug)       { "#{timestamp}-event" }
-  let(:expected_attributes) { { 'slug' => expected_slug } }
-
-  before(:example) { allow(Time).to receive(:current).and_return(current_time) }
+  let(:expected_attributes) do
+    {
+      'event_date' => Date.new(1982, 7, 9),
+      'slug'       => '1982-07-09-event'
+    }
+  end
 
   include_contract 'create action contract',
     invalid_attributes:             -> { invalid_attributes },
     valid_attributes:               -> { valid_attributes },
     expected_attributes_on_failure: lambda { |hsh|
-      hsh.merge({ 'slug' => expected_slug })
+      hsh.merge({ 'slug' => 'event' })
     },
     expected_attributes_on_success: ->(hsh) { hsh.merge(expected_attributes) } \
   do
-    # rubocop:disable RSpec/MultipleMemoizedHelpers
     describe 'with type: an invalid status event type' do
       let(:role) do
         FactoryBot.create(:role, :interviewing, :with_cycle)
@@ -94,6 +94,5 @@ RSpec.describe Lanyard::Actions::RoleEvents::Create, type: :action do
         end
       end
     end
-    # rubocop:enable RSpec/MultipleMemoizedHelpers
   end
 end

@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_31_183529) do
   create_table "role_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type", default: "", null: false
     t.string "slug", default: "", null: false
+    t.date "event_date", null: false
     t.jsonb "data", default: {}, null: false
     t.text "notes", default: "", null: false
     t.datetime "created_at", null: false

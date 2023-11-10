@@ -17,14 +17,46 @@ RSpec.describe Lanyard::Models::RoleEvents::GenerateSlug do
   end
 
   describe '#call' do
-    let(:role)         { FactoryBot.create(:role, :with_cycle) }
-    let(:current_time) { Time.current }
-    let(:timestamp)    { current_time.strftime('%Y-%m-%d') }
-    let(:attributes)   { { 'role_id' => role.id } }
-
-    before(:example) do
-      allow(Time).to receive(:current).and_return(current_time)
+    shared_context 'when there are non-matching events' do
+      before(:example) do
+        FactoryBot.create(
+          :event,
+          :with_role,
+          type:       attributes.fetch('type', ''),
+          event_date: event_date
+        )
+        FactoryBot.create(
+          :event,
+          role:       role,
+          type:       attributes.fetch('type', ''),
+          event_date: event_date - 1.day
+        )
+        FactoryBot.create(
+          :event,
+          role:       role,
+          type:       RoleEvents::StatusEvent.name,
+          event_date: event_date
+        )
+      end
     end
+
+    shared_context 'when there are matching events' do
+      include_context 'when there are non-matching events'
+
+      before(:example) do
+        3.times do
+          FactoryBot.create(
+            :event,
+            role:       role,
+            type:       attributes.fetch('type', ''),
+            event_date: event_date
+          )
+        end
+      end
+    end
+
+    let(:role)       { FactoryBot.create(:role, :with_cycle) }
+    let(:attributes) { { 'role_id' => role.id } }
 
     it 'should define the method' do
       expect(command).to be_callable.with(0).arguments.and_keywords(:attributes)
@@ -49,26 +81,9 @@ RSpec.describe Lanyard::Models::RoleEvents::GenerateSlug do
     end
 
     describe 'with attributes: { type: nil }' do
-      let(:expected) { "#{timestamp}-event" }
+      let(:expected) { 'event' }
 
-      it 'should generate the slug' do
-        expect(command.call(attributes: attributes))
-          .to be_a_passing_result
-          .with_value(expected)
-      end
-
-      context 'when there are existing events' do
-        before(:example) do
-          FactoryBot.create(:event, :with_role, created_at: current_time)
-          FactoryBot.create(:event, role: role, created_at: 1.day.ago)
-          FactoryBot.create(
-            :event,
-            created_at: current_time,
-            role:       role,
-            type:       RoleEvents::StatusEvent.name
-          )
-        end
-
+      describe 'and { event_date: nil }' do
         it 'should generate the slug' do
           expect(command.call(attributes: attributes))
             .to be_a_passing_result
@@ -76,14 +91,68 @@ RSpec.describe Lanyard::Models::RoleEvents::GenerateSlug do
         end
       end
 
-      context 'when there are existing events with the same date and type' do
-        let(:expected) { "#{super()}-3" }
+      describe 'and { event_date: a Date }' do
+        let(:event_date) { Date.new(1982, 7, 9) }
+        let(:attributes) { super().merge('event_date' => event_date) }
+        let(:expected)   { "1982-07-09-#{super()}" }
 
-        before(:example) do
-          3.times do
-            FactoryBot.create(:event, role: role, created_at: current_time)
+        it 'should generate the slug' do
+          expect(command.call(attributes: attributes))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+
+        wrap_context 'when there are non-matching events' do
+          it 'should generate the slug' do
+            expect(command.call(attributes: attributes))
+              .to be_a_passing_result
+              .with_value(expected)
           end
         end
+
+        wrap_context 'when there are matching events' do
+          let(:expected) { "#{super()}-3" }
+
+          it 'should generate the slug' do
+            expect(command.call(attributes: attributes))
+              .to be_a_passing_result
+              .with_value(expected)
+          end
+        end
+      end
+
+      describe 'and { event_date: a String }' do
+        let(:event_date) { Date.new(1982, 7, 9) }
+        let(:attributes) { super().merge('event_date' => event_date.iso8601) }
+        let(:expected)   { "1982-07-09-#{super()}" }
+
+        it 'should generate the slug' do
+          expect(command.call(attributes: attributes))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+
+        wrap_context 'when there are non-matching events' do
+          it 'should generate the slug' do
+            expect(command.call(attributes: attributes))
+              .to be_a_passing_result
+              .with_value(expected)
+          end
+        end
+
+        wrap_context 'when there are matching events' do
+          let(:expected) { "#{super()}-3" }
+
+          it 'should generate the slug' do
+            expect(command.call(attributes: attributes))
+              .to be_a_passing_result
+              .with_value(expected)
+          end
+        end
+      end
+
+      describe 'and { event_date: an invalid String }' do
+        let(:attributes) { super().merge('event_date' => '1982-13-32') }
 
         it 'should generate the slug' do
           expect(command.call(attributes: attributes))
@@ -96,36 +165,9 @@ RSpec.describe Lanyard::Models::RoleEvents::GenerateSlug do
     describe 'with attributes: { type: value }' do
       let(:type)       { RoleEvents::AppliedEvent.name }
       let(:attributes) { super().merge('type' => type) }
-      let(:expected)   { "#{timestamp}-applied" }
+      let(:expected)   { 'applied' }
 
-      it 'should generate the slug' do
-        expect(command.call(attributes: attributes))
-          .to be_a_passing_result
-          .with_value(expected)
-      end
-
-      context 'when there are existing events' do
-        before(:example) do
-          FactoryBot.create(
-            :event,
-            :with_role,
-            created_at: current_time,
-            type:       type
-          )
-          FactoryBot.create(
-            :event,
-            role:       role,
-            created_at: 1.day.ago,
-            type:       type
-          )
-          FactoryBot.create(
-            :event,
-            created_at: current_time,
-            role:       role,
-            type:       RoleEvents::StatusEvent.name
-          )
-        end
-
+      describe 'and { event_date: nil }' do
         it 'should generate the slug' do
           expect(command.call(attributes: attributes))
             .to be_a_passing_result
@@ -133,24 +175,33 @@ RSpec.describe Lanyard::Models::RoleEvents::GenerateSlug do
         end
       end
 
-      context 'when there are existing events with the same date and type' do
-        let(:expected) { "#{super()}-3" }
+      describe 'and { event_date: a Date }' do
+        let(:event_date) { Date.new(1982, 7, 9) }
+        let(:attributes) { super().merge('event_date' => event_date) }
+        let(:expected)   { "1982-07-09-#{super()}" }
 
-        before(:example) do
-          3.times do
-            FactoryBot.create(
-              :event,
-              role:       role,
-              created_at: current_time,
-              type:       type
-            )
+        it 'should generate the slug' do
+          expect(command.call(attributes: attributes))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+
+        wrap_context 'when there are non-matching events' do
+          it 'should generate the slug' do
+            expect(command.call(attributes: attributes))
+              .to be_a_passing_result
+              .with_value(expected)
           end
         end
 
-        it 'should generate the slug' do
-          expect(command.call(attributes: attributes))
-            .to be_a_passing_result
-            .with_value(expected)
+        wrap_context 'when there are matching events' do
+          let(:expected) { "#{super()}-3" }
+
+          it 'should generate the slug' do
+            expect(command.call(attributes: attributes))
+              .to be_a_passing_result
+              .with_value(expected)
+          end
         end
       end
     end

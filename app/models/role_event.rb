@@ -6,6 +6,8 @@ class RoleEvent < ApplicationRecord
   belongs_to :role
 
   ### Validations
+  validates :event_date,
+    presence: true
   validates :slug,
     format:     {
       message: I18n.t('errors.messages.kebab_case'),
@@ -14,16 +16,11 @@ class RoleEvent < ApplicationRecord
     presence:   true,
     uniqueness: true
 
-  # @return [Boolean] true if the event closes the associated role; otherwise
-  #   false.
-  def close_event?
-    false
-  end
+  # @return [String] a human-readable event type.
+  def name
+    return 'Event' if type.blank?
 
-  # @return [Boolean] true if the event opens the associated role; otherwise
-  #   false.
-  def open_event?
-    false
+    type.split('::').last.sub(/Event\z/, '')
   end
 end
 
@@ -33,6 +30,7 @@ end
 #
 #  id         :uuid             not null, primary key
 #  data       :jsonb            not null
+#  event_date :date             not null
 #  notes      :text             default(""), not null
 #  slug       :string           default(""), not null
 #  type       :string           default(""), not null

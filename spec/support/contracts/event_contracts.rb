@@ -25,10 +25,6 @@ module Spec::Support::Contracts
           :role,
           association: -> { FactoryBot.create(:role, :with_cycle) }
 
-        describe '#close_event?' do
-          include_examples 'should define predicate', :close_event?, false
-        end
-
         describe '#data' do
           include_contract 'should define attribute',
             :data,
@@ -36,14 +32,24 @@ module Spec::Support::Contracts
             value:   { 'custom_key' => 'custom value' }
         end
 
+        describe '#event_date' do
+          include_contract 'should define attribute', :event_date
+        end
+
+        describe '#name' do
+          let(:expected) do
+            next 'Event' if event.type.blank?
+
+            event.type.split('::').last.sub(/Event\z/, '')
+          end
+
+          include_examples 'should define reader', :name, -> { expected }
+        end
+
         describe '#notes' do
           include_contract 'should define attribute',
             :notes,
             default: ''
-        end
-
-        describe '#open_event?' do
-          include_examples 'should define predicate', :open_event?, false
         end
 
         describe '#type' do
@@ -58,6 +64,8 @@ module Spec::Support::Contracts
           include_contract 'should validate the presence of',
             :role,
             message: 'must exist'
+
+          include_contract 'should validate the presence of', :event_date
 
           include_contract 'should validate the format of',
             :slug,

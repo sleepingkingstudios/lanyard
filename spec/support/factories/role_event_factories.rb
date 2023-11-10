@@ -6,6 +6,8 @@ FactoryBot.define do
       sequence(:event_index) { |index| index }
     end
 
+    event_date { Time.current.to_date }
+
     slug { "event-#{event_index}" }
 
     trait(:with_role) do

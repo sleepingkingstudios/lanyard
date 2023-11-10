@@ -3,10 +3,11 @@
 class CreateRoleEvents < ActiveRecord::Migration[7.0]
   def change
     create_table :role_events, id: :uuid do |t|
-      t.string :type,  null: false, default: ''
-      t.string :slug,  null: false, default: ''
-      t.jsonb  :data,  null: false, default: {}
-      t.text   :notes, null: false, default: ''
+      t.string :type,       null: false, default: ''
+      t.string :slug,       null: false, default: ''
+      t.date   :event_date, null: false
+      t.jsonb  :data,       null: false, default: {}
+      t.text   :notes,      null: false, default: ''
 
       t.timestamps
     end
