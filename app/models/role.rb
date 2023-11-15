@@ -83,7 +83,7 @@ class Role < ApplicationRecord # rubocop:disable Metrics/ClassLength
     presence:  true
   validates :slug,
     format:     {
-      message: I18n.t('errors.messages.kebab_case'),
+      message: ->(*) { I18n.t('errors.messages.kebab_case') },
       with:    /\A[a-z0-9]+(-[a-z0-9]+)*\z/
     },
     presence:   true,

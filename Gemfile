@@ -50,10 +50,10 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.0'
   gem 'rspec-sleeping_king_studios', '~> 2.7'
 
-  gem 'rubocop', '~> 1.56'
-  gem 'rubocop-rails', '~> 2.20' # https://docs.rubocop.org/rubocop-rails/
+  gem 'rubocop', '~> 1.57', '>= 1.57.2'
+  gem 'rubocop-rails', '~> 2.22', '>= 2.22.1' # https://docs.rubocop.org/rubocop-rails/
   gem 'rubocop-rake', '~> 0.6'
-  gem 'rubocop-rspec', '~> 2.23' # https://docs.rubocop.org/rubocop-rspec/
+  gem 'rubocop-rspec', '~> 2.25' # https://docs.rubocop.org/rubocop-rspec/
 
   gem 'simplecov', '~> 0.22'
 end

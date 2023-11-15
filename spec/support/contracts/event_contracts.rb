@@ -113,7 +113,9 @@ module Spec::Support::Contracts
           unless options[:abstract]
             include_contract 'should validate the uniqueness of',
               :slug,
-              attributes:   -> { FactoryBot.attributes_for(:event, :with_role) },
+              attributes:   lambda {
+                FactoryBot.attributes_for(:event, :with_role)
+              },
               factory_name: :event
           end
         end
