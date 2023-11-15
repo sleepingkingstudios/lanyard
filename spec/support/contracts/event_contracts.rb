@@ -10,13 +10,25 @@ module Spec::Support::Contracts
     module ShouldBeARoleEvent
       extend RSpec::SleepingKingStudios::Contract
 
-      contract do |type:|
+      contract do |type:, **options|
         include Librum::Core::RSpec::Contracts::ModelContracts
         include Librum::Core::RSpec::Contracts::Models::DataPropertiesContracts
 
         shared_context 'with a role' do
           let(:role)       { FactoryBot.create(:role, :with_cycle) }
           let(:attributes) { super().merge(role: role) }
+        end
+
+        describe '.abstract_event?' do
+          let(:expected) { options[:abstract] || false }
+
+          it 'should define the class predicate' do
+            expect(described_class)
+              .to respond_to(:abstract_event?)
+              .with(0).arguments
+          end
+
+          it { expect(described_class.abstract_event?).to be expected }
         end
 
         include_contract 'should be a model'
@@ -57,8 +69,17 @@ module Spec::Support::Contracts
         end
 
         describe '#valid?' do
-          wrap_context 'with a role' do
-            it { expect(subject.valid?).to be true }
+          if options[:abstract]
+            it 'should validate the event type' do
+              expect(subject)
+                .to have_errors
+                .on(:type)
+                .with_message('is an abstract event')
+            end
+          else
+            wrap_context 'with a role' do
+              it { expect(subject.valid?).to be true }
+            end
           end
 
           include_contract 'should validate the presence of',
@@ -89,10 +110,12 @@ module Spec::Support::Contracts
             :slug,
             type: String
 
-          include_contract 'should validate the uniqueness of',
-            :slug,
-            attributes:   -> { FactoryBot.attributes_for(:event, :with_role) },
-            factory_name: :event
+          unless options[:abstract]
+            include_contract 'should validate the uniqueness of',
+              :slug,
+              attributes:   -> { FactoryBot.attributes_for(:event, :with_role) },
+              factory_name: :event
+          end
         end
       end
     end
@@ -104,7 +127,9 @@ module Spec::Support::Contracts
       contract do |type:, **options|
         include Spec::Support::Contracts::EventContracts
 
-        include_contract 'should be a role event', type: type
+        include_contract 'should be a role event',
+          abstract: options[:abstract],
+          type:     type
 
         describe '#status' do
           let(:expected_status) { options.fetch(:status) }

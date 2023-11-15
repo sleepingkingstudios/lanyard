@@ -33,3 +33,8 @@ en:
   errors:
     messages:
       kebab_case: 'must be in kebab-case'
+  lanyard:
+    errors:
+      models:
+        role_events:
+          is_abstract: 'is an abstract event'

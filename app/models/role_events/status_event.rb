@@ -5,6 +5,12 @@ class RoleEvents::StatusEvent < RoleEvent
   # Exception raised when calling an abstract method.
   class AbstractEventError < StandardError; end
 
+  class << self
+    def abstract_event?
+      name == 'RoleEvents::StatusEvent'
+    end
+  end
+
   # @return [String] the status of the role after applying the event.
   #
   # @raise [AbstractEventError] if the status is not defined.

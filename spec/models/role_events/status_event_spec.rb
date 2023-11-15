@@ -26,7 +26,9 @@ RSpec.describe RoleEvents::StatusEvent, type: :model do
       -> { be < StandardError }
   end
 
-  include_contract 'should be a status event', type: 'RoleEvents::StatusEvent'
+  include_contract 'should be a status event',
+    abstract: true,
+    type:     'RoleEvents::StatusEvent'
 
   describe '#status' do
     let(:error_message) do
