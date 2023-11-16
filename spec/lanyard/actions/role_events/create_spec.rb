@@ -61,11 +61,27 @@ RSpec.describe Lanyard::Actions::RoleEvents::Create, type: :action do
           )
         )
       end
+      let(:expected_attributes) do
+        valid_attributes.merge({
+          'event_date' => Date.new(1982, 7, 9),
+          'slug'       => '1982-07-09-applied'
+        })
+      end
 
       it 'should return a failing result' do
         expect(call_action)
           .to be_a_failing_result
           .with_error(expected_error)
+      end
+
+      it 'should return the invalid role event', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+        value = call_action.value
+
+        expect(value).to deep_match({
+          'event' => be_a(RoleEvents::AppliedEvent),
+          'role'  => role
+        })
+        expect(value['event']).to have_attributes(expected_attributes)
       end
 
       it 'should not create the event' do

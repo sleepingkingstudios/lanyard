@@ -27,9 +27,16 @@ module Lanyard::Actions::RoleEvents
     end
 
     def update_role(role:, role_event:)
-      step { role_event.validate_status_transition.call(role: role) }
+      result = role_event.validate_status_transition.call(role: role)
 
-      role_event.update_status(repository: repository).call(role: role)
+      if result.success?
+        return role_event.update_status(repository: repository).call(role: role)
+      end
+
+      Cuprum::Rails::Result.new(
+        **result.properties,
+        value: { 'event' => role_event, 'role' => role }
+      )
     end
   end
 end

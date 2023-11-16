@@ -9,7 +9,11 @@ Rails.application.routes.draw do
 
   resources :cycles
 
-  resources :roles
+  resources :roles do
+    resources :events,
+      controller: 'role_events',
+      only:       %i[index new create show edit update]
+  end
 
   root to: 'roles#index'
 
