@@ -35,11 +35,12 @@ module Lanyard::View::Components::Cycles
 
     # @param data [Array<Cycle>] the table data to render.
     # @param resource [Cuprum::Rails::Resource] the controller resource.
-    def initialize(data:, resource:)
+    def initialize(data:, resource:, **rest)
       super(
         columns:  COLUMNS,
         data:     data,
-        resource: resource
+        resource: resource,
+        **rest
       )
     end
   end

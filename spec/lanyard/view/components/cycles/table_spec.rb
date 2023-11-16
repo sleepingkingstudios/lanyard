@@ -30,6 +30,7 @@ RSpec.describe Lanyard::View::Components::Cycles::Table, type: :component do
         .to be_constructible
         .with(0).arguments
         .and_keywords(:data, :resource)
+        .and_any_keywords
     end
   end
 

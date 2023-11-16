@@ -67,11 +67,12 @@ module Lanyard::View::Components::Roles
 
     # @param data [Array<Role>] the table data to render.
     # @param resource [Cuprum::Rails::Resource] the controller resource.
-    def initialize(data:, resource:)
+    def initialize(data:, resource:, **rest)
       super(
         columns:  COLUMNS,
         data:     data,
-        resource: resource
+        resource: resource,
+        **rest
       )
     end
 
