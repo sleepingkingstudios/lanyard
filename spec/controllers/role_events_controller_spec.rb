@@ -121,6 +121,18 @@ RSpec.describe RoleEventsController, type: :controller do
   describe '.resource' do
     subject(:resource) { described_class.resource }
 
+    let(:expected_actions) do
+      Set.new(
+        %w[
+          index
+          new
+          create
+          show
+          edit
+          update
+        ]
+      )
+    end
     let(:permitted_attributes) do
       %w[
         data
@@ -134,6 +146,8 @@ RSpec.describe RoleEventsController, type: :controller do
 
     it { expect(resource).to be_a Librum::Core::Resources::ViewResource }
 
+    it { expect(resource.actions).to be == expected_actions }
+
     it { expect(resource.default_order).to be == :slug }
 
     it { expect(resource.parent).to be RolesController.resource }
@@ -143,6 +157,11 @@ RSpec.describe RoleEventsController, type: :controller do
     it { expect(resource.resource_class).to be == RoleEvent }
 
     it { expect(resource.resource_name).to be == 'events' }
+
+    it 'should define the table component' do
+      expect(resource.table_component)
+        .to be Lanyard::View::RoleEvents::Table
+    end
   end
 
   describe '.responders' do

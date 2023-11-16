@@ -14,4 +14,6 @@ FactoryBot.define do
       role { FactoryBot.create(:role, :with_cycle) }
     end
   end
+
+  factory :applied_event, parent: :event, class: 'RoleEvents::AppliedEvent'
 end

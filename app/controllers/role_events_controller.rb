@@ -49,8 +49,11 @@ class RoleEventsController < ViewController
   end
 
   def self.resource # rubocop:disable Metrics/MethodLength
+    components = Lanyard::View::RoleEvents
+
     @resource ||=
       Librum::Core::Resources::ViewResource.new(
+        actions:              %w[index new create show edit update],
         default_order:        :slug,
         name:                 'events',
         parent:               RolesController.resource,
@@ -62,7 +65,8 @@ class RoleEventsController < ViewController
           slug
           type
         ],
-        resource_class:       RoleEvent
+        resource_class:       RoleEvent,
+        table_component:      components::Table
       )
   end
 
