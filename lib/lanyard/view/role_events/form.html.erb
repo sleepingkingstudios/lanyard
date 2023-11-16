@@ -1,0 +1,11 @@
+<%= render_form do %>
+  <%= render_role_input %>
+
+  <%= render_event_field %>
+
+  <%= render_form_field('event[event_date]', disabled: action == 'edit') %>
+
+  <%= render_form_field('event[notes]', type: :textarea) %>
+
+  <%= render_form_actions %>
+<% end %>

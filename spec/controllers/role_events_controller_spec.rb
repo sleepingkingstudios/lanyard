@@ -158,6 +158,11 @@ RSpec.describe RoleEventsController, type: :controller do
 
     it { expect(resource.resource_name).to be == 'events' }
 
+    it 'should define the form component' do
+      expect(resource.form_component)
+        .to be Lanyard::View::RoleEvents::Form
+    end
+
     it 'should define the table component' do
       expect(resource.table_component)
         .to be Lanyard::View::RoleEvents::Table

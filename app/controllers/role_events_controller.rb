@@ -66,6 +66,7 @@ class RoleEventsController < ViewController
           type
         ],
         resource_class:       RoleEvent,
+        form_component:       components::Form,
         table_component:      components::Table
       )
   end
