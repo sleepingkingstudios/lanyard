@@ -3,17 +3,23 @@
 FactoryBot.define do
   factory :event, class: 'RoleEvent' do
     transient do
-      sequence(:event_index) { |index| index }
+      event_name { 'event' }
     end
 
-    event_date { Time.current.to_date }
+    role        { nil }
+    event_date  { Time.current.to_date }
+    event_index { role&.persisted? ? RoleEvent.where(role: role).count : nil }
 
-    slug { "event-#{event_index}" }
+    slug { "#{event_date.iso8601}-#{event_index}-#{event_name}" }
 
     trait(:with_role) do
       role { FactoryBot.create(:role, :with_cycle) }
     end
   end
 
-  factory :applied_event, parent: :event, class: 'RoleEvents::AppliedEvent'
+  factory :applied_event, parent: :event, class: 'RoleEvents::AppliedEvent' do
+    transient do
+      event_name { 'applied' }
+    end
+  end
 end

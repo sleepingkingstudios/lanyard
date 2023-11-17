@@ -31,8 +31,9 @@ RSpec.describe Lanyard::Actions::RoleEvents::Create, type: :action do
   end
   let(:expected_attributes) do
     {
-      'event_date' => Date.new(1982, 7, 9),
-      'slug'       => '1982-07-09-event'
+      'event_date'  => Date.new(1982, 7, 9),
+      'event_index' => 0,
+      'slug'        => '1982-07-09-0-event'
     }
   end
 
@@ -40,7 +41,7 @@ RSpec.describe Lanyard::Actions::RoleEvents::Create, type: :action do
     invalid_attributes:             -> { invalid_attributes },
     valid_attributes:               -> { valid_attributes },
     expected_attributes_on_failure: lambda { |hsh|
-      hsh.merge({ 'slug' => 'event' })
+      hsh.merge({ 'event_index' => 0, 'slug' => '0-event' })
     },
     expected_attributes_on_success: ->(hsh) { hsh.merge(expected_attributes) } \
   do
@@ -63,8 +64,9 @@ RSpec.describe Lanyard::Actions::RoleEvents::Create, type: :action do
       end
       let(:expected_attributes) do
         valid_attributes.merge({
-          'event_date' => Date.new(1982, 7, 9),
-          'slug'       => '1982-07-09-applied'
+          'event_date'  => Date.new(1982, 7, 9),
+          'event_index' => 0,
+          'slug'        => '1982-07-09-0-applied'
         })
       end
 

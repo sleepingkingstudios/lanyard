@@ -58,11 +58,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_31_183529) do
     t.string "type", default: "", null: false
     t.string "slug", default: "", null: false
     t.date "event_date", null: false
+    t.integer "event_index", null: false
     t.jsonb "data", default: {}, null: false
     t.text "notes", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "role_id"
+    t.index ["role_id", "event_index"], name: "index_role_events_on_role_id_and_event_index", unique: true
     t.index ["role_id", "slug"], name: "index_role_events_on_role_id_and_slug", unique: true
     t.index ["slug"], name: "index_role_events_on_slug", unique: true
   end

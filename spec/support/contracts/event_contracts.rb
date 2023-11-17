@@ -48,6 +48,10 @@ module Spec::Support::Contracts
           include_contract 'should define attribute', :event_date
         end
 
+        describe '#event_index' do
+          include_contract 'should define attribute', :event_index
+        end
+
         describe '#name' do
           let(:expected) do
             next 'Event' if event.type.blank?
@@ -88,6 +92,14 @@ module Spec::Support::Contracts
 
           include_contract 'should validate the presence of', :event_date
 
+          include_contract 'should validate the numericality of',
+            :event_index,
+            allow_nil:                true,
+            greater_than_or_equal_to: 0,
+            only_integer:             true
+
+          include_contract 'should validate the presence of', :event_index
+
           include_contract 'should validate the format of',
             :slug,
             message:     'must be in kebab-case',
@@ -117,6 +129,138 @@ module Spec::Support::Contracts
                 FactoryBot.attributes_for(:event, :with_role)
               },
               factory_name: :event
+
+            context 'when another event exists with the same date' do
+              include_context 'with a role'
+
+              let(:attributes) do
+                hsh = super()
+
+                hsh.merge(
+                  event_index: (hsh.fetch(:event_index, 0) + 1),
+                  role:        role
+                )
+              end
+              let(:other_event) do
+                FactoryBot.build(
+                  :event,
+                  role:        role,
+                  event_date:  attributes[:event_date],
+                  event_index: (attributes[:event_index] - 1)
+                )
+              end
+
+              before(:example) { other_event.save! }
+
+              it { expect(event.valid?).to be true }
+            end
+
+            context 'when another event exists with a later date' do
+              include_context 'with a role'
+
+              let(:attributes) do
+                hsh = super()
+
+                hsh.merge(
+                  event_index: (hsh.fetch(:event_index, 0) + 1),
+                  role:        role
+                )
+              end
+              let(:other_event) do
+                FactoryBot.build(
+                  :event,
+                  role:        role,
+                  event_date:  attributes[:event_date] + 1.day,
+                  event_index: (attributes[:event_index] - 1)
+                )
+              end
+              let(:expected_message) do
+                'is before another event'
+              end
+
+              before(:example) { other_event.save! }
+
+              it 'should have an error' do
+                expect(event)
+                  .to have_errors
+                  .on(:event_date)
+                  .with_message(expected_message)
+              end
+            end
+
+            context 'when the event is persisted' do
+              include_context 'with a role'
+
+              before(:example) { event.save! }
+
+              context 'when another event exists with a later date' do
+                let(:attributes) do
+                  hsh = super()
+
+                  hsh.merge(
+                    event_index: (hsh.fetch(:event_index, 0) + 1),
+                    role:        role
+                  )
+                end
+                let(:other_event) do
+                  FactoryBot.build(
+                    :event,
+                    role:        role,
+                    event_date:  attributes[:event_date] + 1.day,
+                    event_index: (attributes[:event_index] - 1)
+                  )
+                end
+
+                before(:example) { other_event.save! }
+
+                it { expect(event.valid?).to be true }
+              end
+
+              context 'when the event_date is changed' do
+                let(:expected_message) { 'must not change after creation' }
+
+                before(:example) do
+                  event.event_date = attributes[:event_date] + 1.day
+                end
+
+                it 'should have an error' do
+                  expect(event)
+                    .to have_errors
+                    .on(:event_date)
+                    .with_message(expected_message)
+                end
+              end
+
+              context 'when the event_index is changed' do
+                let(:expected_message) { 'must not change after creation' }
+
+                before(:example) do
+                  event.event_index = attributes[:event_index] + 1
+                end
+
+                it 'should have an error' do
+                  expect(event)
+                    .to have_errors
+                    .on(:event_index)
+                    .with_message(expected_message)
+                end
+              end
+
+              context 'when the type is changed' do
+                let(:expected_message) { 'must not change after creation' }
+
+                before(:example) do
+                  event.type = 'CustomEvent'
+                end
+
+                it 'should have an error' do
+                  expect(event)
+                    .to have_errors
+                    .on(:event_type)
+                    .with_message(expected_message)
+                end
+              end
+            end
           end
         end
       end

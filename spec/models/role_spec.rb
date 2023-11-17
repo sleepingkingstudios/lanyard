@@ -250,7 +250,14 @@ RSpec.describe Role, type: :model do
 
   include_contract 'should belong to', :cycle
 
-  include_contract 'should have many', :events do
+  include_contract 'should have many',
+    :events,
+    association: lambda {
+      Array.new(3) do |index|
+        FactoryBot.build(:event, role: role, event_index: index)
+      end
+    } \
+  do
     include_context 'with a cycle'
   end
 

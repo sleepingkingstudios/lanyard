@@ -4,6 +4,7 @@ module Lanyard::Actions::RoleEvents
   # Create action for RoleEvent controllers.
   class Create < Librum::Core::Actions::Create
     prepend Lanyard::Actions::RoleEvents::Concerns::GenerateSlug
+    prepend Lanyard::Actions::RoleEvents::Concerns::GenerateIndex
 
     private
 

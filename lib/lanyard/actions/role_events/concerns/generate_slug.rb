@@ -16,9 +16,7 @@ module Lanyard::Actions::RoleEvents::Concerns
     def generate_slug(attributes)
       return success(attributes['slug']) if attributes['slug'].present?
 
-      Lanyard::Models::RoleEvents::GenerateSlug
-        .new(repository: repository)
-        .call(attributes: attributes)
+      Lanyard::Models::RoleEvents::GenerateSlug.new.call(attributes: attributes)
     end
 
     def update_entity(attributes:)
