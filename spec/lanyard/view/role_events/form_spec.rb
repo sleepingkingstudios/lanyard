@@ -72,6 +72,7 @@ RSpec.describe Lanyard::View::RoleEvents::Form, type: :component do
             role:       role,
             slug:       '1996-09-29-applied',
             event_date: Date.new(1996, 6, 29),
+            summary:    'Blew dust from cartridge',
             notes:      'Something something, the very best.'
           )
         )
@@ -104,6 +105,14 @@ RSpec.describe Lanyard::View::RoleEvents::Form, type: :component do
 
               <div class="control">
                 <input id="event_event_date" disabled name="event[event_date]" class="input" type="text" value="1996-06-29">
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="event_summary" class="label">Summary</label>
+
+              <div class="control">
+                <input id="event_summary" name="event[summary]" class="input" placeholder="Applied directly for the role" type="text" value="Blew dust from cartridge">
               </div>
             </div>
 
@@ -166,6 +175,14 @@ RSpec.describe Lanyard::View::RoleEvents::Form, type: :component do
 
               <div class="control">
                 <input id="event_event_date" name="event[event_date]" class="input" type="text">
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="event_summary" class="label">Summary</label>
+
+              <div class="control">
+                <input id="event_summary" name="event[summary]" class="input" placeholder="Generic role event" type="text" value="">
               </div>
             </div>
 

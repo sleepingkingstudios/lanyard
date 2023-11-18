@@ -37,11 +37,21 @@ module Spec::Support::Contracts
           :role,
           association: -> { FactoryBot.create(:role, :with_cycle) }
 
+        include_contract 'should define data property',
+          :summary,
+          default: options[:summary]
+
         describe '#data' do
           include_contract 'should define attribute',
             :data,
             default: {},
             value:   { 'custom_key' => 'custom value' }
+        end
+
+        describe '#default_summary' do
+          include_examples 'should define reader',
+            :default_summary,
+            options[:summary]
         end
 
         describe '#event_date' do
@@ -275,6 +285,7 @@ module Spec::Support::Contracts
 
         include_contract 'should be a role event',
           abstract: options[:abstract],
+          summary:  options[:summary],
           type:     type
 
         describe '#status' do

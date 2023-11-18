@@ -35,6 +35,7 @@ RSpec.describe RoleEvents::AppliedEvent, type: :model do
 
   include_contract 'should be a status event',
     status:         described_class::STATUS,
+    summary:        'Applied directly for the role',
     type:           'RoleEvents::AppliedEvent',
     valid_statuses: described_class::VALID_STATUSES
 end

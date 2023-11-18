@@ -261,6 +261,8 @@ RSpec.describe Role, type: :model do
     include_context 'with a cycle'
   end
 
+  include_contract 'should define data properties'
+
   include_contract 'should define data property', :benefits, predicate: true
 
   include_contract 'should define data property', :benefits_details

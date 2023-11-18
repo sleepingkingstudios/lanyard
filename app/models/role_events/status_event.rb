@@ -6,9 +6,15 @@ class RoleEvents::StatusEvent < RoleEvent
   class AbstractEventError < StandardError; end
 
   class << self
+    # (see RoleEvent.abstract_event?)
     def abstract_event?
       name == 'RoleEvents::StatusEvent'
     end
+  end
+
+  # (see RoleEvent#default_summary)
+  def default_summary
+    'Generic status event'
   end
 
   # @return [String] the status of the role after applying the event.

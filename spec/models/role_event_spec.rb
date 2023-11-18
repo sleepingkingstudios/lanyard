@@ -21,7 +21,9 @@ RSpec.describe RoleEvent, type: :model do
     }
   end
 
-  include_contract 'should be a role event', type: ''
+  include_contract 'should be a role event',
+    summary: 'Generic role event',
+    type:    ''
 
   describe '.event_types' do
     let(:expected) do

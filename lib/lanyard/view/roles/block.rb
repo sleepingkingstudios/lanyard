@@ -124,6 +124,7 @@ module Lanyard::View::Roles
     private_constant :SOURCE_FIELDS
 
     # @param data [Role] the role to display.
+    # @param routes [Cuprum::Rails::Routes] the routes for the resource.
     def initialize(data:, routes:, **)
       super()
 
@@ -134,6 +135,7 @@ module Lanyard::View::Roles
     # @return [Role] the role to display.
     attr_reader :data
 
+    # @return [Cuprum::Rails::Routes] the routes for the resource.
     attr_reader :routes
 
     private

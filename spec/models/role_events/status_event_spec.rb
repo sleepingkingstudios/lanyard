@@ -29,6 +29,7 @@ RSpec.describe RoleEvents::StatusEvent, type: :model do
 
   include_contract 'should be a status event',
     abstract: true,
+    summary:  'Generic status event',
     type:     'RoleEvents::StatusEvent'
 
   describe '#status' do

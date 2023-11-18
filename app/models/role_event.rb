@@ -2,6 +2,8 @@
 
 # Model class representing an event in a role application process.
 class RoleEvent < ApplicationRecord
+  extend Librum::Core::Models::DataProperties
+
   class << self
     # @return [Boolean] true if the event class is abstract, and should not
     #   allow persisting events of this type.
@@ -45,6 +47,9 @@ class RoleEvent < ApplicationRecord
     end
   end
 
+  ### Attributes
+  data_property :summary
+
   ### Associations
   belongs_to :role
 
@@ -71,9 +76,19 @@ class RoleEvent < ApplicationRecord
   validate :event_index_unchanged, on: :update
   validate :event_type_unchanged,  on: :update
 
+  # @return [String] the default summary for the event type.
+  def default_summary
+    'Generic role event'
+  end
+
   # @return [String] a human-readable event type.
   def name
     self.class.name_for(type)
+  end
+
+  # @return [String] a brief text description for the event.
+  def summary
+    data['summary'].presence || default_summary
   end
 
   private

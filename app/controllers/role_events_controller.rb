@@ -64,6 +64,7 @@ class RoleEventsController < ViewController
           notes
           role_id
           slug
+          summary
           type
         ],
         resource_class:       RoleEvent,

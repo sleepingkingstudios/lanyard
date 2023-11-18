@@ -141,6 +141,7 @@ RSpec.describe RoleEventsController, type: :controller do
         notes
         role_id
         slug
+        summary
         type
       ]
     end

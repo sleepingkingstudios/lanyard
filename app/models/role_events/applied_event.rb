@@ -10,6 +10,11 @@ class RoleEvents::AppliedEvent < RoleEvents::StatusEvent
     Role::Statuses::NEW
   ].freeze
 
+  # (see RoleEvent#default_summary)
+  def default_summary
+    'Applied directly for the role'
+  end
+
   # (see RoleEvents::StatusEvent#status)
   def status
     STATUS

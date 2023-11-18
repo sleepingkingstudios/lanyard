@@ -50,6 +50,16 @@ RSpec.describe Lanyard::View::RoleEvents::Block, type: :component do
               1996-09-28
             </div>
           </div>
+
+          <div class="columns mb-0">
+            <div class="column is-2 has-text-weight-semibold mb-1">
+              Summary
+            </div>
+
+            <div class="column">
+              Generic role event
+            </div>
+          </div>
         </div>
 
         <h3 class="title is-4">Notes</h3>

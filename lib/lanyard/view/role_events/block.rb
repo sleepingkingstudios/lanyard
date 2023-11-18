@@ -9,7 +9,8 @@ module Lanyard::View::RoleEvents
       {
         key:   'event_date',
         value: ->(item) { item.event_date.iso8601 }
-      }.freeze
+      }.freeze,
+      { key: 'summary' }.freeze
     ].freeze
     private_constant :FIELDS
 

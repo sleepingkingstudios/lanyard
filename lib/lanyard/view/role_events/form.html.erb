@@ -5,6 +5,14 @@
 
   <%= render_form_field('event[event_date]', disabled: action == 'edit') %>
 
+  <%=
+    render_form_field(
+      'event[summary]',
+      placeholder: data['event']&.default_summary,
+      value:       data['event']&.data.fetch('summary', '')
+    )
+  %>
+
   <%= render_form_field('event[notes]', type: :textarea) %>
 
   <%= render_form_actions %>
