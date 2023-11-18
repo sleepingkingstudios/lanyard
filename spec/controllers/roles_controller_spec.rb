@@ -100,6 +100,21 @@ RSpec.describe RolesController, type: :controller do
     it { expect(resource.resource_class).to be == Role }
 
     it { expect(resource.resource_name).to be == 'roles' }
+
+    it 'should define the block component' do
+      expect(resource.block_component)
+        .to be Lanyard::View::Roles::Block
+    end
+
+    it 'should define the form component' do
+      expect(resource.form_component)
+        .to be Lanyard::View::Roles::Form
+    end
+
+    it 'should define the table component' do
+      expect(resource.table_component)
+        .to be Lanyard::View::Roles::Table
+    end
   end
 
   describe '.responders' do

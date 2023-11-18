@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Lanyard::View::Components::Roles
+module Lanyard::View::Roles
   # Renders a form for a Role record.
   class Form < Librum::Core::View::Components::Resources::Form
     private

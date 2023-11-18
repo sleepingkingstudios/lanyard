@@ -19,7 +19,7 @@ class RolesController < ViewController
   end
 
   def self.resource # rubocop:disable Metrics/MethodLength
-    components = Lanyard::View::Components::Roles
+    components = Lanyard::View::Roles
 
     @resource ||=
       Librum::Core::Resources::ViewResource.new(

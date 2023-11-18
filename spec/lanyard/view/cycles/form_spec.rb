@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Lanyard::View::Components::Cycles::Form, type: :component do
+RSpec.describe Lanyard::View::Cycles::Form, type: :component do
   subject(:form) { described_class.new(**constructor_options) }
 
   let(:data)   { {} }

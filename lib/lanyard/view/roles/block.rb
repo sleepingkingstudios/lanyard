@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Lanyard::View::Components::Roles
+module Lanyard::View::Roles
   # Renders a single Role record.
   class Block < ViewComponent::Base # rubocop:disable Metrics/ClassLength
     COMPENSATION_FIELDS = [

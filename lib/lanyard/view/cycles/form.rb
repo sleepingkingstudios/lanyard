@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Lanyard::View::Components::Cycles
+module Lanyard::View::Cycles
   # Renders a form for a Cycle record.
   class Form < Librum::Core::View::Components::Resources::Form
     private

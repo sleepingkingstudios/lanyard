@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Lanyard::View::Components::Roles
+module Lanyard::View::Roles
   # Renders a table of Role records.
   class Table < Librum::Core::View::Components::Resources::Table
     COLUMNS = lambda { # rubocop:disable Metrics/BlockLength

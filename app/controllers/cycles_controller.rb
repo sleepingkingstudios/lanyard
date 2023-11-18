@@ -16,7 +16,7 @@ class CyclesController < ViewController
   end
 
   def self.resource # rubocop:disable Metrics/MethodLength
-    components = Lanyard::View::Components::Cycles
+    components = Lanyard::View::Cycles
 
     @resource ||=
       Librum::Core::Resources::ViewResource.new(

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Lanyard::View::Components::Cycles
+module Lanyard::View::Cycles
   # Renders a single Cycle record.
   class Block < ViewComponent::Base
     FIELDS = [

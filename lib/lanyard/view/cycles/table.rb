@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Lanyard::View::Components::Cycles
+module Lanyard::View::Cycles
   # Renders a table of Cycle records.
   class Table < Librum::Core::View::Components::Resources::Table
     COLUMNS = lambda { # rubocop:disable Metrics/BlockLength

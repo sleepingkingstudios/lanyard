@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Lanyard::View::Components::Cycles::Block, type: :component do
+RSpec.describe Lanyard::View::Cycles::Block, type: :component do
   subject(:block) { described_class.new(data: data) }
 
   let(:data) { FactoryBot.build(:cycle, year: '1996', season: 'winter') }

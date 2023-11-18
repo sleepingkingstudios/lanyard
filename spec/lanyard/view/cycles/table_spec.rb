@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Lanyard::View::Components::Cycles::Table, type: :component do
+RSpec.describe Lanyard::View::Cycles::Table, type: :component do
   subject(:table) { described_class.new(**constructor_options) }
 
   shared_context 'with data' do
