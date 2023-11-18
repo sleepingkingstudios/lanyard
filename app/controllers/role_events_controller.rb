@@ -60,12 +60,14 @@ class RoleEventsController < ViewController
         permitted_attributes: %w[
           data
           event_date
+          event_index
           notes
           role_id
           slug
           type
         ],
         resource_class:       RoleEvent,
+        block_component:      components::Block,
         form_component:       components::Form,
         table_component:      components::Table
       )

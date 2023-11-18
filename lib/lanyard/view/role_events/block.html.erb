@@ -1,0 +1,13 @@
+<%=
+  render(
+    Librum::Core::View::Components::DataList.new(data: data, fields: fields)
+  )
+%>
+
+<% if data.notes.present? %>
+<h3 class="title is-4">Notes</h3>
+
+<div class="content">
+  <%= data.notes %>
+</div>
+<% end %>

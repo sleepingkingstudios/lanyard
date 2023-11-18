@@ -137,6 +137,7 @@ RSpec.describe RoleEventsController, type: :controller do
       %w[
         data
         event_date
+        event_index
         notes
         role_id
         slug
@@ -157,6 +158,11 @@ RSpec.describe RoleEventsController, type: :controller do
     it { expect(resource.resource_class).to be == RoleEvent }
 
     it { expect(resource.resource_name).to be == 'events' }
+
+    it 'should define the block component' do
+      expect(resource.block_component)
+        .to be Lanyard::View::RoleEvents::Block
+    end
 
     it 'should define the form component' do
       expect(resource.form_component)
