@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Lanyard::View::Roles::Block, type: :component do
-  subject(:block) { described_class.new(data: data) }
+  subject(:block) { described_class.new(data: data, routes: routes) }
 
   let(:cycle) { FactoryBot.build(:cycle, year: '1996', season: 'winter') }
   let(:attributes) do
@@ -15,13 +15,18 @@ RSpec.describe Lanyard::View::Roles::Block, type: :component do
   let(:data) do
     FactoryBot.build(:role, **attributes)
   end
+  let(:routes) do
+    Cuprum::Rails::Routing::PluralRoutes
+      .new(base_path: '/path/to/roles')
+      .with_wildcards({ 'id' => attributes[:slug] })
+  end
 
   describe '.new' do
     it 'should define the constructor' do
       expect(described_class)
         .to be_constructible
         .with(0).arguments
-        .and_keywords(:data)
+        .and_keywords(:data, :routes)
         .and_any_keywords
     end
   end
@@ -168,6 +173,20 @@ RSpec.describe Lanyard::View::Roles::Block, type: :component do
             </div>
           </div>
         </div>
+
+        <h3 class="title is-4">Events</h3>
+
+        <p class="block">
+          <a class="has-text-link" href="/path/to/roles/indigo-staffing-inc-gym-leader/events" target="_self">
+            <span class="icon-text">
+              <span class="icon">
+                <i class="fas fa-right-long"></i>
+              </span>
+
+              <span>Go to Events</span>
+            </span>
+          </a>
+        </p>
       HTML
     end
 
@@ -363,6 +382,20 @@ RSpec.describe Lanyard::View::Roles::Block, type: :component do
               </div>
             </div>
           </div>
+
+          <h3 class="title is-4">Events</h3>
+
+          <p class="block">
+            <a class="has-text-link" href="/path/to/roles/indigo-staffing-inc-gym-leader/events" target="_self">
+              <span class="icon-text">
+                <span class="icon">
+                  <i class="fas fa-right-long"></i>
+                </span>
+
+                <span>Go to Events</span>
+              </span>
+            </a>
+          </p>
 
           <h3 class="title is-4">Notes</h3>
 

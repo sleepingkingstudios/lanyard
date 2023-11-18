@@ -30,6 +30,20 @@
   )
 %>
 
+<h3 class="title is-4">Events</h3>
+
+<p class="block">
+  <%=
+    render(
+      Librum::Core::View::Components::Link.new(
+        "#{routes.show_path}/events",
+        label: 'Go to Events',
+        icon:  'right-long'
+      )
+    )
+  %>
+</p>
+
 <% if data.notes.present? %>
 <h3 class="title is-4">Notes</h3>
 

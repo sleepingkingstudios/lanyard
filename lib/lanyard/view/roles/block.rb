@@ -124,14 +124,17 @@ module Lanyard::View::Roles
     private_constant :SOURCE_FIELDS
 
     # @param data [Role] the role to display.
-    def initialize(data:, **)
+    def initialize(data:, routes:, **)
       super()
 
-      @data = data
+      @data   = data
+      @routes = routes
     end
 
     # @return [Role] the role to display.
     attr_reader :data
+
+    attr_reader :routes
 
     private
 
