@@ -66,7 +66,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_31_183529) do
     t.uuid "role_id"
     t.index ["role_id", "event_index"], name: "index_role_events_on_role_id_and_event_index", unique: true
     t.index ["role_id", "slug"], name: "index_role_events_on_role_id_and_slug", unique: true
-    t.index ["slug"], name: "index_role_events_on_slug", unique: true
   end
 
   create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

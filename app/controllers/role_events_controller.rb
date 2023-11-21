@@ -87,10 +87,10 @@ class RoleEventsController < ViewController
 
   responder :html, RoleEventsController::Responder
 
-  action :index,  Librum::Core::Actions::Index,         member: false
+  action :index,  Lanyard::Actions::RoleEvents::Index,  member: false
   action :new,    Cuprum::Rails::Actions::New,          member: false
   action :create, Lanyard::Actions::RoleEvents::Create, member: false
-  action :show,   Librum::Core::Actions::Show,          member: true
-  action :edit,   Librum::Core::Actions::Show,          member: true
+  action :show,   Lanyard::Actions::RoleEvents::Show,   member: true
+  action :edit,   Lanyard::Actions::RoleEvents::Show,   member: true
   action :update, Lanyard::Actions::RoleEvents::Update, member: true
 end

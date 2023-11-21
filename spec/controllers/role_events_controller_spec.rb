@@ -191,17 +191,17 @@ RSpec.describe RoleEventsController, type: :controller do
 
   include_contract 'should define action',
     :edit,
-    Librum::Core::Actions::Show,
+    Lanyard::Actions::RoleEvents::Show,
     member: true
 
   include_contract 'should define action',
     :index,
-    Librum::Core::Actions::Index,
+    Lanyard::Actions::RoleEvents::Index,
     member: false
 
   include_contract 'should define action',
     :show,
-    Librum::Core::Actions::Show,
+    Lanyard::Actions::RoleEvents::Show,
     member: true
 
   include_contract 'should define action',

@@ -15,8 +15,6 @@ class CreateRoleEvents < ActiveRecord::Migration[7.0]
 
     add_reference :role_events, :role, index: false, type: :uuid
 
-    add_index :role_events, :slug, unique: true
-
     add_index :role_events, %i[role_id event_index], unique: true
 
     add_index :role_events, %i[role_id slug], unique: true

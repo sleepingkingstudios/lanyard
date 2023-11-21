@@ -45,5 +45,4 @@ end
 #
 #  index_role_events_on_role_id_and_event_index  (role_id,event_index) UNIQUE
 #  index_role_events_on_role_id_and_slug         (role_id,slug) UNIQUE
-#  index_role_events_on_slug                     (slug) UNIQUE
 #

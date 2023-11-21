@@ -133,28 +133,65 @@ module Spec::Support::Contracts
             type: String
 
           unless options[:abstract]
-            include_contract 'should validate the uniqueness of',
-              :slug,
-              attributes:   lambda {
-                FactoryBot.attributes_for(:event, :with_role)
-              },
-              factory_name: :event
+            context 'when another event exists with the same slug' do
+              include_context 'with a role'
+
+              let(:other_event) do
+                FactoryBot.build(:event, :with_role, slug: attributes[:slug])
+              end
+
+              before(:example) { other_event.save! }
+
+              it { expect(event.valid?).to be true }
+
+              context 'when the other event has the same role' do
+                let(:other_event) do
+                  FactoryBot.build(:event, role: role, slug: attributes[:slug])
+                end
+
+                it 'should have an error' do
+                  expect(event)
+                    .to have_errors
+                    .on(:slug)
+                    .with_message('has already been taken')
+                end
+              end
+            end
 
             context 'when another event exists with the same date' do
               include_context 'with a role'
 
               let(:attributes) do
-                hsh = super()
+                hsh   = super()
+                date  = hsh[:event_date]&.iso8601
+                index = hsh.fetch(:event_index, 0) + 1
+                name  =
+                  RoleEvent
+                  .name_for(described_class.name)
+                  .underscore
+                  .tr('_', '-')
+                slug  = "#{date}-#{index}-#{name}"
 
                 hsh.merge(
-                  event_index: (hsh.fetch(:event_index, 0) + 1),
-                  role:        role
+                  event_index: index,
+                  role:        role,
+                  slug:        slug
                 )
               end
               let(:other_event) do
+                date  = attributes[:event_date]&.iso8601
+                index = attributes[:event_index] - 1
+                name  =
+                  RoleEvent
+                  .name_for(described_class.name)
+                  .underscore
+                  .tr('_', '-')
+                slug  = "#{date}-#{index}-#{name}"
+
                 FactoryBot.build(
                   :event,
                   role:        role,
+                  slug:        slug,
                   event_date:  attributes[:event_date],
                   event_index: (attributes[:event_index] - 1)
                 )

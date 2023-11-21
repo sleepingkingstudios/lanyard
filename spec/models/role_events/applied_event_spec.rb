@@ -11,7 +11,7 @@ RSpec.describe RoleEvents::AppliedEvent, type: :model do
 
   let(:attributes) do
     {
-      slug:        '1982-07-09-applied',
+      slug:        '1982-07-09-0-applied',
       event_date:  Date.new(1982, 7, 9),
       event_index: 0,
       data:        {},

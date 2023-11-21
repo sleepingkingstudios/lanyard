@@ -69,7 +69,7 @@ class RoleEvent < ApplicationRecord
       with:    /\A[a-z0-9]+(-[a-z0-9]+)*\z/
     },
     presence:   true,
-    uniqueness: true
+    uniqueness: { scope: :role_id }
   validate :event_class_is_not_abstract
   validate :event_is_last_event,   on: :create
   validate :event_date_unchanged,  on: :update
@@ -166,5 +166,4 @@ end
 #
 #  index_role_events_on_role_id_and_event_index  (role_id,event_index) UNIQUE
 #  index_role_events_on_role_id_and_slug         (role_id,slug) UNIQUE
-#  index_role_events_on_slug                     (slug) UNIQUE
 #
