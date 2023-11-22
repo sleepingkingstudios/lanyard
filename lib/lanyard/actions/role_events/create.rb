@@ -12,7 +12,7 @@ module Lanyard::Actions::RoleEvents
       transaction do
         role_event = step { super }
 
-        next role_event unless role_event.is_a?(RoleEvents::StatusEvent)
+        next role_event unless role_event.respond_to?(:update_status)
 
         role = step { find_role(role_event: role_event) }
         role = step { update_role(role: role, role_event: role_event) }

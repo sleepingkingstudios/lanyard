@@ -358,7 +358,7 @@ module Spec::Support::Contracts
 
         describe '#update_status' do
           let(:repository) { Cuprum::Rails::Repository.new }
-          let(:command) { subject.update_status(repository: repository) }
+          let(:command)    { subject.update_status(repository: repository) }
           let(:command_class) do
             Lanyard::Models::Roles::UpdateStatus
           end

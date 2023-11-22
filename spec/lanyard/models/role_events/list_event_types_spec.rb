@@ -19,6 +19,7 @@ RSpec.describe Lanyard::Models::RoleEvents::ListEventTypes do
         'Offered'   => RoleEvents::OfferedEvent,
         'Pitched'   => RoleEvents::PitchedEvent,
         'Rejected'  => RoleEvents::RejectedEvent,
+        'Reopened'  => RoleEvents::ReopenedEvent,
         'Withdrawn' => RoleEvents::WithdrawnEvent
       }
     end
@@ -121,7 +122,8 @@ RSpec.describe Lanyard::Models::RoleEvents::ListEventTypes do
         [
           ['Event',     ''],
           ['Closed',    RoleEvents::ClosedEvent.name],
-          ['Contacted', RoleEvents::ContactedEvent.name]
+          ['Contacted', RoleEvents::ContactedEvent.name],
+          ['Reopened',  RoleEvents::ReopenedEvent.name]
         ]
       end
 

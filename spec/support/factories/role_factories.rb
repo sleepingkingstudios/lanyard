@@ -13,6 +13,38 @@ FactoryBot.define do
       cycle { FactoryBot.create(:cycle) }
     end
 
+    trait(:with_events) do
+      after(:create) do |role|
+        create(
+          :contacted_event,
+          role:        role,
+          event_date:  (role.applied_at || Time.current).to_date - 1.day,
+          event_index: 0
+        )
+
+        create( # rubocop:disable Style/MultilineIfModifier
+          :applied_event,
+          role:        role,
+          event_date:  role.applied_at.to_date,
+          event_index: 1
+        ) if role.applied_at.present?
+
+        create( # rubocop:disable Style/MultilineIfModifier
+          :interview_event,
+          role:        role,
+          event_date:  role.interviewing_at.to_date,
+          event_index: 2
+        ) if role.interviewing_at.present?
+
+        create( # rubocop:disable Style/MultilineIfModifier
+          :offered_event,
+          role:        role,
+          event_date:  role.offered_at.to_date,
+          event_index: 3
+        ) if role.offered_at.present?
+      end
+    end
+
     trait(:new) do
       status { Role::Statuses::NEW }
     end
