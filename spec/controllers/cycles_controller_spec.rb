@@ -73,17 +73,17 @@ RSpec.describe CyclesController, type: :controller do
 
     it 'should define the block component' do
       expect(resource.block_component)
-        .to be Lanyard::View::Components::Cycles::Block
+        .to be Lanyard::View::Cycles::Block
     end
 
     it 'should define the form component' do
       expect(resource.form_component)
-        .to be Lanyard::View::Components::Cycles::Form
+        .to be Lanyard::View::Cycles::Form
     end
 
     it 'should define the table component' do
       expect(resource.table_component)
-        .to be Lanyard::View::Components::Cycles::Table
+        .to be Lanyard::View::Cycles::Table
     end
   end
 

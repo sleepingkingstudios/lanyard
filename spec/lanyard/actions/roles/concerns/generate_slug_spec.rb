@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'support/action'
+
 RSpec.describe Lanyard::Actions::Roles::Concerns::GenerateSlug do
   subject(:action) { described_class.new(action_name, repository: repository) }
 
@@ -9,33 +11,8 @@ RSpec.describe Lanyard::Actions::Roles::Concerns::GenerateSlug do
   let(:described_class) { Spec::Action }
   let(:repository)      { Cuprum::Rails::Repository.new }
 
-  example_class 'Spec::Action', Cuprum::Command do |klass|
+  example_class 'Spec::Action', Spec::Support::Action do |klass|
     klass.prepend(Lanyard::Actions::Roles::Concerns::GenerateSlug) # rubocop:disable RSpec/DescribedClass
-
-    klass.define_method(:initialize) do |action, repository:|
-      @action     = action
-      @repository = repository
-    end
-
-    klass.attr_reader :action
-
-    klass.attr_reader :repository
-
-    klass.define_method(:create_entity) do |attributes:|
-      attributes
-    end
-
-    klass.define_method(:update_entity) do |attributes:|
-      attributes
-    end
-
-    klass.define_method(:process) do |attributes:|
-      if action == :create
-        create_entity(attributes: attributes)
-      else
-        update_entity(attributes: attributes)
-      end
-    end
   end
 
   describe '#call' do

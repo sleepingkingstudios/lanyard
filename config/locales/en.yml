@@ -33,3 +33,10 @@ en:
   errors:
     messages:
       kebab_case: 'must be in kebab-case'
+  lanyard:
+    errors:
+      models:
+        role_events:
+          is_abstract: 'is an abstract event'
+          is_not_last_event: 'is before another event'
+          is_static: 'must not change after creation'

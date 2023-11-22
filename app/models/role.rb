@@ -3,7 +3,7 @@
 require 'sleeping_king_studios/tools/toolbox/constant_map'
 
 # Model class representing an application process for a role.
-class Role < ApplicationRecord
+class Role < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend Librum::Core::Models::DataProperties
 
   # Enumerates types of compensation for a role.
@@ -41,9 +41,11 @@ class Role < ApplicationRecord
 
   # Enumerates role statuses.
   Statuses = SleepingKingStudios::Tools::Toolbox::ConstantMap.new(
-    CLOSED: 'closed',
-    NEW:    'new',
-    OPEN:   'open'
+    NEW:          'new',
+    APPLIED:      'applied',
+    INTERVIEWING: 'interviewing',
+    OFFERED:      'offered',
+    CLOSED:       'closed'
   ).freeze
 
   ### Attributes
@@ -58,6 +60,7 @@ class Role < ApplicationRecord
 
   ### Associations
   belongs_to :cycle
+  has_many   :events, class_name: 'RoleEvent', dependent: :nullify
 
   ### Validations
   validates :compensation_type,
@@ -80,7 +83,7 @@ class Role < ApplicationRecord
     presence:  true
   validates :slug,
     format:     {
-      message: I18n.t('errors.messages.kebab_case'),
+      message: ->(*) { I18n.t('errors.messages.kebab_case') },
       with:    /\A[a-z0-9]+(-[a-z0-9]+)*\z/
     },
     presence:   true,
@@ -144,16 +147,18 @@ end
 #
 #  id                :uuid             not null, primary key
 #  agency_name       :string           default(""), not null
+#  applied_at        :datetime
 #  client_name       :string           default(""), not null
 #  closed_at         :datetime
 #  company_name      :string           default(""), not null
 #  compensation_type :string           default("unknown"), not null
 #  contract_type     :string           default("unknown"), not null
 #  data              :jsonb            not null
+#  interviewing_at   :datetime
 #  job_title         :string           default(""), not null
 #  location_type     :string           default("unknown"), not null
 #  notes             :text             default(""), not null
-#  opened_at         :datetime
+#  offered_at        :datetime
 #  recruiter_name    :string           default(""), not null
 #  slug              :string           default(""), not null
 #  source            :string           default("unknown"), not null

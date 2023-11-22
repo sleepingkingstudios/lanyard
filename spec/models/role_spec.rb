@@ -201,9 +201,11 @@ RSpec.describe Role, type: :model do
   describe '::Statuses' do
     let(:expected_statuses) do
       {
-        CLOSED: 'closed',
-        NEW:    'new',
-        OPEN:   'open'
+        NEW:          'new',
+        APPLIED:      'applied',
+        INTERVIEWING: 'interviewing',
+        OFFERED:      'offered',
+        CLOSED:       'closed'
       }
     end
 
@@ -213,9 +215,21 @@ RSpec.describe Role, type: :model do
       expect(described_class::Statuses.all).to be == expected_statuses
     end
 
+    describe '::APPLIED' do
+      it 'should store the value' do
+        expect(described_class::Statuses::APPLIED).to be == 'applied'
+      end
+    end
+
     describe '::CLOSED' do
       it 'should store the value' do
         expect(described_class::Statuses::CLOSED).to be == 'closed'
+      end
+    end
+
+    describe '::INTERVIEWING' do
+      it 'should store the value' do
+        expect(described_class::Statuses::INTERVIEWING).to be == 'interviewing'
       end
     end
 
@@ -225,9 +239,9 @@ RSpec.describe Role, type: :model do
       end
     end
 
-    describe '::OPEN' do
+    describe '::OFFERED' do
       it 'should store the value' do
-        expect(described_class::Statuses::OPEN).to be == 'open'
+        expect(described_class::Statuses::OFFERED).to be == 'offered'
       end
     end
   end
@@ -235,6 +249,19 @@ RSpec.describe Role, type: :model do
   include_contract 'should be a model'
 
   include_contract 'should belong to', :cycle
+
+  include_contract 'should have many',
+    :events,
+    association: lambda {
+      Array.new(3) do |index|
+        FactoryBot.build(:event, role: role, event_index: index)
+      end
+    } \
+  do
+    include_context 'with a cycle'
+  end
+
+  include_contract 'should define data properties'
 
   include_contract 'should define data property', :benefits, predicate: true
 
@@ -251,6 +278,12 @@ RSpec.describe Role, type: :model do
   include_contract 'should define data property', :source_details
 
   include_contract 'should define data property', :time_zone
+
+  describe '#applied_at' do
+    include_contract 'should define attribute',
+      :applied_at,
+      value: Time.zone.at(1.hour.ago.to_i)
+  end
 
   describe '#client?' do
     include_examples 'should define predicate', :client?, false
@@ -414,6 +447,12 @@ RSpec.describe Role, type: :model do
     end
   end
 
+  describe '#interviewing_at' do
+    include_contract 'should define attribute',
+      :interviewing_at,
+      value: Time.zone.at(30.minutes.ago.to_i)
+  end
+
   describe '#job_title' do
     include_contract 'should define attribute',
       :job_title,
@@ -433,10 +472,10 @@ RSpec.describe Role, type: :model do
       default: ''
   end
 
-  describe '#opened_at' do
+  describe '#offered_at' do
     include_contract 'should define attribute',
-      :closed_at,
-      value: Time.zone.at(1.hour.ago.to_i)
+      :offered_at,
+      value: Time.zone.at(30.minutes.ago.to_i)
   end
 
   describe '#remote?' do
@@ -501,7 +540,7 @@ RSpec.describe Role, type: :model do
     include_contract 'should define attribute',
       :status,
       default: described_class::Statuses::NEW,
-      value:   described_class::Statuses::OPEN
+      value:   described_class::Statuses::APPLIED
   end
 
   describe '#valid?' do
