@@ -31,6 +31,12 @@ module Spec::Support::Contracts
           it { expect(described_class.abstract_event?).to be expected }
         end
 
+        describe '.valid_for?' do
+          it 'should define the class method' do
+            expect(described_class).to respond_to(:valid_for?).with(1).argument
+          end
+        end
+
         include_contract 'should be a model'
 
         include_contract 'should belong to',
@@ -324,6 +330,21 @@ module Spec::Support::Contracts
           abstract: options[:abstract],
           summary:  options[:summary],
           type:     type
+
+        unless options[:abstract]
+          describe '.valid_for?' do
+            Role::Statuses.each_value do |status|
+              describe "with a role with status #{status.inspect}" do
+                let(:role) { FactoryBot.build(:role, status: status) }
+                let(:expected) do
+                  described_class::VALID_STATUSES.include?(status)
+                end
+
+                it { expect(described_class.valid_for?(role)).to be expected }
+              end
+            end
+          end
+        end
 
         describe '#status' do
           let(:expected_status) { options.fetch(:status) }

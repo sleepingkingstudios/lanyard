@@ -13,7 +13,10 @@ FactoryBot.define do
       cycle { FactoryBot.create(:cycle) }
     end
 
-    # :nocov:
+    trait(:new) do
+      status { Role::Statuses::NEW }
+    end
+
     trait(:applied) do
       status     { Role::Statuses::APPLIED }
       applied_at { 1.day.ago }
@@ -26,7 +29,7 @@ FactoryBot.define do
     end
 
     trait(:offered) do
-      status          { Role::Statuses::INTERVIEWING }
+      status          { Role::Statuses::OFFERED }
       applied_at      { 3.days.ago }
       interviewing_at { 2.days.ago }
       offered_at      { 1.day.ago }
@@ -39,6 +42,5 @@ FactoryBot.define do
       offered_at      { 2.days.ago }
       closed_at       { 1.day.ago }
     end
-    # :nocov:
   end
 end

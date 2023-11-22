@@ -10,6 +10,11 @@ class RoleEvents::StatusEvent < RoleEvent
     def abstract_event?
       name == 'RoleEvents::StatusEvent'
     end
+
+    # (see RoleEvent.valid_for?)
+    def valid_for?(role)
+      self::VALID_STATUSES.include?(role.status)
+    end
   end
 
   # (see RoleEvent#default_summary)

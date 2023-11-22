@@ -5,11 +5,12 @@ module Lanyard::View::RoleEvents
   class Form < Librum::Core::View::Components::Resources::Form
     private
 
-    def render_event_field
-      event_types =
-        RoleEvent
-        .event_types
-        .map { |type, event_class| { label: type, value: event_class } }
+    def render_event_field # rubocop:disable Metrics/MethodLength
+      role        = data.fetch('role') { return nil }
+      command     = Lanyard::Models::RoleEvents::ListEventTypes.new
+      event_types = command.call(role).value.map do |type, event_class|
+        { label: type, value: event_class }
+      end
 
       render_form_field(
         'event[type]',

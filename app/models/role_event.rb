@@ -11,12 +11,6 @@ class RoleEvent < ApplicationRecord
       false
     end
 
-    # @return [Hash{String=>String}] a mapping of the valid (non-abstract) event
-    #   subclass types and the corresponding huamn-readable type.
-    def event_types
-      @event_types ||= generate_event_types
-    end
-
     # Generates the event name for a given type.
     #
     # @param type [String] the event type.
@@ -28,22 +22,12 @@ class RoleEvent < ApplicationRecord
       type.split('::').last.sub(/Event\z/, '')
     end
 
-    private
-
-    def event_types_for(klass)
-      hsh = klass.abstract_event? ? {} : { name_for(klass.name) => klass.name }
-
-      klass.subclasses.reduce(hsh) do |types, subclass|
-        types.merge(event_types_for(subclass))
-      end
-    end
-
-    def generate_event_types
-      event_types_for(RoleEvent)
-        .except('Role')
-        .sort
-        .unshift(['Event', ''])
-        .to_h
+    # @param role [Role] the role to filter event types for.
+    #
+    # @return [Boolean] true if the event type can be applied to the given role;
+    #   otherwise false.
+    def valid_for?(_role)
+      true
     end
   end
 

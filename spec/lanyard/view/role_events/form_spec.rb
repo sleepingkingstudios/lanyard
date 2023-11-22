@@ -59,7 +59,12 @@ RSpec.describe Lanyard::View::RoleEvents::Form, type: :component do
     let(:rendered) { render_inline(form) }
 
     before(:example) do
-      allow(RoleEvent).to receive(:event_types).and_return(event_types)
+      result  = Cuprum::Result.new(value: event_types)
+      command = instance_double(Cuprum::Command, call: result)
+
+      allow(Lanyard::Models::RoleEvents::ListEventTypes)
+        .to receive(:new)
+        .and_return(command)
     end
 
     describe 'with action: edit' do
