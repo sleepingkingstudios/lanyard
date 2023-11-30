@@ -65,11 +65,11 @@ RSpec.describe CyclesController, type: :controller do
 
     it { expect(resource.default_order).to be == default_order }
 
+    it { expect(resource.entity_class).to be == Cycle }
+
+    it { expect(resource.name).to be == 'cycles' }
+
     it { expect(resource.permitted_attributes).to be == permitted_attributes }
-
-    it { expect(resource.resource_class).to be == Cycle }
-
-    it { expect(resource.resource_name).to be == 'cycles' }
 
     it 'should define the block component' do
       expect(resource.block_component)

@@ -30,7 +30,7 @@ RSpec.describe Lanyard::View::Roles::Form, type: :component do
   let(:data)   { { 'cycles' => cycles } }
   let(:action) { 'new' }
   let(:resource) do
-    Cuprum::Rails::Resource.new(resource_class: Role)
+    Cuprum::Rails::Resource.new(entity_class: Role)
   end
   let(:constructor_options) do
     {
@@ -842,11 +842,5 @@ RSpec.describe Lanyard::View::Roles::Form, type: :component do
 
   describe '#resource' do
     include_examples 'should define reader', :resource, -> { resource }
-  end
-
-  describe '#singular_resource_name' do
-    include_examples 'should define reader',
-      :singular_resource_name,
-      -> { resource.singular_resource_name }
   end
 end

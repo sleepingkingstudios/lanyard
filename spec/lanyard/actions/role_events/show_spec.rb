@@ -12,7 +12,7 @@ RSpec.describe Lanyard::Actions::RoleEvents::Show do
 
   let(:repository) { Cuprum::Rails::Repository.new }
   let(:resource) do
-    Cuprum::Rails::Resource.new(resource_class: RoleEvent)
+    Cuprum::Rails::Resource.new(entity_class: RoleEvent)
   end
   let(:cycle) { FactoryBot.build(:cycle) }
   let(:role)  { FactoryBot.build(:role, cycle: cycle) }

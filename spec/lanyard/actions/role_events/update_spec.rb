@@ -13,6 +13,7 @@ RSpec.describe Lanyard::Actions::RoleEvents::Update do
   let(:repository) { Cuprum::Rails::Repository.new }
   let(:resource) do
     Cuprum::Rails::Resource.new(
+      entity_class:         RoleEvent,
       permitted_attributes: %i[
         event_date
         event_index
@@ -21,8 +22,7 @@ RSpec.describe Lanyard::Actions::RoleEvents::Update do
         slug
         summary
         type
-      ],
-      resource_class:       RoleEvent
+      ]
     )
   end
   let(:invalid_attributes) do

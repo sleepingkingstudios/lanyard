@@ -13,14 +13,14 @@ RSpec.describe Lanyard::Actions::Roles::Update do
   let(:repository) { Cuprum::Rails::Repository.new }
   let(:resource) do
     Cuprum::Rails::Resource.new(
+      entity_class:         Role,
       permitted_attributes: %i[
         company_name
         cycle_id
         job_title
         slug
         source
-      ],
-      resource_class:       Role
+      ]
     )
   end
   let(:invalid_attributes) do

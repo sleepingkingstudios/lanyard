@@ -13,6 +13,7 @@ RSpec.describe Lanyard::Actions::Cycles::Create, type: :action do
   let(:repository) { Cuprum::Rails::Repository.new }
   let(:resource) do
     Cuprum::Rails::Resource.new(
+      entity_class:         Cycle,
       permitted_attributes: %i[
         active
         name
@@ -20,8 +21,7 @@ RSpec.describe Lanyard::Actions::Cycles::Create, type: :action do
         slug
         ui_eligible
         year
-      ],
-      resource_class:       Cycle
+      ]
     )
   end
   let(:invalid_attributes) do

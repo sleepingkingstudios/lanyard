@@ -44,7 +44,7 @@ RSpec.describe RolesController, type: :controller do
       lambda {
         be_a(Cuprum::Rails::Actions::Middleware::Associations::Find)
           .and have_attributes(
-            association:      have_attributes(association_name: 'cycle'),
+            association:      have_attributes(name: 'cycle'),
             association_type: :belongs_to
           )
       },
@@ -54,7 +54,7 @@ RSpec.describe RolesController, type: :controller do
       lambda {
         be_a(Cuprum::Rails::Actions::Middleware::Resources::Find)
           .and have_attributes(
-            resource:           have_attributes(resource_name: 'cycles'),
+            resource:           have_attributes(name: 'cycles'),
             only_form_actions?: true
           )
       },
@@ -95,11 +95,11 @@ RSpec.describe RolesController, type: :controller do
 
     it { expect(resource.default_order).to be == default_order }
 
+    it { expect(resource.entity_class).to be == Role }
+
+    it { expect(resource.name).to be == 'roles' }
+
     it { expect(resource.permitted_attributes).to be == permitted_attributes }
-
-    it { expect(resource.resource_class).to be == Role }
-
-    it { expect(resource.resource_name).to be == 'roles' }
 
     it 'should define the block component' do
       expect(resource.block_component)

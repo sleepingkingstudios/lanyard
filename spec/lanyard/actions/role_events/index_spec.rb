@@ -13,8 +13,8 @@ RSpec.describe Lanyard::Actions::RoleEvents::Index do
   let(:repository) { Cuprum::Rails::Repository.new }
   let(:resource) do
     Cuprum::Rails::Resource.new(
-      default_order:  :slug,
-      resource_class: RoleEvent
+      default_order: :slug,
+      entity_class:  RoleEvent
     )
   end
   let(:cycle) { FactoryBot.build(:cycle) }

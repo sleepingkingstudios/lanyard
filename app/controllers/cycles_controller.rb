@@ -24,6 +24,7 @@ class CyclesController < ViewController
           year:         :desc,
           season_index: :desc
         },
+        entity_class:         Cycle,
         permitted_attributes: %w[
           active
           name
@@ -32,7 +33,6 @@ class CyclesController < ViewController
           ui_eligible
           year
         ],
-        resource_class:       Cycle,
         block_component:      components::Block,
         form_component:       components::Form,
         table_component:      components::Table
