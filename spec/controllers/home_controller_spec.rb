@@ -32,7 +32,7 @@ RSpec.describe HomeController, type: :controller do
 
     it { expect(resource).to be_a Librum::Core::Resources::BaseResource }
 
-    it { expect(resource.resource_name).to be == 'home' }
+    it { expect(resource.name).to be == 'home' }
   end
 
   include_contract 'should define action',

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/sleepingkingstudios/cuprum-collections
-  revision: a1bb3d714de7dfede81d68c5be63b10d2a44fdc3
+  revision: 5576c68dafcdae69f7f8e35a30959d512d677def
   branch: main
   specs:
     cuprum-collections (0.3.0)
@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: https://github.com/sleepingkingstudios/cuprum-rails
-  revision: df7e253ee1bda0f73f7a73f6b26f06cb2594d8fa
+  revision: d957e833d3c3d828eefc31c4834a335cba528f97
   branch: main
   specs:
     cuprum-rails (0.2.0.alpha)
@@ -20,12 +20,12 @@ GIT
 
 GIT
   remote: https://github.com/sleepingkingstudios/librum-core
-  revision: 442daced122bcd02d8cf972990a77523913bdc6d
+  revision: 52e858361fb64eedf724bf7f25bbc9f28b37a8a7
   branch: main
   specs:
     librum-core (0.1.0)
       annotate (~> 3.2)
-      cuprum (~> 1.1)
+      cuprum (~> 1.2)
       cuprum-collections
       cuprum-rails
       diffy (~> 3.4.2)
@@ -38,12 +38,12 @@ GIT
 
 GIT
   remote: https://github.com/sleepingkingstudios/librum-iam
-  revision: a7321406378637edccd3239ce31d52fe2b4a183f
+  revision: 9c59ac0228c2df0d1d7f0dd80c779d3fada8b686
   branch: main
   specs:
     librum-iam (0.1.0)
       bcrypt (~> 3.1.19)
-      cuprum (~> 1.1)
+      cuprum (~> 1.2)
       cuprum-rails (~> 0.1)
       jwt (~> 2.7)
       librum-core
@@ -122,7 +122,7 @@ GEM
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
     ast (2.4.2)
-    bcrypt (3.1.19)
+    bcrypt (3.1.20)
     bindex (0.8.1)
     builder (3.2.4)
     byebug (11.1.3)

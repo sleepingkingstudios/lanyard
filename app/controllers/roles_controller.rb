@@ -24,6 +24,7 @@ class RolesController < ViewController
     @resource ||=
       Librum::Core::Resources::ViewResource.new(
         default_order:        { created_at: :desc },
+        entity_class:         Role,
         permitted_attributes: %w[
           agency_name
           benefits
@@ -47,7 +48,6 @@ class RolesController < ViewController
           status
           time_zone
         ],
-        resource_class:       Role,
         block_component:      components::Block,
         form_component:       components::Form,
         table_component:      components::Table
@@ -61,7 +61,7 @@ class RolesController < ViewController
 
   middleware(
     Cuprum::Rails::Actions::Middleware::Associations::Find.new(
-      association_name: 'cycle',
+      name:             'cycle',
       association_type: :belongs_to
     ),
     except: %i[destroy]
@@ -69,7 +69,7 @@ class RolesController < ViewController
 
   middleware(
     Cuprum::Rails::Actions::Middleware::Resources::Find.new(
-      resource_name:     'cycles',
+      name:              'cycles',
       only_form_actions: true
     ),
     only: %i[create edit new update]

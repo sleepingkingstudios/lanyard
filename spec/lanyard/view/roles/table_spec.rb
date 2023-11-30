@@ -66,7 +66,7 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
   end
 
   let(:data)     { [] }
-  let(:resource) { Cuprum::Rails::Resource.new(resource_name: 'roles') }
+  let(:resource) { Cuprum::Rails::Resource.new(name: 'roles') }
   let(:constructor_options) do
     {
       data:     data,

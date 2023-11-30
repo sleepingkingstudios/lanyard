@@ -55,6 +55,7 @@ class RoleEventsController < ViewController
       Librum::Core::Resources::ViewResource.new(
         actions:              %w[index new create show edit update],
         default_order:        :slug,
+        entity_class:         RoleEvent,
         name:                 'events',
         parent:               RolesController.resource,
         permitted_attributes: %w[
@@ -67,7 +68,6 @@ class RoleEventsController < ViewController
           summary
           type
         ],
-        resource_class:       RoleEvent,
         block_component:      components::Block,
         form_component:       components::Form,
         table_component:      components::Table
@@ -80,9 +80,7 @@ class RoleEventsController < ViewController
   )
 
   middleware(
-    Librum::Core::Actions::Middleware::Associations::Parent.new(
-      association_name: 'role'
-    )
+    Librum::Core::Actions::Middleware::Associations::Parent.new(name: 'role')
   )
 
   responder :html, RoleEventsController::Responder

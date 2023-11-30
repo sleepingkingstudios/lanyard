@@ -20,7 +20,7 @@ RSpec.describe Authentication::SessionsController, type: :controller do
 
     it { expect(resource).to be_a Librum::Core::Resources::BaseResource }
 
-    it { expect(resource.resource_name).to be == 'sessions' }
+    it { expect(resource.name).to be == 'sessions' }
 
     it { expect(resource.singular?).to be true }
 

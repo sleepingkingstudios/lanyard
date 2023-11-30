@@ -13,13 +13,13 @@ RSpec.describe Lanyard::Actions::RoleEvents::Create, type: :action do
   let(:repository) { Cuprum::Rails::Repository.new }
   let(:resource) do
     Cuprum::Rails::Resource.new(
+      entity_class:         RoleEvent,
       permitted_attributes: %i[
         event_date
         role_id
         slug
         type
-      ],
-      resource_class:       RoleEvent
+      ]
     )
   end
   let(:role) { FactoryBot.create(:role, :with_cycle) }

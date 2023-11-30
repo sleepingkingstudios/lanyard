@@ -16,7 +16,7 @@ RSpec.describe Lanyard::View::Cycles::Table, type: :component do
   end
 
   let(:data)     { [] }
-  let(:resource) { Cuprum::Rails::Resource.new(resource_name: 'cycles') }
+  let(:resource) { Cuprum::Rails::Resource.new(name: 'cycles') }
   let(:constructor_options) do
     {
       data:     data,

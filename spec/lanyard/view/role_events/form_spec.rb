@@ -233,10 +233,4 @@ RSpec.describe Lanyard::View::RoleEvents::Form, type: :component do
   describe '#routes' do
     include_examples 'should define reader', :routes, -> { routes }
   end
-
-  describe '#singular_resource_name' do
-    include_examples 'should define reader',
-      :singular_resource_name,
-      -> { resource.singular_resource_name }
-  end
 end

@@ -13,13 +13,13 @@ RSpec.describe Lanyard::Actions::Cycles::Update, type: :action do
   let(:repository) { Cuprum::Rails::Repository.new }
   let(:resource) do
     Cuprum::Rails::Resource.new(
+      entity_class:         Cycle,
       permitted_attributes: %i[
         name
         season_index
         slug
         year
-      ],
-      resource_class:       Cycle
+      ]
     )
   end
   let(:invalid_attributes) do

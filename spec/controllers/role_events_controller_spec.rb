@@ -152,13 +152,13 @@ RSpec.describe RoleEventsController, type: :controller do
 
     it { expect(resource.default_order).to be == :slug }
 
+    it { expect(resource.entity_class).to be == RoleEvent }
+
+    it { expect(resource.name).to be == 'events' }
+
     it { expect(resource.parent).to be RolesController.resource }
 
     it { expect(resource.permitted_attributes).to be == permitted_attributes }
-
-    it { expect(resource.resource_class).to be == RoleEvent }
-
-    it { expect(resource.resource_name).to be == 'events' }
 
     it 'should define the block component' do
       expect(resource.block_component)
