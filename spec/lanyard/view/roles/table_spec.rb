@@ -19,7 +19,8 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
           company_name:  'Indigo League',
           contract_type: Role::ContractTypes::FULL_TIME,
           location_type: Role::LocationTypes::REMOTE,
-          status:        Role::Statuses::NEW
+          status:        Role::Statuses::NEW,
+          updated_at:    '2003-03-10'
         ),
         FactoryBot.build(
           :role,
@@ -29,7 +30,8 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
           company_name:  'Pewter City Civil Society',
           contract_type: Role::ContractTypes::CONTRACT,
           location_type: Role::LocationTypes::IN_PERSON,
-          status:        Role::Statuses::APPLIED
+          status:        Role::Statuses::APPLIED,
+          updated_at:    '2001-11-02'
         ),
         FactoryBot.build(
           :role,
@@ -39,7 +41,8 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
           company_name:  'Indigo Plateau Constabulary',
           contract_type: Role::ContractTypes::CONTRACT_TO_HIRE,
           location_type: Role::LocationTypes::IN_PERSON,
-          status:        Role::Statuses::INTERVIEWING
+          status:        Role::Statuses::INTERVIEWING,
+          updated_at:    '2000-10-15'
         ),
         FactoryBot.build(
           :role,
@@ -49,7 +52,8 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
           company_name:  'Blackthorn City Gym',
           contract_type: Role::ContractTypes::CONTRACT,
           location_type: Role::LocationTypes::IN_PERSON,
-          status:        Role::Statuses::OFFERED
+          status:        Role::Statuses::OFFERED,
+          updated_at:    '1999-10-19'
         ),
         FactoryBot.build(
           :role,
@@ -59,7 +63,8 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
           company_name:  'Pallet Town Laboratory',
           contract_type: Role::ContractTypes::CONTRACT_TO_HIRE,
           location_type: Role::LocationTypes::HYBRID,
-          status:        Role::Statuses::CLOSED
+          status:        Role::Statuses::CLOSED,
+          updated_at:    '1998-09-28'
         )
       ]
     end
@@ -106,13 +111,15 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
 
               <th>Cycle</th>
 
+              <th>Updated</th>
+
               <th> </th>
             </tr>
           </thead>
 
           <tbody>
             <tr>
-              <td colspan="7">There are no roles matching the criteria.</td>
+              <td colspan="8">There are no roles matching the criteria.</td>
             </tr>
           </tbody>
         </table>
@@ -144,6 +151,8 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
                 <th>Status</th>
 
                 <th>Cycle</th>
+
+                <th>Updated</th>
 
                 <th> </th>
               </tr>
@@ -181,6 +190,10 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
                   <a class="has-text-link" href="/cycles/winter-1996" target="_self">
                     Winter 1996
                   </a>
+                </td>
+
+                <td>
+                  2003-03-10
                 </td>
 
                 <td>
@@ -222,6 +235,10 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
                 </td>
 
                 <td>
+                  2001-11-02
+                </td>
+
+                <td>
                   [actions]
                 </td>
               </tr>
@@ -257,6 +274,10 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
                   <a class="has-text-link" href="/cycles/winter-1996" target="_self">
                     Winter 1996
                   </a>
+                </td>
+
+                <td>
+                  2000-10-15
                 </td>
 
                 <td>
@@ -298,6 +319,10 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
                 </td>
 
                 <td>
+                  1999-10-19
+                </td>
+
+                <td>
                   [actions]
                 </td>
               </tr>
@@ -333,6 +358,10 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
                   <a class="has-text-link" href="/cycles/winter-1996" target="_self">
                     Winter 1996
                   </a>
+                </td>
+
+                <td>
+                  1998-09-28
                 </td>
 
                 <td>

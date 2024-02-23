@@ -56,6 +56,10 @@ module Lanyard::View::Roles
           }
         },
         {
+          key:   'updated',
+          value: ->(item) { item.updated_at&.strftime('%Y-%m-%d') }
+        },
+        {
           key:      'actions',
           label:    ' ',
           resource: resource,
