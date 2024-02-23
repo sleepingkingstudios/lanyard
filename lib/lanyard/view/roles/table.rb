@@ -59,7 +59,14 @@ module Lanyard::View::Roles
           key:      'actions',
           label:    ' ',
           resource: resource,
-          type:     :actions
+          value:    lambda { |item|
+            return '(None)' if item.cycle.blank?
+
+            Lanyard::View::Roles::TableActions.new(
+              data:     item,
+              resource: resource
+            )
+          }
         }
       ].freeze
     }.freeze

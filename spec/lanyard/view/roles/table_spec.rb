@@ -120,7 +120,7 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
     end
 
     before(:example) do
-      allow(Librum::Core::View::Components::Resources::TableActions)
+      allow(Lanyard::View::Roles::TableActions)
         .to receive(:new)
         .and_return(mock_actions)
     end
