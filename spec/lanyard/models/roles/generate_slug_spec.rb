@@ -85,10 +85,10 @@ RSpec.describe Lanyard::Models::Roles::GenerateSlug do
       end
     end
 
-    describe 'with attributes { company_name: value }' do
-      let(:company_name) { 'Encom Software, Inc' }
-      let(:attributes)   { super().merge('company_name' => company_name) }
-      let(:expected)     { "#{super()}-encom-software-inc" }
+    describe 'with attributes { agency_name: value }' do
+      let(:agency_name) { 'Flynn Recruiting' }
+      let(:attributes)  { super().merge('agency_name' => agency_name) }
+      let(:expected)    { "#{super()}-agency-flynn-recruiting" }
 
       it 'should return a passing result' do
         expect(command.call(attributes: attributes))
@@ -107,6 +107,128 @@ RSpec.describe Lanyard::Models::Roles::GenerateSlug do
             .with_value(expected)
         end
       end
+
+      describe 'and { recruiter_name: value }' do
+        let(:recruiter_name) { 'Kevin Flynn' }
+        let(:attributes) do
+          super().merge('recruiter_name' => recruiter_name)
+        end
+
+        it 'should return a passing result' do
+          expect(command.call(attributes: attributes))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+
+        describe 'and { job_title: value }' do
+          let(:job_title)  { 'Software Engineer' }
+          let(:attributes) { super().merge('job_title' => job_title) }
+          let(:expected)   { "#{super()}-software-engineer" }
+
+          it 'should return a passing result' do
+            expect(command.call(attributes: attributes))
+              .to be_a_passing_result
+              .with_value(expected)
+          end
+        end
+      end
+    end
+
+    describe 'with attributes { company_name: value }' do
+      let(:company_name) { 'Encom Software, Inc' }
+      let(:attributes)   { super().merge('company_name' => company_name) }
+      let(:expected)     { "#{super()}-encom-software-inc" }
+
+      it 'should return a passing result' do
+        expect(command.call(attributes: attributes))
+          .to be_a_passing_result
+          .with_value(expected)
+      end
+
+      describe 'and { agency_name: value }' do
+        let(:agency_name) { 'Flynn Recruiting' }
+        let(:attributes)  { super().merge('agency_name' => agency_name) }
+
+        it 'should return a passing result' do
+          expect(command.call(attributes: attributes))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+
+        describe 'and { job_title: value }' do
+          let(:job_title)  { 'Software Engineer' }
+          let(:attributes) { super().merge('job_title' => job_title) }
+          let(:expected)   { "#{super()}-software-engineer" }
+
+          it 'should return a passing result' do
+            expect(command.call(attributes: attributes))
+              .to be_a_passing_result
+              .with_value(expected)
+          end
+        end
+
+        describe 'and { recruiter_name: value }' do
+          let(:recruiter_name) { 'Kevin Flynn' }
+          let(:attributes) do
+            super().merge('recruiter_name' => recruiter_name)
+          end
+
+          it 'should return a passing result' do
+            expect(command.call(attributes: attributes))
+              .to be_a_passing_result
+              .with_value(expected)
+          end
+
+          describe 'and { job_title: value }' do # rubocop:disable RSpec/NestedGroups
+            let(:job_title)  { 'Software Engineer' }
+            let(:attributes) { super().merge('job_title' => job_title) }
+            let(:expected)   { "#{super()}-software-engineer" }
+
+            it 'should return a passing result' do
+              expect(command.call(attributes: attributes))
+                .to be_a_passing_result
+                .with_value(expected)
+            end
+          end
+        end
+      end
+
+      describe 'and { job_title: value }' do
+        let(:job_title)  { 'Software Engineer' }
+        let(:attributes) { super().merge('job_title' => job_title) }
+        let(:expected)   { "#{super()}-software-engineer" }
+
+        it 'should return a passing result' do
+          expect(command.call(attributes: attributes))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      describe 'and { recruiter_name: value }' do
+        let(:recruiter_name) { 'Kevin Flynn' }
+        let(:attributes) do
+          super().merge('recruiter_name' => recruiter_name)
+        end
+
+        it 'should return a passing result' do
+          expect(command.call(attributes: attributes))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+
+        describe 'and { job_title: value }' do
+          let(:job_title)  { 'Software Engineer' }
+          let(:attributes) { super().merge('job_title' => job_title) }
+          let(:expected)   { "#{super()}-software-engineer" }
+
+          it 'should return a passing result' do
+            expect(command.call(attributes: attributes))
+              .to be_a_passing_result
+              .with_value(expected)
+          end
+        end
+      end
     end
 
     describe 'with attributes: { job_title: value }' do
@@ -118,6 +240,30 @@ RSpec.describe Lanyard::Models::Roles::GenerateSlug do
         expect(command.call(attributes: attributes))
           .to be_a_passing_result
           .with_value(expected)
+      end
+    end
+
+    describe 'with attributes { recruiter_name: value }' do
+      let(:recruiter_name) { 'Kevin Flynn' }
+      let(:attributes)     { super().merge('recruiter_name' => recruiter_name) }
+      let(:expected)       { "#{super()}-recruiter-kevin-flynn" }
+
+      it 'should return a passing result' do
+        expect(command.call(attributes: attributes))
+          .to be_a_passing_result
+          .with_value(expected)
+      end
+
+      describe 'and { job_title: value }' do
+        let(:job_title)  { 'Software Engineer' }
+        let(:attributes) { super().merge('job_title' => job_title) }
+        let(:expected)   { "#{super()}-software-engineer" }
+
+        it 'should return a passing result' do
+          expect(command.call(attributes: attributes))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
       end
     end
   end

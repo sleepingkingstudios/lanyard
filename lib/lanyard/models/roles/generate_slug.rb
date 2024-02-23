@@ -17,6 +17,16 @@ module Lanyard::Models::Roles
 
     private
 
+    def company_or_agency(attributes)
+      if attributes['company_name'].present?
+        attributes['company_name']
+      elsif attributes['agency_name'].present?
+        "agency #{attributes['agency_name']}"
+      elsif attributes['recruiter_name'].present?
+        "recruiter #{attributes['recruiter_name']}"
+      end
+    end
+
     def format_value(value)
       return if value.blank?
 
@@ -31,7 +41,7 @@ module Lanyard::Models::Roles
     def generate_slug_for(attributes)
       segments = [
         generate_timestamp,
-        format_value(attributes['company_name']),
+        format_value(company_or_agency(attributes)),
         format_value(attributes['job_title'])
       ].compact
 
