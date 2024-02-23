@@ -179,7 +179,7 @@ RSpec.describe Lanyard::View::RoleEvents::Form, type: :component do
               <label for="event_event_date" class="label">Event Date</label>
 
               <div class="control">
-                <input id="event_event_date" name="event[event_date]" class="input" type="text">
+                <input id="event_event_date" name="event[event_date]" class="input" type="text" value="#{Time.zone.today.iso8601}">
               </div>
             </div>
 

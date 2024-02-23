@@ -3,7 +3,13 @@
 
   <%= render_event_field %>
 
-  <%= render_form_field('event[event_date]', disabled: action == 'edit') %>
+  <%=
+    render_form_field(
+      'event[event_date]',
+      disabled: action == 'edit',
+      value:    data['event']&.event_date || Time.zone.today.iso8601
+    )
+  %>
 
   <%=
     render_form_field(
