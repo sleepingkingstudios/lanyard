@@ -75,7 +75,7 @@ class RolesController < ViewController
     only: %i[create edit new update]
   )
 
-  responder :html, Librum::Core::Responders::Html::ResourceResponder
+  responder :html, Lanyard::Responders::Html::ResourceResponder
 
   action :index,   Librum::Core::Actions::Index,    member: false
   action :new,     Cuprum::Rails::Actions::New,     member: false
