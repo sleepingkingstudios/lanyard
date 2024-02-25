@@ -17,15 +17,8 @@ class RoleEvents::ReopenedEvent < RoleEvent
   # Generates a command for updating the role status.
   #
   # @return [Cuprum::Command] the generated command.
-  def update_status(repository:)
+  def update_role(repository:)
     Lanyard::Models::Roles::Reopen.new(repository: repository)
-  end
-
-  # Generates a command for validating the role transition.
-  #
-  # @return [Cuprum::Command] the generated command.
-  def validate_status_transition
-    Cuprum::Command.new { |_| nil }
   end
 end
 

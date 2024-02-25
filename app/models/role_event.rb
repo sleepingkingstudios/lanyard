@@ -75,6 +75,26 @@ class RoleEvent < ApplicationRecord
     data['summary'].presence || default_summary
   end
 
+  # Generates a command for updating the role status.
+  #
+  # @param repository [Cuprum::Collections::Repository] the repository for
+  #   Role entities.
+  #
+  # @return [Cuprum::Command] the generated command.
+  def update_role(repository:)
+    Lanyard::Models::Roles::UpdateLastEvent.new(repository: repository)
+  end
+
+  # Generates a command for validating the associated role.
+  #
+  # @param repository [Cuprum::Collections::Repository] the repository for
+  #   Role entities.
+  #
+  # @return [Cuprum::Command] the generated command.
+  def validate_role(repository:)
+    Lanyard::Models::RoleEvents::ValidateRole.new(repository: repository)
+  end
+
   private
 
   def event_class_is_not_abstract

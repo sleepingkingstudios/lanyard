@@ -35,7 +35,7 @@ class RoleEvents::StatusEvent < RoleEvent
   #   Role entities.
   #
   # @return [Cuprum::Command] the generated command.
-  def update_status(repository:)
+  def update_role(repository:)
     Lanyard::Models::Roles::UpdateStatus.new(
       repository: repository,
       status:     status
@@ -55,7 +55,7 @@ class RoleEvents::StatusEvent < RoleEvent
   #   Role entities.
   #
   # @return [Cuprum::Command] the generated command.
-  def validate_status_transition(repository:)
+  def validate_role(repository:)
     Lanyard::Models::RoleEvents::ValidateStatusTransition.new(
       repository:     repository,
       status:         status,

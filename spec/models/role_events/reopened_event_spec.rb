@@ -36,37 +36,23 @@ RSpec.describe RoleEvents::ReopenedEvent, type: :model do
     end
   end
 
-  describe '#update_status' do
-    let(:repository) { Cuprum::Rails::Repository.new }
-    let(:command)    { subject.update_status(repository: repository) }
-    let(:command_class) do
-      Lanyard::Models::Roles::Reopen
-    end
-
-    it 'should define the method' do
-      expect(event)
-        .to respond_to(:update_status)
-        .with(0).arguments
-        .and_keywords(:repository)
-    end
+  describe '#update_role' do
+    let(:repository)    { Cuprum::Rails::Repository.new }
+    let(:command)       { subject.update_role(repository: repository) }
+    let(:command_class) { Lanyard::Models::Roles::Reopen }
 
     it { expect(command).to be_a command_class }
 
     it { expect(command.repository).to be repository }
   end
 
-  describe '#validate_status_transition' do
-    let(:command) { subject.validate_status_transition }
-    let(:role)    { FactoryBot.build(:role) }
+  describe '#validate_role' do
+    let(:repository)    { Cuprum::Rails::Repository.new }
+    let(:command)       { subject.validate_role(repository: repository) }
+    let(:command_class) { Lanyard::Models::RoleEvents::ValidateRole }
 
-    it 'should define the method' do
-      expect(event)
-        .to respond_to(:validate_status_transition)
-        .with(0).arguments
-    end
+    it { expect(command).to be_a command_class }
 
-    it { expect(command).to be_a Cuprum::Command }
-
-    it { expect(command.call(role: role)).to be_a_passing_result }
+    it { expect(command.repository).to be repository }
   end
 end
