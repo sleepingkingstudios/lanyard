@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_31_183529) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_25_061052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -89,6 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_31_183529) do
     t.uuid "cycle_id"
     t.datetime "interviewing_at"
     t.datetime "offered_at"
+    t.datetime "last_event_at"
     t.index ["cycle_id", "slug"], name: "index_roles_on_cycle_id_and_slug", unique: true
     t.index ["slug"], name: "index_roles_on_slug", unique: true
   end

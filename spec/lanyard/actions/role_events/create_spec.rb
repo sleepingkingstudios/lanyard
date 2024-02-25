@@ -76,14 +76,13 @@ RSpec.describe Lanyard::Actions::RoleEvents::Create, type: :action do
           .with_error(expected_error)
       end
 
-      it 'should return the invalid role event', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      it 'should return the invalid role event', :aggregate_failures do
         value = call_action.value
 
         expect(value).to deep_match({
-          'event' => be_a(RoleEvents::AppliedEvent),
-          'role'  => role
+          'role_event' => be_a(RoleEvents::AppliedEvent)
         })
-        expect(value['event']).to have_attributes(expected_attributes)
+        expect(value['role_event']).to have_attributes(expected_attributes)
       end
 
       it 'should not create the event' do

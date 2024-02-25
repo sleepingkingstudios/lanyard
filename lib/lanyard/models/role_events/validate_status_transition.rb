@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
-module Lanyard::Models::Roles
+module Lanyard::Models::RoleEvents
   # Validates a status transition for a specified role.
-  class ValidateStatusTransition < Cuprum::Command
+  class ValidateStatusTransition < Lanyard::Models::RoleEvents::ValidateRole
+    # @param repository [Cuprum::Collections::Repository] the repository for
+    #   Role and RoleEvent entities.
     # @param status [String] the status to transition to the role into.
     # @param valid_statuses [Array<String>] the valid statuses for the role
     #   transition.
-    def initialize(status:, valid_statuses:)
-      super()
+    def initialize(repository:, status:, valid_statuses:)
+      super(repository: repository)
 
       @status         = status
       @valid_statuses = Set.new(valid_statuses)

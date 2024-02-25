@@ -31,12 +31,12 @@ class RoleEvents::StatusEvent < RoleEvent
 
   # Generates a command for updating the role status.
   #
+  # @param repository [Cuprum::Collections::Repository] the repository for
+  #   Role entities.
+  #
   # @return [Cuprum::Command] the generated command.
-  def update_status(repository:)
-    Lanyard::Models::Roles::UpdateStatus.new(
-      repository: repository,
-      status:     status
-    )
+  def update_role(repository:)
+    Lanyard::Models::Roles::UpdateStatus.new(repository: repository)
   end
 
   # @return [Array<String>] the valid statuses for a role before applying the
@@ -48,9 +48,13 @@ class RoleEvents::StatusEvent < RoleEvent
 
   # Generates a command for validating the role transition.
   #
+  # @param repository [Cuprum::Collections::Repository] the repository for
+  #   Role entities.
+  #
   # @return [Cuprum::Command] the generated command.
-  def validate_status_transition
-    Lanyard::Models::Roles::ValidateStatusTransition.new(
+  def validate_role(repository:)
+    Lanyard::Models::RoleEvents::ValidateStatusTransition.new(
+      repository:     repository,
       status:         status,
       valid_statuses: valid_statuses
     )

@@ -8,9 +8,9 @@ FactoryBot.define do
 
     role        { nil }
     event_date  { Time.current.to_date }
-    event_index { role&.persisted? ? RoleEvent.where(role: role).count : nil }
+    event_index { role&.persisted? ? RoleEvent.where(role: role).count : 0 }
 
-    slug { "#{event_date.iso8601}-#{event_index}-#{event_name}" }
+    slug { "#{event_date.strftime('%Y-%m-%d')}-#{event_index}-#{event_name}" }
 
     trait(:with_role) do
       role { FactoryBot.create(:role, :with_cycle) }

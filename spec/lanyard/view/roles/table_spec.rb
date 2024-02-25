@@ -20,7 +20,7 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
           contract_type: Role::ContractTypes::FULL_TIME,
           location_type: Role::LocationTypes::REMOTE,
           status:        Role::Statuses::NEW,
-          updated_at:    '2003-03-10'
+          last_event_at: '2003-03-10'
         ),
         FactoryBot.build(
           :role,
@@ -31,7 +31,7 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
           contract_type: Role::ContractTypes::CONTRACT,
           location_type: Role::LocationTypes::IN_PERSON,
           status:        Role::Statuses::APPLIED,
-          updated_at:    '2001-11-02'
+          last_event_at: '2001-11-02'
         ),
         FactoryBot.build(
           :role,
@@ -42,7 +42,7 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
           contract_type: Role::ContractTypes::CONTRACT_TO_HIRE,
           location_type: Role::LocationTypes::IN_PERSON,
           status:        Role::Statuses::INTERVIEWING,
-          updated_at:    '2000-10-15'
+          last_event_at: '2000-10-15'
         ),
         FactoryBot.build(
           :role,
@@ -53,7 +53,7 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
           contract_type: Role::ContractTypes::CONTRACT,
           location_type: Role::LocationTypes::IN_PERSON,
           status:        Role::Statuses::OFFERED,
-          updated_at:    '1999-10-19'
+          last_event_at: '1999-10-19'
         ),
         FactoryBot.build(
           :role,
@@ -64,7 +64,7 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
           contract_type: Role::ContractTypes::CONTRACT_TO_HIRE,
           location_type: Role::LocationTypes::HYBRID,
           status:        Role::Statuses::CLOSED,
-          updated_at:    '1998-09-28'
+          last_event_at: '1998-09-28'
         )
       ]
     end

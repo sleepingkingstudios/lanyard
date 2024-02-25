@@ -88,6 +88,15 @@ module Spec::Support::Contracts
           include_examples 'should define reader', :type, type
         end
 
+        describe '#update_role' do
+          it 'should define the method' do
+            expect(subject)
+              .to respond_to(:update_role)
+              .with(0).arguments
+              .and_keywords(:repository)
+          end
+        end
+
         describe '#valid?' do
           if options[:abstract]
             it 'should validate the event type' do
@@ -316,6 +325,15 @@ module Spec::Support::Contracts
             end
           end
         end
+
+        describe '#validate_role' do
+          it 'should define the method' do
+            expect(subject)
+              .to respond_to(:validate_role)
+              .with(0).arguments
+              .and_keywords(:repository)
+          end
+        end
       end
     end
 
@@ -356,27 +374,14 @@ module Spec::Support::Contracts
           it { expect(subject.status).to be == expected_status }
         end
 
-        describe '#update_status' do
-          let(:repository) { Cuprum::Rails::Repository.new }
-          let(:command)    { subject.update_status(repository: repository) }
-          let(:command_class) do
-            Lanyard::Models::Roles::UpdateStatus
-          end
-
-          it 'should define the method' do
-            expect(subject)
-              .to respond_to(:update_status)
-              .with(0).arguments
-              .and_keywords(:repository)
-          end
-
-          next unless options.key?(:status)
+        describe '#update_role' do
+          let(:repository)    { Cuprum::Rails::Repository.new }
+          let(:command)       { subject.update_role(repository: repository) }
+          let(:command_class) { Lanyard::Models::Roles::UpdateStatus }
 
           it { expect(command).to be_a command_class }
 
           it { expect(command.repository).to be repository }
-
-          it { expect(command.status).to be == subject.status }
         end
 
         describe '#valid_statuses' do
@@ -389,19 +394,16 @@ module Spec::Support::Contracts
           it { expect(subject.valid_statuses).to be == expected_statuses }
         end
 
-        describe '#validate_status_transition' do
-          let(:command) { subject.validate_status_transition }
+        describe '#validate_role' do
+          let(:repository) { Cuprum::Rails::Repository.new }
+          let(:command) do
+            subject.validate_role(repository: repository)
+          end
           let(:command_class) do
-            Lanyard::Models::Roles::ValidateStatusTransition
+            Lanyard::Models::RoleEvents::ValidateStatusTransition
           end
           let(:expected_statuses) do
             Set.new(subject.valid_statuses)
-          end
-
-          it 'should define the method' do
-            expect(subject)
-              .to respond_to(:validate_status_transition)
-              .with(0).arguments
           end
 
           next unless options.key?(:status) && options.key?(:valid_statuses)

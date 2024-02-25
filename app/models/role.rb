@@ -156,6 +156,7 @@ end
 #  data              :jsonb            not null
 #  interviewing_at   :datetime
 #  job_title         :string           default(""), not null
+#  last_event_at     :datetime
 #  location_type     :string           default("unknown"), not null
 #  notes             :text             default(""), not null
 #  offered_at        :datetime

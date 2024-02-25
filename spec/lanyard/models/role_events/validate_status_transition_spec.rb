@@ -2,11 +2,16 @@
 
 require 'rails_helper'
 
-RSpec.describe Lanyard::Models::Roles::ValidateStatusTransition do
+RSpec.describe Lanyard::Models::RoleEvents::ValidateStatusTransition do
   subject(:command) do
-    described_class.new(status: status, valid_statuses: valid_statuses)
+    described_class.new(
+      repository:     repository,
+      status:         status,
+      valid_statuses: valid_statuses
+    )
   end
 
+  let(:repository)     { Cuprum::Rails::Repository.new }
   let(:status)         { 'offered' }
   let(:valid_statuses) { %w[applied interviewing] }
 
@@ -15,7 +20,7 @@ RSpec.describe Lanyard::Models::Roles::ValidateStatusTransition do
       expect(described_class)
         .to be_constructible
         .with(0).arguments
-        .and_keywords(:status, :valid_statuses)
+        .and_keywords(:repository, :status, :valid_statuses)
     end
   end
 

@@ -64,7 +64,7 @@ RSpec.describe RolesController, type: :controller do
   describe '.resource' do
     subject(:resource) { described_class.resource }
 
-    let(:default_order) { { created_at: :desc } }
+    let(:default_order) { { last_event_at: :desc } }
     let(:permitted_attributes) do
       %w[
         agency_name

@@ -12,31 +12,29 @@ module Lanyard::Actions::RoleEvents
       transaction do
         role_event = step { super }
 
-        next role_event unless role_event.respond_to?(:update_status)
+        step { validate_role(role_event: role_event) }
 
-        role = step { find_role(role_event: role_event) }
-        role = step { update_role(role: role, role_event: role_event) }
+        step { update_role(role_event: role_event) }
       end
     end
 
-    def find_role(role_event:)
-      roles_collection.find_one.call(primary_key: role_event.role_id)
+    def update_role(role_event:)
+      role_event
+        .update_role(repository: repository)
+        .call(role: role_event.role, role_event: role_event)
     end
 
-    def roles_collection
-      repository.find_or_create(entity_class: Role)
-    end
+    def validate_role(role_event:)
+      result =
+        role_event
+        .validate_role(repository: repository)
+        .call(role: role_event.role)
 
-    def update_role(role:, role_event:)
-      result = role_event.validate_status_transition.call(role: role)
-
-      if result.success?
-        return role_event.update_status(repository: repository).call(role: role)
-      end
+      return result if result.success?
 
       Cuprum::Rails::Result.new(
         **result.properties,
-        value: { 'event' => role_event, 'role' => role }
+        value: build_response
       )
     end
   end
