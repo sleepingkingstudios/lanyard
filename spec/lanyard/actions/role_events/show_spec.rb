@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 require 'cuprum/rails/repository'
-require 'cuprum/rails/rspec/actions/show_contracts'
+require 'cuprum/rails/rspec/contracts/actions/show_contracts'
 
 RSpec.describe Lanyard::Actions::RoleEvents::Show do
-  include Cuprum::Rails::RSpec::Actions::ShowContracts
+  include Cuprum::Rails::RSpec::Contracts::Actions::ShowContracts
 
   subject(:action) { described_class.new }
 
@@ -34,7 +34,7 @@ RSpec.describe Lanyard::Actions::RoleEvents::Show do
     event.save!
   end
 
-  include_contract 'show action contract',
+  include_contract 'should be a show action contract',
     existing_entity:   -> { event },
     primary_key_value: -> { SecureRandom.uuid },
     params:            -> { params } \
