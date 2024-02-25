@@ -3,19 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe Lanyard::Models::Roles::UpdateStatus do
-  subject(:command) do
-    described_class.new(repository: repository, status: status)
-  end
+  subject(:command) { described_class.new(repository: repository) }
 
   let(:repository) { Cuprum::Rails::Repository.new }
-  let(:status)     { 'indeterminate' }
 
   describe '.new' do
     it 'should define the constructor' do
       expect(described_class)
         .to be_constructible
         .with(0).arguments
-        .and_keywords(:repository, :status)
+        .and_keywords(:repository)
     end
   end
 
@@ -25,148 +22,125 @@ RSpec.describe Lanyard::Models::Roles::UpdateStatus do
         :role,
         :with_cycle,
         created_at:    2.days.ago,
-        last_event_at: 1.day.ago.beginning_of_day,
+        last_event_at: 2.days.ago,
         updated_at:    1.hour.ago
       )
     end
-    let(:status) { Role::Statuses::APPLIED }
+    let(:role_event) do
+      FactoryBot.build(
+        :applied_event,
+        role:       role,
+        event_date: 1.day.ago
+      )
+    end
+    let(:current_time) { Time.current }
 
     before(:example) do
-      FactoryBot.create(
-        :contacted_event,
-        slug:       'previous-event',
-        role:       role,
-        event_date: Time.current.beginning_of_day
-      )
+      allow(Time).to receive(:current).and_return(current_time)
     end
 
     it 'should define the method' do
       expect(command)
         .to be_callable
         .with(0).arguments
-        .and_keywords(:role)
+        .and_keywords(:role, :role_event)
     end
 
-    describe 'with an invalid status' do
-      let(:status) { 'indeterminate' }
-      let(:expected_error) do
-        Lanyard::Errors::Roles::InvalidStatus.new(status: status)
-      end
-
-      it 'should return a failing result' do
-        expect(command.call(role: role))
-          .to be_a_failing_result
-          .with_error(expected_error)
-      end
-
-      it 'should not update the role' do
-        expect { command.call(role: role) }
-          .not_to(change { role.reload.attributes })
-      end
+    it 'should return a passing result' do
+      expect(command.call(role: role, role_event: role_event))
+        .to be_a_passing_result
+        .with_value(role)
     end
 
-    describe 'with a valid status' do
-      let(:current_time) { Time.current }
-      let(:status)       { Role::Statuses::APPLIED }
+    it 'should set the role status' do
+      expect { command.call(role: role, role_event: role_event) }
+        .to(
+          change { role.reload.status }
+          .to be == role_event.status
+        )
+    end
 
-      before(:example) do
-        allow(Time).to receive(:current).and_return(current_time)
+    it 'should set the role last_event_at timestamp' do
+      expect { command.call(role: role, role_event: role_event) }
+        .to(
+          change { role.reload.last_event_at.to_i }
+          .to be == role_event.event_date.beginning_of_day.to_i
+        )
+    end
+
+    it 'should set the role status timestamp' do
+      expect { command.call(role: role, role_event: role_event) }
+        .to(
+          change { role.reload.applied_at.to_i }
+          .to be == current_time.to_i
+        )
+    end
+
+    it 'should set the role updated_at timestamp' do
+      expect { command.call(role: role, role_event: role_event) }
+        .to(
+          change { role.reload.updated_at.to_i }
+          .to be == current_time.to_i
+        )
+    end
+
+    context 'when the timestamp is already set' do
+      let(:role) do
+        FactoryBot.create(
+          :role,
+          :with_cycle,
+          :interviewing,
+          created_at:    2.days.ago,
+          last_event_at: 2.days.ago,
+          updated_at:    1.hour.ago
+        )
+      end
+      let(:role_event) do
+        FactoryBot.build(
+          :interview_event,
+          role:       role,
+          event_date: 1.day.ago
+        )
       end
 
       it 'should return a passing result' do
-        expect(command.call(role: role))
+        expect(command.call(role: role, role_event: role_event))
           .to be_a_passing_result
           .with_value(role)
       end
 
-      it 'should set the role status' do
-        expect { command.call(role: role) }
-          .to(
-            change { role.reload.status }
-            .to be == status
-          )
+      it 'should not change the role status' do
+        expect { command.call(role: role, role_event: role_event) }
+          .not_to(change { role.reload.status })
       end
 
       it 'should set the role last_event_at timestamp' do
-        expect { command.call(role: role) }
+        expect { command.call(role: role, role_event: role_event) }
           .to(
             change { role.reload.last_event_at.to_i }
-            .to be == current_time.beginning_of_day.to_i
+            .to be == role_event.event_date.beginning_of_day.to_i
           )
       end
 
       it 'should set the role status timestamp' do
-        expect { command.call(role: role) }
+        expect { command.call(role: role, role_event: role_event) }
           .to(
-            change { role.reload.applied_at.to_i }
+            change { role.reload.interviewing_at.to_i }
             .to be == current_time.to_i
           )
       end
 
       it 'should set the role updated_at timestamp' do
-        expect { command.call(role: role) }
+        expect { command.call(role: role, role_event: role_event) }
           .to(
             change { role.reload.updated_at.to_i }
             .to be == current_time.to_i
           )
-      end
-
-      context 'when the timestamp is already set' do
-        let(:role) do
-          FactoryBot.create(
-            :role,
-            :with_cycle,
-            :interviewing,
-            created_at:    2.days.ago,
-            last_event_at: 1.day.ago.beginning_of_day,
-            updated_at:    1.hour.ago
-          )
-        end
-        let(:status) { Role::Statuses::INTERVIEWING }
-
-        it 'should return a passing result' do
-          expect(command.call(role: role))
-            .to be_a_passing_result
-            .with_value(role)
-        end
-
-        it 'should not change the role status' do
-          expect { command.call(role: role) }
-            .not_to(change { role.reload.status })
-        end
-
-        it 'should set the role last_event_at timestamp' do
-          expect { command.call(role: role) }
-            .to(
-              change { role.reload.last_event_at.to_i }
-              .to be == current_time.beginning_of_day.to_i
-            )
-        end
-
-        it 'should set the role status timestamp' do
-          expect { command.call(role: role) }
-            .to(
-              change { role.reload.interviewing_at.to_i }
-              .to be == current_time.to_i
-            )
-        end
-
-        it 'should set the role updated_at timestamp' do
-          expect { command.call(role: role) }
-            .to(
-              change { role.reload.updated_at.to_i }
-              .to be == current_time.to_i
-            )
-        end
       end
     end
   end
 
   describe '#repository' do
     include_examples 'should define reader', :repository, -> { repository }
-  end
-
-  describe '#status' do
-    include_examples 'should define reader', :status, -> { status }
   end
 end

@@ -36,10 +36,7 @@ class RoleEvents::StatusEvent < RoleEvent
   #
   # @return [Cuprum::Command] the generated command.
   def update_role(repository:)
-    Lanyard::Models::Roles::UpdateStatus.new(
-      repository: repository,
-      status:     status
-    )
+    Lanyard::Models::Roles::UpdateStatus.new(repository: repository)
   end
 
   # @return [Array<String>] the valid statuses for a role before applying the

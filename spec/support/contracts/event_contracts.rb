@@ -379,13 +379,9 @@ module Spec::Support::Contracts
           let(:command)       { subject.update_role(repository: repository) }
           let(:command_class) { Lanyard::Models::Roles::UpdateStatus }
 
-          next unless options.key?(:status)
-
           it { expect(command).to be_a command_class }
 
           it { expect(command.repository).to be repository }
-
-          it { expect(command.status).to be == subject.status }
         end
 
         describe '#valid_statuses' do

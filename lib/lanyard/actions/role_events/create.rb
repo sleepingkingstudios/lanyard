@@ -21,7 +21,7 @@ module Lanyard::Actions::RoleEvents
     def update_role(role_event:)
       role_event
         .update_role(repository: repository)
-        .call(role: role_event.role)
+        .call(role: role_event.role, role_event: role_event)
     end
 
     def validate_role(role_event:)

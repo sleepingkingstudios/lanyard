@@ -26,6 +26,13 @@ RSpec.describe Lanyard::Models::Roles::UpdateLastEvent do
         updated_at: 1.hour.ago
       )
     end
+    let(:role_event) do
+      FactoryBot.build(
+        :event,
+        role:       role,
+        event_date: 1.day.ago
+      )
+    end
 
     before(:example) do
       allow(Time).to receive(:current).and_return(current_time)
@@ -35,61 +42,29 @@ RSpec.describe Lanyard::Models::Roles::UpdateLastEvent do
       expect(command)
         .to be_callable
         .with(0).arguments
-        .and_keywords(:role)
+        .and_keywords(:role, :role_event)
     end
 
     it 'should return a passing result' do
-      expect(command.call(role: role))
+      expect(command.call(role: role, role_event: role_event))
         .to be_a_passing_result
         .with_value(role)
     end
 
     it 'should set the role last_event_at timestamp' do
-      expect { command.call(role: role) }
+      expect { command.call(role: role, role_event: role_event) }
         .to(
           change { role.reload.last_event_at.to_i }
-          .to be == role.created_at.to_i
+          .to be == role_event.event_date.beginning_of_day.to_i
         )
     end
 
     it 'should set the role updated_at timestamp' do
-      expect { command.call(role: role) }
+      expect { command.call(role: role, role_event: role_event) }
         .to(
           change { role.reload.updated_at.to_i }
           .to be == current_time.to_i
         )
-    end
-
-    context 'when the role has many events' do
-      let(:expected_date) do
-        role.events.order(event_date: :desc).first.event_date.beginning_of_day
-      end
-
-      before(:example) do
-        FactoryBot.create(
-          :contacted_event,
-          role:       role,
-          event_date: 3.days.ago
-        )
-        FactoryBot.create(
-          :applied_event,
-          role:       role,
-          event_date: 2.days.ago
-        )
-        FactoryBot.create(
-          :interview_event,
-          role:       role,
-          event_date: 1.day.ago
-        )
-      end
-
-      it 'should set the role last_event_at timestamp' do
-        expect { command.call(role: role) }
-          .to(
-            change { role.reload.last_event_at.to_i }
-            .to be == expected_date.to_i
-          )
-      end
     end
   end
 

@@ -17,40 +17,19 @@ module Lanyard::Models::Roles
 
     private
 
-    def attributes_for(role:)
+    def attributes_for(role:, role_event:)
+      last_event_at = role_event.event_date&.beginning_of_day || role.created_at
+
       {
-        last_event_at: last_event_at(role: role),
+        last_event_at: last_event_at,
         updated_at:    Time.current
       }
     end
 
-    def last_event_at(role:)
-      event = last_event_for(role: role)
-
-      event&.event_date&.beginning_of_day || role.created_at
-    end
-
-    def last_event_for(role:)
-      role_events_collection
-        .find_matching
-        .call(
-          limit: 1,
-          order: { event_date: :desc },
-          where: { role_id: role.id }
-        )
-        .value
-        &.first
-    end
-
-    def process(role:)
-      attributes = attributes_for(role: role)
+    def process(role:, role_event:)
+      attributes = attributes_for(role: role, role_event: role_event)
 
       update_role(attributes: attributes, role: role)
-    end
-
-    def role_events_collection
-      @role_events_collection ||=
-        repository.find_or_create(entity_class: RoleEvent)
     end
 
     def roles_collection
