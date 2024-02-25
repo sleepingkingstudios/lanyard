@@ -20,8 +20,25 @@ RSpec.describe Lanyard::Models::Roles::UpdateStatus do
   end
 
   describe '#call' do
-    let(:role)   { FactoryBot.create(:role, :with_cycle) }
+    let(:role) do
+      FactoryBot.create(
+        :role,
+        :with_cycle,
+        created_at:    2.days.ago,
+        last_event_at: 1.day.ago.beginning_of_day,
+        updated_at:    1.hour.ago
+      )
+    end
     let(:status) { Role::Statuses::APPLIED }
+
+    before(:example) do
+      FactoryBot.create(
+        :contacted_event,
+        slug:       'previous-event',
+        role:       role,
+        event_date: Time.current.beginning_of_day
+      )
+    end
 
     it 'should define the method' do
       expect(command)
@@ -70,6 +87,14 @@ RSpec.describe Lanyard::Models::Roles::UpdateStatus do
           )
       end
 
+      it 'should set the role last_event_at timestamp' do
+        expect { command.call(role: role) }
+          .to(
+            change { role.reload.last_event_at.to_i }
+            .to be == current_time.beginning_of_day.to_i
+          )
+      end
+
       it 'should set the role status timestamp' do
         expect { command.call(role: role) }
           .to(
@@ -78,8 +103,25 @@ RSpec.describe Lanyard::Models::Roles::UpdateStatus do
           )
       end
 
+      it 'should set the role updated_at timestamp' do
+        expect { command.call(role: role) }
+          .to(
+            change { role.reload.updated_at.to_i }
+            .to be == current_time.to_i
+          )
+      end
+
       context 'when the timestamp is already set' do
-        let(:role)   { FactoryBot.create(:role, :with_cycle, :interviewing) }
+        let(:role) do
+          FactoryBot.create(
+            :role,
+            :with_cycle,
+            :interviewing,
+            created_at:    2.days.ago,
+            last_event_at: 1.day.ago.beginning_of_day,
+            updated_at:    1.hour.ago
+          )
+        end
         let(:status) { Role::Statuses::INTERVIEWING }
 
         it 'should return a passing result' do
@@ -93,10 +135,26 @@ RSpec.describe Lanyard::Models::Roles::UpdateStatus do
             .not_to(change { role.reload.status })
         end
 
+        it 'should set the role last_event_at timestamp' do
+          expect { command.call(role: role) }
+            .to(
+              change { role.reload.last_event_at.to_i }
+              .to be == current_time.beginning_of_day.to_i
+            )
+        end
+
         it 'should set the role status timestamp' do
           expect { command.call(role: role) }
             .to(
               change { role.reload.interviewing_at.to_i }
+              .to be == current_time.to_i
+            )
+        end
+
+        it 'should set the role updated_at timestamp' do
+          expect { command.call(role: role) }
+            .to(
+              change { role.reload.updated_at.to_i }
               .to be == current_time.to_i
             )
         end
