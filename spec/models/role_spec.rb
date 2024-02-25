@@ -419,6 +419,12 @@ RSpec.describe Role, type: :model do
     end
   end
 
+  describe '#last_event_at' do
+    include_contract 'should define attribute',
+      :last_event_at,
+      value: nil
+  end
+
   describe '#in_person?' do
     include_examples 'should define predicate', :in_person?, false
 

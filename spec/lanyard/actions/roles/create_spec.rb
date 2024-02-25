@@ -41,7 +41,12 @@ RSpec.describe Lanyard::Actions::Roles::Create, type: :action do
 
     "#{timestamp}-#{title}"
   end
-  let(:expected_attributes) { { 'slug' => expected_slug } }
+  let(:expected_attributes) do
+    {
+      'last_event_at' => current_time,
+      'slug'          => expected_slug
+    }
+  end
 
   before(:example) { allow(Time).to receive(:current).and_return(current_time) }
 
@@ -49,7 +54,10 @@ RSpec.describe Lanyard::Actions::Roles::Create, type: :action do
     invalid_attributes:             -> { invalid_attributes },
     valid_attributes:               -> { valid_attributes },
     expected_attributes_on_failure: lambda { |hsh|
-      hsh.merge({ 'slug' => "#{timestamp}-0" })
+      hsh.merge({
+        'last_event_at' => current_time,
+        'slug'          => "#{timestamp}-0"
+      })
     },
     expected_attributes_on_success: ->(hsh) { hsh.merge(expected_attributes) } \
   do
