@@ -27,8 +27,11 @@ module Lanyard::Actions::RoleEvents
       repository.find_or_create(entity_class: Role)
     end
 
-    def update_role(role:, role_event:)
-      result = role_event.validate_status_transition.call(role: role)
+    def update_role(role:, role_event:) # rubocop:disable Metrics/MethodLength
+      result =
+        role_event
+        .validate_status_transition(repository: repository)
+        .call(role: role)
 
       if result.success?
         return role_event.update_status(repository: repository).call(role: role)

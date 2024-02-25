@@ -67,12 +67,13 @@ RSpec.describe RoleEvents::StatusEvent, type: :model do
   end
 
   describe '#validate_status_transition' do
+    let(:repository) { Cuprum::Rails::Repository.new }
     let(:error_message) do
       "#{described_class}#status is an abstract method"
     end
 
     it 'should raise an exception' do
-      expect { event.validate_status_transition }
+      expect { event.validate_status_transition(repository: repository) }
         .to raise_error described_class::AbstractEventError, error_message
     end
   end

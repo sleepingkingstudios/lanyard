@@ -390,9 +390,12 @@ module Spec::Support::Contracts
         end
 
         describe '#validate_status_transition' do
-          let(:command) { subject.validate_status_transition }
+          let(:repository) { Cuprum::Rails::Repository.new }
+          let(:command) do
+            subject.validate_status_transition(repository: repository)
+          end
           let(:command_class) do
-            Lanyard::Models::Roles::ValidateStatusTransition
+            Lanyard::Models::RoleEvents::ValidateStatusTransition
           end
           let(:expected_statuses) do
             Set.new(subject.valid_statuses)
@@ -402,6 +405,7 @@ module Spec::Support::Contracts
             expect(subject)
               .to respond_to(:validate_status_transition)
               .with(0).arguments
+              .and_keywords(:repository)
           end
 
           next unless options.key?(:status) && options.key?(:valid_statuses)
