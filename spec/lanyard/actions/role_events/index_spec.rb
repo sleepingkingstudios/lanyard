@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 require 'cuprum/rails/repository'
-require 'cuprum/rails/rspec/actions/index_contracts'
+require 'cuprum/rails/rspec/contracts/actions/index_contracts'
 
 RSpec.describe Lanyard::Actions::RoleEvents::Index do
-  include Cuprum::Rails::RSpec::Actions::IndexContracts
+  include Cuprum::Rails::RSpec::Contracts::Actions::IndexContracts
 
   subject(:action) { described_class.new }
 
@@ -38,7 +38,7 @@ RSpec.describe Lanyard::Actions::RoleEvents::Index do
     3.times { FactoryBot.create(:event, :with_role) }
   end
 
-  include_contract 'index action contract',
+  include_contract 'should be an index action',
     existing_entities: -> { events },
     params:            -> { params } \
   do

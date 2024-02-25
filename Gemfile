@@ -25,6 +25,7 @@ gem 'stimulus-rails'
 ### Commands
 gem 'cuprum', '~> 1.2'
 gem 'cuprum-collections',
+  '>= 0.5.0.alpha',
   branch: 'main',
   git:    'https://github.com/sleepingkingstudios/cuprum-collections'
 gem 'cuprum-rails',

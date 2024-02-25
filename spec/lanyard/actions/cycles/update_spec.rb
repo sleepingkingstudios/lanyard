@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 require 'cuprum/rails/repository'
-require 'cuprum/rails/rspec/actions/update_contracts'
+require 'cuprum/rails/rspec/contracts/actions/update_contracts'
 
 RSpec.describe Lanyard::Actions::Cycles::Update, type: :action do
-  include Cuprum::Rails::RSpec::Actions::UpdateContracts
+  include Cuprum::Rails::RSpec::Contracts::Actions::UpdateContracts
 
   subject(:action) { described_class.new }
 
@@ -32,7 +32,7 @@ RSpec.describe Lanyard::Actions::Cycles::Update, type: :action do
 
   before(:example) { cycle.save }
 
-  include_contract 'update action contract',
+  include_contract 'should be an update action',
     existing_entity:    -> { cycle },
     invalid_attributes: -> { invalid_attributes },
     valid_attributes:   -> { valid_attributes },
