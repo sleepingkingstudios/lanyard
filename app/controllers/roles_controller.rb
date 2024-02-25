@@ -23,7 +23,7 @@ class RolesController < ViewController
 
     @resource ||=
       Librum::Core::Resources::ViewResource.new(
-        default_order:        { created_at: :desc },
+        default_order:        { last_event_at: :desc },
         entity_class:         Role,
         permitted_attributes: %w[
           agency_name
