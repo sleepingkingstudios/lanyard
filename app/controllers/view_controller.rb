@@ -25,6 +25,10 @@ class ViewController < Librum::Core::ViewController
             {
               label: 'Inactive',
               url:   '/roles/inactive'
+            },
+            {
+              label: 'Expiring',
+              url:   '/roles/expiring'
             }
           ]
         },

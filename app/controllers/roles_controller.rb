@@ -86,5 +86,6 @@ class RolesController < ViewController
   action :destroy, Librum::Core::Actions::Destroy,  member: true
 
   action :active,   Lanyard::Actions::Roles::Active,   member: false
+  action :expiring, Lanyard::Actions::Roles::Expiring, member: false
   action :inactive, Lanyard::Actions::Roles::Inactive, member: false
 end

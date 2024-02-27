@@ -33,6 +33,10 @@ RSpec.describe ViewController, type: :controller do
               {
                 label: 'Inactive',
                 url:   '/roles/inactive'
+              },
+              {
+                label: 'Expiring',
+                url:   '/roles/expiring'
               }
             ]
           },

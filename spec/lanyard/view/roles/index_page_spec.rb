@@ -41,21 +41,27 @@ RSpec.describe Lanyard::View::Roles::IndexPage, type: :component do
       <<~HTML.strip
         <div class="tabs">
           <ul>
-            <li class="is-active">
+            <li#{action_name == 'index' ? ' class="is-active"' : ''}>
               <a class="has-text-link" href="/roles" target="_self">
                 All Roles
               </a>
             </li>
 
-            <li>
+            <li#{action_name == 'active' ? ' class="is-active"' : ''}>
               <a class="has-text-link" href="/roles/active" target="_self">
                 Active
               </a>
             </li>
 
-            <li>
+            <li#{action_name == 'inactive' ? ' class="is-active"' : ''}>
               <a class="has-text-link" href="/roles/inactive" target="_self">
                 Inactive
+              </a>
+            </li>
+
+            <li#{action_name == 'expiring' ? ' class="is-active"' : ''}>
+              <a class="has-text-link" href="/roles/expiring" target="_self">
+                Expiring
               </a>
             </li>
           </ul>
@@ -102,62 +108,18 @@ RSpec.describe Lanyard::View::Roles::IndexPage, type: :component do
 
     describe 'with action_name: "active"' do
       let(:action_name) { 'active' }
-      let(:tabs_snapshot) do
-        <<~HTML.strip
-          <div class="tabs">
-            <ul>
-              <li>
-                <a class="has-text-link" href="/roles" target="_self">
-                  All Roles
-                </a>
-              </li>
 
-              <li class="is-active">
-                <a class="has-text-link" href="/roles/active" target="_self">
-                  Active
-                </a>
-              </li>
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
 
-              <li>
-                <a class="has-text-link" href="/roles/inactive" target="_self">
-                  Inactive
-                </a>
-              </li>
-            </ul>
-          </div>
-        HTML
-      end
+    describe 'with action_name: "expiring"' do
+      let(:action_name) { 'expiring' }
 
       it { expect(rendered).to match_snapshot(snapshot) }
     end
 
     describe 'with action_name: "inactive"' do
       let(:action_name) { 'inactive' }
-      let(:tabs_snapshot) do
-        <<~HTML.strip
-          <div class="tabs">
-            <ul>
-              <li>
-                <a class="has-text-link" href="/roles" target="_self">
-                  All Roles
-                </a>
-              </li>
-
-              <li>
-                <a class="has-text-link" href="/roles/active" target="_self">
-                  Active
-                </a>
-              </li>
-
-              <li class="is-active">
-                <a class="has-text-link" href="/roles/inactive" target="_self">
-                  Inactive
-                </a>
-              </li>
-            </ul>
-          </div>
-        HTML
-      end
 
       it { expect(rendered).to match_snapshot(snapshot) }
     end

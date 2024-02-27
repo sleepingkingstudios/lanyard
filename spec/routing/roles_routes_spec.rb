@@ -19,6 +19,16 @@ RSpec.describe "#{RolesController} routes", type: :routing do
     end
   end
 
+  describe 'GET /roles/expiring.html' do
+    it 'should route to Roles#index' do
+      expect(get: '/roles/expiring.html').to route_to(
+        controller: controller,
+        action:     'expiring',
+        format:     'html'
+      )
+    end
+  end
+
   describe 'GET /roles/inactive.html' do
     it 'should route to Roles#index' do
       expect(get: '/roles/inactive.html').to route_to(

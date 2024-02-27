@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   resources :roles do
     get :active,   on: :collection
+    get :expiring, on: :collection
     get :inactive, on: :collection
 
     resources :events,

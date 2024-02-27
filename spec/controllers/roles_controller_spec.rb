@@ -146,6 +146,11 @@ RSpec.describe RolesController, type: :controller do
     member: true
 
   include_contract 'should define action',
+    :expiring,
+    Lanyard::Actions::Roles::Expiring,
+    member: false
+
+  include_contract 'should define action',
     :inactive,
     Lanyard::Actions::Roles::Inactive,
     member: false
