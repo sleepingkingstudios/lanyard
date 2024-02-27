@@ -10,12 +10,14 @@ Rails.application.routes.draw do
   resources :cycles
 
   resources :roles do
+    get :active, on: :collection
+
     resources :events,
       controller: 'role_events',
       only:       %i[index new create show edit update]
   end
 
-  root to: 'roles#index'
+  root to: 'roles#active'
 
   get '*path',
     to:          'home#not_found',

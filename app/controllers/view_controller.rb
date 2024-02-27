@@ -12,7 +12,17 @@ class ViewController < Librum::Core::ViewController
       items: [
         {
           label: 'Roles',
-          url:   '/roles'
+          url:   '/roles',
+          items: [
+            {
+              label: 'All Roles',
+              url:   '/roles'
+            },
+            {
+              label: 'Active',
+              url:   '/roles/active'
+            }
+          ]
         },
         {
           label: 'Cycles',

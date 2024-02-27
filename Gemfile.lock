@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/sleepingkingstudios/cuprum-collections
-  revision: b8b6d49f010d3c22b206df97e912925a2e749a43
+  revision: b1dd8d6aee7c751871cdf63fb6289da392075cea
   branch: main
   specs:
     cuprum-collections (0.5.0.alpha)
@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: https://github.com/sleepingkingstudios/cuprum-rails
-  revision: c0353cb67f68017cdd9137920e323b50a23df360
+  revision: d7ca4a5be1e4ab3a6686f3f5282e178ae4fd4f15
   branch: main
   specs:
     cuprum-rails (0.2.0)
@@ -20,7 +20,7 @@ GIT
 
 GIT
   remote: https://github.com/sleepingkingstudios/librum-core
-  revision: 0473f84be1419a6b5be8a53c3f7e415321507272
+  revision: 95e3393e873a2ef3bd26c38ae949f616067ada48
   branch: main
   specs:
     librum-core (0.1.0)
@@ -34,7 +34,7 @@ GIT
       rails (~> 7.0.4)
       stannum (~> 0.3)
       stimulus-rails (~> 1.3)
-      view_component (~> 3.0)
+      view_component (~> 3.11)
 
 GIT
   remote: https://github.com/sleepingkingstudios/librum-iam
@@ -309,7 +309,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
-    view_component (3.10.0)
+    view_component (3.11.0)
       activesupport (>= 5.2.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)

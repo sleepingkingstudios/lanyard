@@ -20,7 +20,17 @@ RSpec.describe ViewController, type: :controller do
         items: [
           {
             label: 'Roles',
-            url:   '/roles'
+            url:   '/roles',
+            items: [
+              {
+                label: 'All Roles',
+                url:   '/roles'
+              },
+              {
+                label: 'Active',
+                url:   '/roles/active'
+              }
+            ]
           },
           {
             label: 'Cycles',

@@ -2,7 +2,7 @@
 
 module Lanyard::Responders::Html
   # Delegates missing pages to View::Pages::Resources.
-  class ResourceResponder < Librum::Core::Responders::Html::ViewResponder
+  class ResourceResponder < Librum::Core::Responders::Html::ResourceResponder
     private
 
     def view_component_name(action: nil)

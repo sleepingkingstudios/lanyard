@@ -6,8 +6,9 @@ FactoryBot.define do
       sequence(:role_index) { |index| index }
     end
 
-    slug   { "role-#{role_index}" }
-    source { Role::Sources::OTHER }
+    slug          { "role-#{role_index}" }
+    source        { Role::Sources::OTHER }
+    last_event_at { Time.current }
 
     trait(:with_cycle) do
       cycle { FactoryBot.create(:cycle) }
