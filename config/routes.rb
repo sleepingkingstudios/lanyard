@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   resources :cycles
 
   resources :roles do
-    get :active, on: :collection
+    get :active,   on: :collection
+    get :inactive, on: :collection
 
     resources :events,
       controller: 'role_events',

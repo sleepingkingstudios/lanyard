@@ -126,6 +126,11 @@ RSpec.describe RolesController, type: :controller do
   end
 
   include_contract 'should define action',
+    :active,
+    Lanyard::Actions::Roles::Active,
+    member: false
+
+  include_contract 'should define action',
     :create,
     Lanyard::Actions::Roles::Create,
     member: false
@@ -139,6 +144,11 @@ RSpec.describe RolesController, type: :controller do
     :edit,
     Librum::Core::Actions::Show,
     member: true
+
+  include_contract 'should define action',
+    :inactive,
+    Lanyard::Actions::Roles::Inactive,
+    member: false
 
   include_contract 'should define action',
     :index,

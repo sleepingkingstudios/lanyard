@@ -13,6 +13,10 @@ module Lanyard::View::Roles
       Librum::Core::View::Components::Tabs::TabDefinition.new(
         key: 'active',
         url: Rails.application.routes.url_helpers.active_roles_path
+      ).freeze,
+      Librum::Core::View::Components::Tabs::TabDefinition.new(
+        key: 'inactive',
+        url: Rails.application.routes.url_helpers.inactive_roles_path
       ).freeze
     ].freeze
     private_constant :TABS

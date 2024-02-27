@@ -52,6 +52,12 @@ RSpec.describe Lanyard::View::Roles::IndexPage, type: :component do
                 Active
               </a>
             </li>
+
+            <li>
+              <a class="has-text-link" href="/roles/inactive" target="_self">
+                Inactive
+              </a>
+            </li>
           </ul>
         </div>
       HTML
@@ -109,6 +115,43 @@ RSpec.describe Lanyard::View::Roles::IndexPage, type: :component do
               <li class="is-active">
                 <a class="has-text-link" href="/roles/active" target="_self">
                   Active
+                </a>
+              </li>
+
+              <li>
+                <a class="has-text-link" href="/roles/inactive" target="_self">
+                  Inactive
+                </a>
+              </li>
+            </ul>
+          </div>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with action_name: "inactive"' do
+      let(:action_name) { 'inactive' }
+      let(:tabs_snapshot) do
+        <<~HTML.strip
+          <div class="tabs">
+            <ul>
+              <li>
+                <a class="has-text-link" href="/roles" target="_self">
+                  All Roles
+                </a>
+              </li>
+
+              <li>
+                <a class="has-text-link" href="/roles/active" target="_self">
+                  Active
+                </a>
+              </li>
+
+              <li class="is-active">
+                <a class="has-text-link" href="/roles/inactive" target="_self">
+                  Inactive
                 </a>
               </li>
             </ul>

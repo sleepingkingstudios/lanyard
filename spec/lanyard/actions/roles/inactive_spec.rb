@@ -5,7 +5,7 @@ require 'rails_helper'
 require 'cuprum/rails/repository'
 require 'cuprum/rails/rspec/contracts/actions/index_contracts'
 
-RSpec.describe Lanyard::Actions::Roles::Active do
+RSpec.describe Lanyard::Actions::Roles::Inactive do
   include Cuprum::Rails::RSpec::Contracts::Actions::IndexContracts
 
   subject(:action) { described_class.new }
@@ -19,7 +19,7 @@ RSpec.describe Lanyard::Actions::Roles::Active do
   end
   let(:previous_cycle) { FactoryBot.build(:cycle, year: 1999) }
   let(:previous_role) do
-    FactoryBot.build(:role, :offered, cycle: previous_cycle)
+    FactoryBot.build(:role, :accepted, cycle: previous_cycle)
   end
   let(:current_cycle) { FactoryBot.build(:cycle, year: 2000) }
   let(:roles) do
@@ -33,7 +33,7 @@ RSpec.describe Lanyard::Actions::Roles::Active do
   end
   let(:expected_roles) do
     roles
-      .reject { |role| role.status == Role::Statuses::CLOSED }
+      .select { |role| role.status == Role::Statuses::CLOSED }
       .sort_by(&:slug)
   end
   let(:expected_value) do

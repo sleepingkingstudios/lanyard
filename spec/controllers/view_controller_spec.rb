@@ -29,6 +29,10 @@ RSpec.describe ViewController, type: :controller do
               {
                 label: 'Active',
                 url:   '/roles/active'
+              },
+              {
+                label: 'Inactive',
+                url:   '/roles/inactive'
               }
             ]
           },

@@ -85,5 +85,6 @@ class RolesController < ViewController
   action :update,  Lanyard::Actions::Roles::Update, member: true
   action :destroy, Librum::Core::Actions::Destroy,  member: true
 
-  action :active,  Lanyard::Actions::Roles::Active, member: false
+  action :active,   Lanyard::Actions::Roles::Active,   member: false
+  action :inactive, Lanyard::Actions::Roles::Inactive, member: false
 end

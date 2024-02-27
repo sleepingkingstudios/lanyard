@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module Lanyard::Actions::Roles
-  # Action for querying active roles in the current cycle.
-  class Active < Cuprum::Rails::Actions::Index
+  # Action for querying inactive roles in the current cycle.
+  class Inactive < Cuprum::Rails::Actions::Index
     include Lanyard::Actions::Roles::Concerns::CurrentCycle
 
     SCOPE =
       Cuprum::Collections::Scope
-      .new { { 'status' => not_equal(Role::Statuses::CLOSED) } }
+      .new({ 'status' => Role::Statuses::CLOSED })
       .freeze
     private_constant :SCOPE
 
