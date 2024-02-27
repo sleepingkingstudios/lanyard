@@ -120,10 +120,15 @@ RSpec.describe RolesController, type: :controller do
   describe '.responders' do
     include_contract 'should respond to format',
       :html,
-      using: Librum::Core::Responders::Html::ResourceResponder
+      using: Lanyard::Responders::Html::ResourceResponder
 
     include_contract 'should not respond to format', :json
   end
+
+  include_contract 'should define action',
+    :active,
+    Lanyard::Actions::Roles::Active,
+    member: false
 
   include_contract 'should define action',
     :create,
@@ -139,6 +144,16 @@ RSpec.describe RolesController, type: :controller do
     :edit,
     Librum::Core::Actions::Show,
     member: true
+
+  include_contract 'should define action',
+    :expiring,
+    Lanyard::Actions::Roles::Expiring,
+    member: false
+
+  include_contract 'should define action',
+    :inactive,
+    Lanyard::Actions::Roles::Inactive,
+    member: false
 
   include_contract 'should define action',
     :index,

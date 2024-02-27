@@ -1,0 +1,19 @@
+<%=
+  render(
+    Librum::Core::View::Components::Heading.new(
+      'Roles',
+      buttons: buttons
+    )
+  )
+%>
+
+<%=
+  render(
+    Librum::Core::View::Components::Tabs.new(
+      tabs:   tabs,
+      active: action_name
+    )
+  )
+%>
+
+<%= render_data_table %>

@@ -75,7 +75,7 @@ class RolesController < ViewController
     only: %i[create edit new update]
   )
 
-  responder :html, Librum::Core::Responders::Html::ResourceResponder
+  responder :html, Lanyard::Responders::Html::ResourceResponder
 
   action :index,   Librum::Core::Actions::Index,    member: false
   action :new,     Cuprum::Rails::Actions::New,     member: false
@@ -84,4 +84,8 @@ class RolesController < ViewController
   action :edit,    Librum::Core::Actions::Show,     member: true
   action :update,  Lanyard::Actions::Roles::Update, member: true
   action :destroy, Librum::Core::Actions::Destroy,  member: true
+
+  action :active,   Lanyard::Actions::Roles::Active,   member: false
+  action :expiring, Lanyard::Actions::Roles::Expiring, member: false
+  action :inactive, Lanyard::Actions::Roles::Inactive, member: false
 end

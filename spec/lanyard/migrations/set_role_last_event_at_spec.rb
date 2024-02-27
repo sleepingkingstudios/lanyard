@@ -7,15 +7,17 @@ RSpec.describe Lanyard::Migrations::SetRoleLastEventAt do
   let(:role_without_events) do
     FactoryBot.build(
       :role,
-      cycle:      cycle,
-      created_at: 2.weeks.ago
+      cycle:         cycle,
+      created_at:    2.weeks.ago,
+      last_event_at: nil
     )
   end
   let(:role_with_events) do
     FactoryBot.build(
       :role,
-      cycle:      cycle,
-      created_at: 1.week.ago
+      cycle:         cycle,
+      created_at:    1.week.ago,
+      last_event_at: nil
     )
   end
   let(:roles) do
