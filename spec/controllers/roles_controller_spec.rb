@@ -2,8 +2,100 @@
 
 require 'rails_helper'
 
+require 'cuprum/rails/rspec/contracts/responder_contracts'
+
 RSpec.describe RolesController, type: :controller do
   include Librum::Core::RSpec::Contracts::ControllerContracts
+
+  describe '::Responder' do
+    include Cuprum::Rails::RSpec::Contracts::ResponderContracts
+    include Librum::Core::RSpec::Contracts::Responders::HtmlContracts
+
+    subject(:responder) { described_class.new(**constructor_options) }
+
+    let(:described_class) { super()::Responder }
+    let(:controller)      { RolesController.new } # rubocop:disable RSpec/DescribedClass
+    let(:action_name)     { 'implement' }
+    let(:member_action)   { false }
+    let(:request)         { Cuprum::Rails::Request.new }
+    let(:constructor_options) do
+      {
+        action_name:   action_name,
+        controller:    controller,
+        member_action: member_action,
+        request:       request
+      }
+    end
+
+    describe '#call' do
+      context 'when initialized with action_name: apply' do
+        let(:action_name)   { 'apply' }
+        let(:member_action) { true }
+
+        describe 'with a result with an InvalidStatusTransition error' do
+          let(:error) do
+            Lanyard::Errors::Roles::InvalidStatusTransition.new(
+              current_status: Role::Statuses::CLOSED,
+              status:         Role::Statuses::APPLIED,
+              valid_statuses: [Role::Statuses::NEW]
+            )
+          end
+          let(:result) { Cuprum::Result.new(error: error) }
+          let(:flash) do
+            message =
+              'Unable to transition Role from status "Closed" to status ' \
+              '"Applied"'
+
+            {
+              warning: {
+                icon:    'exclamation-triangle',
+                message: message
+              }
+            }
+          end
+
+          include_contract 'should redirect back', flash: -> { flash }
+        end
+
+        describe 'with a failing result' do
+          let(:result) { Cuprum::Rails::Result.new(status: :failure) }
+          let(:flash) do
+            {
+              warning: {
+                icon:    'exclamation-triangle',
+                message: 'Unable to apply for role'
+              }
+            }
+          end
+
+          include_contract 'should redirect back', flash: -> { flash }
+        end
+
+        describe 'with a passing result' do
+          let(:role) do
+            FactoryBot.build(
+              :role,
+              job_title: 'Monster Trainer',
+              slug:      'custom-role'
+            )
+          end
+          let(:result) { Cuprum::Rails::Result.new(value: { 'role' => role }) }
+          let(:flash) do
+            {
+              success: {
+                icon:    'circle-check',
+                message: "Successfully applied for role #{role.job_title}"
+              }
+            }
+          end
+
+          include_contract 'should redirect to',
+            '/roles/active',
+            flash: -> { flash }
+        end
+      end
+    end
+  end
 
   describe '.breadcrumbs' do
     let(:expected) do
@@ -120,7 +212,7 @@ RSpec.describe RolesController, type: :controller do
   describe '.responders' do
     include_contract 'should respond to format',
       :html,
-      using: Lanyard::Responders::Html::ResourceResponder
+      using: described_class::Responder
 
     include_contract 'should not respond to format', :json
   end
@@ -129,6 +221,11 @@ RSpec.describe RolesController, type: :controller do
     :active,
     Lanyard::Actions::Roles::Active,
     member: false
+
+  include_contract 'should define action',
+    :apply,
+    Lanyard::Actions::Roles::Apply,
+    member: true
 
   include_contract 'should define action',
     :create,

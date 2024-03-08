@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     get :expiring, on: :collection
     get :inactive, on: :collection
 
+    patch :apply, on: :member
+
     resources :events,
       controller: 'role_events',
       only:       %i[index new create show edit update]
