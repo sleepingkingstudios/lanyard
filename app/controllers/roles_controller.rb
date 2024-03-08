@@ -5,6 +5,50 @@ require 'cuprum/rails/actions/middleware/resources/find'
 
 # Class for managing job applications.
 class RolesController < ViewController
+  # Responder class for role event requests.
+  class Responder < Lanyard::Responders::Html::ResourceResponder
+    action :apply do
+      match :success do |result|
+        role    = result.value&.then { |hsh| hsh['role'] }
+        path    = "#{routes.index_path}/active"
+        message = 'Successfully applied for role'
+        message += " #{role.job_title}" if role&.job_title.present?
+        flash   = {
+          success: { icon: 'circle-check', message: message }
+        }
+
+        redirect_to(path, flash: flash)
+      end
+
+      match :failure, error: Lanyard::Errors::Roles::InvalidStatusTransition \
+      do |result|
+        redirect_back(flash: invalid_status_transition_flash(result.error))
+      end
+
+      match :failure do
+        role    = result.value&.then { |hsh| hsh['role'] }
+        message = 'Unable to apply for role'
+        message += " #{role.job_title}" if role&.job_title.present?
+        flash = {
+          warning: { icon: 'exclamation-triangle', message: message }
+        }
+
+        redirect_back(flash: flash)
+      end
+    end
+
+    private
+
+    def invalid_status_transition_flash(error)
+      current = error.current_status.titleize.inspect
+      status  = error.status.titleize.inspect
+      message =
+        "Unable to transition Role from status #{current} to status #{status}"
+
+      { warning: { icon: 'exclamation-triangle', message: message } }
+    end
+  end
+
   def self.breadcrumbs
     @breadcrumbs ||= [
       {
@@ -75,7 +119,7 @@ class RolesController < ViewController
     only: %i[create edit new update]
   )
 
-  responder :html, Lanyard::Responders::Html::ResourceResponder
+  responder :html, Responder
 
   action :index,   Librum::Core::Actions::Index,    member: false
   action :new,     Cuprum::Rails::Actions::New,     member: false
@@ -86,6 +130,7 @@ class RolesController < ViewController
   action :destroy, Librum::Core::Actions::Destroy,  member: true
 
   action :active,   Lanyard::Actions::Roles::Active,   member: false
+  action :apply,    Lanyard::Actions::Roles::Apply,    member: true
   action :expiring, Lanyard::Actions::Roles::Expiring, member: false
   action :inactive, Lanyard::Actions::Roles::Inactive, member: false
 end
