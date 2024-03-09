@@ -115,5 +115,59 @@ RSpec.describe Lanyard::Actions::Roles::Apply do
         expect(role.status).to be == Role::Statuses::APPLIED
       end
     end
+
+    describe 'with a valid role slug' do
+      let(:role) do
+        FactoryBot.create(
+          :role,
+          :with_cycle,
+          updated_at:    1.day.ago,
+          last_event_at: 1.day.ago
+        )
+      end
+      let(:params) { super().merge('role_id' => role.slug) }
+      let(:expected_slug) do
+        "#{Time.current.to_date.iso8601}-0-applied"
+      end
+      let(:expected_attributes) do
+        {
+          'event_date'  => Time.current.to_date,
+          'event_index' => 0,
+          'role_id'     => role.id,
+          'slug'        => expected_slug,
+          'type'        => RoleEvents::AppliedEvent.name
+        }
+      end
+      let(:expected_value) do
+        {
+          'role'       => role,
+          'role_event' => be_a(RoleEvents::AppliedEvent).and(
+            have_attributes(expected_attributes)
+          )
+        }
+      end
+
+      it 'should return a passing result', :aggregate_failures do
+        result = call_action
+
+        expect(result).to be_a_passing_result
+        expect(result.value).to deep_match(expected_value)
+      end
+
+      it 'should create the role event', :aggregate_failures do
+        expect { call_action }.to(change { role.reload.events.count }.by(1))
+
+        expect(role.events.last).to have_attributes(expected_attributes)
+      end
+
+      it 'should update the role', :aggregate_failures do
+        call_action
+
+        role.reload
+        expect(role.updated_at.to_i).to be == current_time.to_i
+        expect(role.last_event_at).to be == current_time.to_date
+        expect(role.status).to be == Role::Statuses::APPLIED
+      end
+    end
   end
 end
