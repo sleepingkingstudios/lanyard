@@ -144,5 +144,54 @@ RSpec.describe Lanyard::View::Roles::ShowPage, type: :component do
 
       it { expect(rendered).to match_snapshot(snapshot) }
     end
+
+    describe 'with an expiring role' do
+      let(:role) do
+        FactoryBot.create(
+          :role,
+          :with_cycle,
+          :applied,
+          slug:          'custom-role',
+          last_event_at: 3.weeks.ago
+        )
+      end
+      let(:heading_snapshot) do
+        <<~HTML.strip
+          <div class="level">
+            <div class="level-left">
+              <div class="level-item">
+                <h1 class="title">Role</h1>
+              </div>
+            </div>
+
+            <div class="level-right">
+              <div class="level-item">
+                <form action="/roles/custom-role/expire" accept-charset="UTF-8" method="post">
+                  <input type="hidden" name="_method" value="patch" autocomplete="off">
+
+                  <button type="submit" class="button is-gray is-light">Expire Role</button>
+                </form>
+              </div>
+
+              <div class="level-item">
+                <a class="button is-warning is-light" href="/roles/custom-role/edit" target="_self">
+                  Update Role
+                </a>
+              </div>
+
+              <div class="level-item">
+                <form action="/roles/custom-role" accept-charset="UTF-8" method="post">
+                  <input type="hidden" name="_method" value="delete" autocomplete="off">
+
+                  <button type="submit" class="button is-danger is-light">Destroy Role</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
   end
 end

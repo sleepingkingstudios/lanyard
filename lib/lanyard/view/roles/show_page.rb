@@ -24,7 +24,19 @@ module Lanyard::View::Roles
 
       buttons.prepend(apply_button) if role.status == Role::Statuses::NEW
 
+      buttons.prepend(expire_button) if role.expiring?
+
       buttons
+    end
+
+    def expire_button
+      {
+        color:       'gray',
+        http_method: 'patch',
+        label:       'Expire Role',
+        light:       true,
+        url:         expire_role_path(role.slug)
+      }
     end
   end
 end

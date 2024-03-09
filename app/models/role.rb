@@ -48,6 +48,16 @@ class Role < ApplicationRecord # rubocop:disable Metrics/ClassLength
     CLOSED:       'closed'
   ).freeze
 
+  ### Scopes
+  EXPIRING = lambda do
+    Cuprum::Collections::Scope.new do
+      {
+        status:        not_equal(Statuses::CLOSED),
+        last_event_at: less_than_or_equal_to(2.weeks.ago)
+      }
+    end
+  end
+
   ### Attributes
   data_property :benefits, predicate: true
   data_property :benefits_details
@@ -111,6 +121,14 @@ class Role < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def contract?
     contract_type == ContractTypes::CONTRACT ||
       contract_type == ContractTypes::CONTRACT_TO_HIRE
+  end
+
+  # @return [Boolean] true if the role is active and last activity was two weeks
+  #   ago or more; otherwise false.
+  def expiring?
+    return false unless last_event_at
+
+    status != Statuses::CLOSED && last_event_at < 2.weeks.ago
   end
 
   # @return [Boolean] true if the role is a full-time role; otherwise false.

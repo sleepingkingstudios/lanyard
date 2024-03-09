@@ -26,6 +26,68 @@ RSpec.describe Role, type: :model do
     }
   end
 
+  describe '::EXPIRING' do
+    let(:current_time) { Time.current }
+    let(:scope)        { described_class::EXPIRING.call }
+    let(:collection) do
+      Cuprum::Rails::Collection.new(entity_class: described_class)
+    end
+
+    before(:example) do
+      allow(Time).to receive(:current).and_return(current_time)
+    end
+
+    include_examples 'should define constant', :EXPIRING, -> { be_a Proc }
+
+    it { expect(scope).to be_a Cuprum::Collections::Scope }
+
+    context 'when there are many roles' do
+      let(:cycle) { FactoryBot.create(:cycle) }
+      let(:expiring_roles) do
+        [
+          described_class::Statuses::APPLIED,
+          described_class::Statuses::INTERVIEWING,
+          described_class::Statuses::OFFERED,
+          described_class::Statuses::NEW
+        ]
+          .map do |status|
+            FactoryBot.build(
+              :role,
+              cycle:         cycle,
+              status:        status,
+              last_event_at: 15.days.ago
+            )
+          end
+      end
+      let(:other_roles) do
+        [
+          FactoryBot.build(
+            :role,
+            cycle:         cycle,
+            status:        described_class::Statuses::APPLIED,
+            last_event_at: 13.days.ago
+          ),
+          FactoryBot.build(
+            :role,
+            cycle:         cycle,
+            status:        described_class::Statuses::CLOSED,
+            last_event_at: 15.days.ago
+          )
+        ]
+      end
+      let(:matching_roles) do
+        collection.find_matching.call(where: scope).value
+      end
+
+      before(:example) do
+        expiring_roles.each(&:save!)
+        other_roles.each(&:save!)
+      end
+
+      it { expect(matching_roles).to match_array(expiring_roles) }
+    end
+  end
+
   describe '::CompensationTypes' do
     let(:expected_types) do
       {
@@ -363,6 +425,122 @@ RSpec.describe Role, type: :model do
       :data,
       default: {},
       value:   { 'custom_key' => 'custom value' }
+  end
+
+  describe '#expiring?' do
+    include_examples 'should define predicate', :expiring?
+
+    context 'when initialized with status: "applied"' do
+      let(:attributes) do
+        super().merge(status: described_class::Statuses::APPLIED)
+      end
+
+      it { expect(role.expiring?).to be false }
+
+      context 'when the last event is less than two weeks ago' do
+        let(:attributes) do
+          super().merge(last_event_at: 13.days.ago)
+        end
+
+        it { expect(role.expiring?).to be false }
+      end
+
+      context 'when the last event is more than two weeks ago' do
+        let(:attributes) do
+          super().merge(last_event_at: 15.days.ago)
+        end
+
+        it { expect(role.expiring?).to be true }
+      end
+    end
+
+    context 'when initialized with status: "closed"' do
+      let(:attributes) do
+        super().merge(status: described_class::Statuses::CLOSED)
+      end
+
+      it { expect(role.expiring?).to be false }
+
+      context 'when the last event is more than two weeks ago' do
+        let(:attributes) do
+          super().merge(last_event_at: 15.days.ago)
+        end
+
+        it { expect(role.expiring?).to be false }
+      end
+    end
+
+    context 'when initialized with status: "interviewing"' do
+      let(:attributes) do
+        super().merge(status: described_class::Statuses::INTERVIEWING)
+      end
+
+      it { expect(role.expiring?).to be false }
+
+      context 'when the last event is less than two weeks ago' do
+        let(:attributes) do
+          super().merge(last_event_at: 13.days.ago)
+        end
+
+        it { expect(role.expiring?).to be false }
+      end
+
+      context 'when the last event is more than two weeks ago' do
+        let(:attributes) do
+          super().merge(last_event_at: 15.days.ago)
+        end
+
+        it { expect(role.expiring?).to be true }
+      end
+    end
+
+    context 'when initialized with status: "offered"' do
+      let(:attributes) do
+        super().merge(status: described_class::Statuses::OFFERED)
+      end
+
+      it { expect(role.expiring?).to be false }
+
+      context 'when the last event is less than two weeks ago' do
+        let(:attributes) do
+          super().merge(last_event_at: 13.days.ago)
+        end
+
+        it { expect(role.expiring?).to be false }
+      end
+
+      context 'when the last event is more than two weeks ago' do
+        let(:attributes) do
+          super().merge(last_event_at: 15.days.ago)
+        end
+
+        it { expect(role.expiring?).to be true }
+      end
+    end
+
+    context 'when initialized with status: "new"' do
+      let(:attributes) do
+        super().merge(status: described_class::Statuses::NEW)
+      end
+
+      it { expect(role.expiring?).to be false }
+
+      context 'when the last event is less than two weeks ago' do
+        let(:attributes) do
+          super().merge(last_event_at: 13.days.ago)
+        end
+
+        it { expect(role.expiring?).to be false }
+      end
+
+      context 'when the last event is more than two weeks ago' do
+        let(:attributes) do
+          super().merge(last_event_at: 15.days.ago)
+        end
+
+        it { expect(role.expiring?).to be true }
+      end
+    end
   end
 
   describe '#full_time?' do

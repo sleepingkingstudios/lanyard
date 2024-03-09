@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Lanyard::Actions::Roles::Apply do
+RSpec.describe Lanyard::Actions::Roles::Expire do
   subject(:action) { described_class.new }
 
   let(:params)     { {} }
@@ -67,27 +67,30 @@ RSpec.describe Lanyard::Actions::Roles::Apply do
         FactoryBot.create(
           :role,
           :with_cycle,
-          updated_at:    1.day.ago,
-          last_event_at: 1.day.ago
+          updated_at:    1.month.ago,
+          last_event_at: 1.month.ago
         )
       end
       let(:params) { super().merge('role_id' => role.id) }
+      let!(:expected_date) do
+        (role.last_event_at + 2.weeks).to_date
+      end
       let(:expected_slug) do
-        "#{Time.current.to_date.iso8601}-0-applied"
+        "#{expected_date}-0-expired"
       end
       let(:expected_attributes) do
         {
-          'event_date'  => Time.current.to_date,
+          'event_date'  => expected_date,
           'event_index' => 0,
           'role_id'     => role.id,
           'slug'        => expected_slug,
-          'type'        => RoleEvents::AppliedEvent.name
+          'type'        => RoleEvents::ExpiredEvent.name
         }
       end
       let(:expected_value) do
         {
           'role'       => role,
-          'role_event' => be_a(RoleEvents::AppliedEvent).and(
+          'role_event' => be_a(RoleEvents::ExpiredEvent).and(
             have_attributes(expected_attributes)
           )
         }
@@ -111,8 +114,8 @@ RSpec.describe Lanyard::Actions::Roles::Apply do
 
         role.reload
         expect(role.updated_at.to_i).to be == current_time.to_i
-        expect(role.last_event_at).to be == current_time.to_date
-        expect(role.status).to be == Role::Statuses::APPLIED
+        expect(role.last_event_at).to be == expected_date
+        expect(role.status).to be == Role::Statuses::CLOSED
       end
     end
 
@@ -142,27 +145,30 @@ RSpec.describe Lanyard::Actions::Roles::Apply do
         FactoryBot.create(
           :role,
           :with_cycle,
-          updated_at:    1.day.ago,
-          last_event_at: 1.day.ago
+          updated_at:    1.month.ago,
+          last_event_at: 1.month.ago
         )
       end
       let(:params) { super().merge('role_id' => role.slug) }
+      let!(:expected_date) do
+        (role.last_event_at + 2.weeks).to_date
+      end
       let(:expected_slug) do
-        "#{Time.current.to_date.iso8601}-0-applied"
+        "#{expected_date}-0-expired"
       end
       let(:expected_attributes) do
         {
-          'event_date'  => Time.current.to_date,
+          'event_date'  => expected_date,
           'event_index' => 0,
           'role_id'     => role.id,
           'slug'        => expected_slug,
-          'type'        => RoleEvents::AppliedEvent.name
+          'type'        => RoleEvents::ExpiredEvent.name
         }
       end
       let(:expected_value) do
         {
           'role'       => role,
-          'role_event' => be_a(RoleEvents::AppliedEvent).and(
+          'role_event' => be_a(RoleEvents::ExpiredEvent).and(
             have_attributes(expected_attributes)
           )
         }
@@ -186,8 +192,8 @@ RSpec.describe Lanyard::Actions::Roles::Apply do
 
         role.reload
         expect(role.updated_at.to_i).to be == current_time.to_i
-        expect(role.last_event_at).to be == current_time.to_date
-        expect(role.status).to be == Role::Statuses::APPLIED
+        expect(role.last_event_at).to be == expected_date
+        expect(role.status).to be == Role::Statuses::CLOSED
       end
     end
   end

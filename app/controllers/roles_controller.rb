@@ -37,6 +37,36 @@ class RolesController < ViewController
       end
     end
 
+    action :expire do
+      match :success do |result|
+        role    = result.value&.then { |hsh| hsh['role'] }
+        path    = "#{routes.index_path}/expiring"
+        message = 'Successfully expired role'
+        message += " #{role.job_title}" if role&.job_title.present?
+        flash   = {
+          success: { icon: 'circle-check', message: message }
+        }
+
+        redirect_to(path, flash: flash)
+      end
+
+      match :failure, error: Lanyard::Errors::Roles::InvalidStatusTransition \
+      do |result|
+        redirect_back(flash: invalid_status_transition_flash(result.error))
+      end
+
+      match :failure do
+        role    = result.value&.then { |hsh| hsh['role'] }
+        message = 'Unable to expire role'
+        message += " #{role.job_title}" if role&.job_title.present?
+        flash = {
+          warning: { icon: 'exclamation-triangle', message: message }
+        }
+
+        redirect_back(flash: flash)
+      end
+    end
+
     private
 
     def invalid_status_transition_flash(error)
@@ -131,6 +161,7 @@ class RolesController < ViewController
 
   action :active,   Lanyard::Actions::Roles::Active,   member: false
   action :apply,    Lanyard::Actions::Roles::Apply,    member: true
+  action :expire,   Lanyard::Actions::Roles::Expire,   member: true
   action :expiring, Lanyard::Actions::Roles::Expiring, member: false
   action :inactive, Lanyard::Actions::Roles::Inactive, member: false
 end
