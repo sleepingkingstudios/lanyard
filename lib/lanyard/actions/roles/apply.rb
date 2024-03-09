@@ -28,7 +28,9 @@ module Lanyard::Actions::Roles
     end
 
     def require_role
-      roles_collection.find_one.call(primary_key: step { role_id })
+      Librum::Core::Models::Queries::FindOne
+        .new(collection: roles_collection)
+        .call(value: step { role_id })
     end
 
     def role_id
