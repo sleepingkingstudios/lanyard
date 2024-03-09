@@ -94,6 +94,78 @@ RSpec.describe RolesController, type: :controller do
             flash: -> { flash }
         end
       end
+
+      context 'when initialized with action_name: expire' do
+        let(:action_name)   { 'expire' }
+        let(:member_action) { true }
+
+        describe 'with a result with an InvalidStatusTransition error' do
+          let(:error) do
+            Lanyard::Errors::Roles::InvalidStatusTransition.new(
+              current_status: Role::Statuses::CLOSED,
+              status:         Role::Statuses::CLOSED,
+              valid_statuses: [
+                Role::Statuses::NEW,
+                Role::Statuses::APPLIED,
+                Role::Statuses::INTERVIEWING,
+                Role::Statuses::OFFERED
+              ]
+            )
+          end
+          let(:result) { Cuprum::Result.new(error: error) }
+          let(:flash) do
+            message =
+              'Unable to transition Role from status "Closed" to status ' \
+              '"Closed"'
+
+            {
+              warning: {
+                icon:    'exclamation-triangle',
+                message: message
+              }
+            }
+          end
+
+          include_contract 'should redirect back', flash: -> { flash }
+        end
+
+        describe 'with a failing result' do
+          let(:result) { Cuprum::Rails::Result.new(status: :failure) }
+          let(:flash) do
+            {
+              warning: {
+                icon:    'exclamation-triangle',
+                message: 'Unable to expire role'
+              }
+            }
+          end
+
+          include_contract 'should redirect back', flash: -> { flash }
+        end
+
+        describe 'with a passing result' do
+          let(:role) do
+            FactoryBot.build(
+              :role,
+              job_title: 'Monster Trainer',
+              slug:      'custom-role'
+            )
+          end
+          let(:result) { Cuprum::Rails::Result.new(value: { 'role' => role }) }
+          let(:flash) do
+            {
+              success: {
+                icon:    'circle-check',
+                message: "Successfully expired role #{role.job_title}"
+              }
+            }
+          end
+
+          include_contract 'should redirect to',
+            '/roles/expiring',
+            flash: -> { flash }
+        end
+      end
     end
   end
 
@@ -240,6 +312,11 @@ RSpec.describe RolesController, type: :controller do
   include_contract 'should define action',
     :edit,
     Librum::Core::Actions::Show,
+    member: true
+
+  include_contract 'should define action',
+    :expire,
+    Lanyard::Actions::Roles::Expire,
     member: true
 
   include_contract 'should define action',
