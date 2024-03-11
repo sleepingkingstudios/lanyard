@@ -29,6 +29,7 @@ gem 'cuprum-collections',
   branch: 'main',
   git:    'https://github.com/sleepingkingstudios/cuprum-collections'
 gem 'cuprum-rails',
+  '>= 0.3.0.alpha',
   branch: 'main',
   git:    'https://github.com/sleepingkingstudios/cuprum-rails'
 gem 'stannum', '~> 0.3'
