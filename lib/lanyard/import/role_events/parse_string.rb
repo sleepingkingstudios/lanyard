@@ -7,6 +7,8 @@ module Lanyard::Import::RoleEvents
       'applied'   => RoleEvents::AppliedEvent,
       'closed'    => RoleEvents::ClosedEvent,
       'contacted' => RoleEvents::ContactedEvent,
+      'interview' => RoleEvents::InterviewEvent,
+      'offered'   => RoleEvents::OfferedEvent,
       'pitched'   => RoleEvents::PitchedEvent,
       'rejected'  => RoleEvents::RejectedEvent,
       'submitted' => RoleEvents::PitchedEvent
@@ -16,6 +18,16 @@ module Lanyard::Import::RoleEvents
     MONTHS = %w[jan feb mar apr may jun jul aug sep oct nov dec].freeze
     private_constant :MONTHS
 
+    # @param [Integer] the year for implicit date resolution.
+    def initialize(year:)
+      super()
+
+      @year = year
+    end
+
+    # @return [Integer] the year for implicit date resolution.
+    attr_reader :year
+
     private
 
     attr_reader :raw_value
@@ -23,7 +35,6 @@ module Lanyard::Import::RoleEvents
     def parse_date(raw_month, raw_day)
       month = step { parse_month(raw_month) }
       day   = step { validate_day(raw_day) }
-      year  = month > 6 ? 2023 : 2024
 
       Date.new(year, month, day)
     rescue Date::Error

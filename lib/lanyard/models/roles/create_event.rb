@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'cuprum/rails/transaction'
+
 module Lanyard::Models::Roles
   # Adds a new event to the role.
   class CreateEvent < Cuprum::Command
