@@ -31,12 +31,15 @@ class Role < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Enumerates role sources.
   Sources = SleepingKingStudios::Tools::Toolbox::ConstantMap.new(
+    DICE:     'dice',
     EMAIL:    'email',
     HIRED:    'hired',
+    INDEED:   'indeed',
     LINKEDIN: 'linkedin',
     OTHER:    'other',
     REFERRAL: 'referral',
-    UNKNOWN:  'unknown'
+    UNKNOWN:  'unknown',
+    WEBSITE:  'website'
   ).freeze
 
   # Enumerates role statuses.
