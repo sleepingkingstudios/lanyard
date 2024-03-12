@@ -208,12 +208,15 @@ RSpec.describe Role, type: :model do
   describe '::Sources' do
     let(:expected_sources) do
       {
+        DICE:     'dice',
         EMAIL:    'email',
         HIRED:    'hired',
+        INDEED:   'indeed',
         LINKEDIN: 'linkedin',
         OTHER:    'other',
         REFERRAL: 'referral',
-        UNKNOWN:  'unknown'
+        UNKNOWN:  'unknown',
+        WEBSITE:  'website'
       }
     end
 
@@ -221,6 +224,12 @@ RSpec.describe Role, type: :model do
 
     it 'should enumerate the types' do
       expect(described_class::Sources.all).to be == expected_sources
+    end
+
+    describe '::DICE' do
+      it 'should store the value' do
+        expect(described_class::Sources::DICE).to be == 'dice'
+      end
     end
 
     describe '::EMAIL' do
@@ -232,6 +241,12 @@ RSpec.describe Role, type: :model do
     describe '::HIRED' do
       it 'should store the value' do
         expect(described_class::Sources::HIRED).to be == 'hired'
+      end
+    end
+
+    describe '::INDEED' do
+      it 'should store the value' do
+        expect(described_class::Sources::INDEED).to be == 'indeed'
       end
     end
 
@@ -256,6 +271,12 @@ RSpec.describe Role, type: :model do
     describe '::UNKNOWN' do
       it 'should store the value' do
         expect(described_class::Sources::UNKNOWN).to be == 'unknown'
+      end
+    end
+
+    describe '::WEBSITE' do
+      it 'should store the value' do
+        expect(described_class::Sources::WEBSITE).to be == 'website'
       end
     end
   end

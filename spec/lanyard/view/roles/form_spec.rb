@@ -165,9 +165,13 @@ RSpec.describe Lanyard::View::Roles::Form, type: :component do
                     <div class="control">
                       <div class="select">
                         <select name="role[source]" id="role_source">
+                          <option value="dice">Dice</option>
+
                           <option value="email">Email</option>
 
                           <option value="hired">Hired</option>
+
+                          <option value="indeed">Indeed</option>
 
                           <option value="linkedin">Linkedin</option>
 
@@ -176,6 +180,8 @@ RSpec.describe Lanyard::View::Roles::Form, type: :component do
                           <option value="referral" selected="selected">Referral</option>
 
                           <option value="unknown">Unknown</option>
+
+                          <option value="website">Website</option>
                         </select>
                       </div>
                     </div>
@@ -538,9 +544,13 @@ RSpec.describe Lanyard::View::Roles::Form, type: :component do
                     <div class="control">
                       <div class="select">
                         <select name="role[source]" id="role_source">
+                          <option value="dice">Dice</option>
+
                           <option value="email">Email</option>
 
                           <option value="hired">Hired</option>
+
+                          <option value="indeed">Indeed</option>
 
                           <option value="linkedin">Linkedin</option>
 
@@ -549,6 +559,8 @@ RSpec.describe Lanyard::View::Roles::Form, type: :component do
                           <option value="referral">Referral</option>
 
                           <option value="unknown" selected="selected">Unknown</option>
+
+                          <option value="website">Website</option>
                         </select>
                       </div>
                     </div>
