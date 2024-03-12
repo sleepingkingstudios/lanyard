@@ -40,9 +40,10 @@ module Lanyard::Import::Roles
       [items, attributes]
     end
 
-    def process(*items)
+    def process(attributes:)
+      items      = Array(attributes['notes'])
+      attributes = attributes.except('notes')
       normalized = Set.new(items.map { |item| normalize(item) })
-      attributes = {}
 
       items, attributes = parse_contract_type(items, attributes, normalized)
       items, attributes = parse_location_type(items, attributes, normalized)

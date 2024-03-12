@@ -10,36 +10,50 @@ RSpec.describe Lanyard::Import::Roles::ParseNotes do
   end
 
   describe '#call' do
-    it { expect(command).to be_callable.with_unlimited_arguments }
+    let(:attributes) { { 'other' => 'value' } }
 
-    describe 'with no items' do
+    it 'should define the method' do
+      expect(command).to be_callable.with(0).arguments.and_keywords(:attributes)
+    end
+
+    describe 'without a notes key' do
       it 'should return a passing result' do
-        expect(command.call)
+        expect(command.call(attributes: attributes))
           .to be_a_passing_result
-          .with_value({})
+          .with_value(attributes)
+      end
+    end
+
+    describe 'with notes: a String' do
+      let(:attributes) { super().merge('notes' => 'www.example.com') }
+
+      it 'should return a passing result' do
+        expect(command.call(attributes: attributes))
+          .to be_a_passing_result
+          .with_value(attributes)
       end
     end
 
     describe 'with one item' do
-      let(:items) { ['www.example.com'] }
-      let(:expected_value) do
-        { 'notes' => 'www.example.com' }
-      end
+      let(:attributes)     { super().merge('notes' => ['www.example.com']) }
+      let(:expected_value) { attributes.merge('notes' => 'www.example.com') }
 
       it 'should return a passing result' do
-        expect(command.call(*items))
+        expect(command.call(attributes: attributes))
           .to be_a_passing_result
           .with_value(expected_value)
       end
     end
 
     describe 'with many items' do
-      let(:items) do
-        [
-          'www.example.com',
-          'This is an example of notes',
-          'These are more notes'
-        ]
+      let(:attributes) do
+        super().merge(
+          'notes' => [
+            'www.example.com',
+            'This is an example of notes',
+            'These are more notes'
+          ]
+        )
       end
       let(:expected_value) do
         notes = <<~TEXT.strip
@@ -50,134 +64,160 @@ RSpec.describe Lanyard::Import::Roles::ParseNotes do
           These are more notes
         TEXT
 
-        { 'notes' => notes }
+        attributes.merge('notes' => notes)
       end
 
       it 'should return a passing result' do
-        expect(command.call(*items))
+        expect(command.call(attributes: attributes))
           .to be_a_passing_result
           .with_value(expected_value)
       end
     end
 
     describe 'with contract_type: "contract"' do
-      let(:items) { %w[Contract] }
+      let(:attributes) { super().merge('notes' => %w[Contract]) }
       let(:expected_value) do
-        { 'contract_type' => Role::ContractTypes::CONTRACT }
+        attributes
+          .dup
+          .tap { |hsh| hsh.delete('notes') }
+          .merge('contract_type' => Role::ContractTypes::CONTRACT)
       end
 
       it 'should return a passing result' do
-        expect(command.call(*items))
+        expect(command.call(attributes: attributes))
           .to be_a_passing_result
           .with_value(expected_value)
       end
     end
 
     describe 'with contract_type: "contract to hire"' do
-      let(:items) { ['Contract To Hire'] }
+      let(:attributes) { super().merge('notes' => ['Contract To Hire']) }
       let(:expected_value) do
-        { 'contract_type' => Role::ContractTypes::CONTRACT_TO_HIRE }
+        attributes
+          .dup
+          .tap { |hsh| hsh.delete('notes') }
+          .merge('contract_type' => Role::ContractTypes::CONTRACT_TO_HIRE)
       end
 
       it 'should return a passing result' do
-        expect(command.call(*items))
+        expect(command.call(attributes: attributes))
           .to be_a_passing_result
           .with_value(expected_value)
       end
     end
 
     describe 'with contract_type: "full time"' do
-      let(:items) { %w[full-time] }
+      let(:attributes) { super().merge('notes' => ['full-time']) }
       let(:expected_value) do
-        { 'contract_type' => Role::ContractTypes::FULL_TIME }
+        attributes
+          .dup
+          .tap { |hsh| hsh.delete('notes') }
+          .merge('contract_type' => Role::ContractTypes::FULL_TIME)
       end
 
       it 'should return a passing result' do
-        expect(command.call(*items))
+        expect(command.call(attributes: attributes))
           .to be_a_passing_result
           .with_value(expected_value)
       end
     end
 
     describe 'with location_type: "hybrid"' do
-      let(:items) { %w[Hybrid] }
+      let(:attributes) { super().merge('notes' => ['hybrid']) }
       let(:expected_value) do
-        { 'location_type' => Role::LocationTypes::HYBRID }
+        attributes
+          .dup
+          .tap { |hsh| hsh.delete('notes') }
+          .merge('location_type' => Role::LocationTypes::HYBRID)
       end
 
       it 'should return a passing result' do
-        expect(command.call(*items))
+        expect(command.call(attributes: attributes))
           .to be_a_passing_result
           .with_value(expected_value)
       end
     end
 
     describe 'with location_type: "hybrid" and a location' do
-      let(:items) { ['hybrid Low Earth Orbit'] }
+      let(:attributes) { super().merge('notes' => ['hybrid Low Earth Orbit']) }
       let(:expected_value) do
-        {
-          'location'      => 'Low Earth Orbit',
-          'location_type' => Role::LocationTypes::HYBRID
-        }
+        attributes
+          .dup
+          .tap { |hsh| hsh.delete('notes') }
+          .merge(
+            'location'      => 'Low Earth Orbit',
+            'location_type' => Role::LocationTypes::HYBRID
+          )
       end
 
       it 'should return a passing result' do
-        expect(command.call(*items))
+        expect(command.call(attributes: attributes))
           .to be_a_passing_result
           .with_value(expected_value)
       end
     end
 
     describe 'with location_type: "in person"' do
-      let(:items) { ['In Person'] }
+      let(:attributes) { super().merge('notes' => ['In Person']) }
       let(:expected_value) do
-        { 'location_type' => Role::LocationTypes::IN_PERSON }
+        attributes
+          .dup
+          .tap { |hsh| hsh.delete('notes') }
+          .merge('location_type' => Role::LocationTypes::IN_PERSON)
       end
 
       it 'should return a passing result' do
-        expect(command.call(*items))
+        expect(command.call(attributes: attributes))
           .to be_a_passing_result
           .with_value(expected_value)
       end
     end
 
     describe 'with location_type: "in person" and a location' do
-      let(:items) { ['in person - the Moon'] }
+      let(:attributes) { super().merge('notes' => ['in person - the Moon']) }
       let(:expected_value) do
-        {
-          'location'      => 'the Moon',
-          'location_type' => Role::LocationTypes::IN_PERSON
-        }
+        attributes
+          .dup
+          .tap { |hsh| hsh.delete('notes') }
+          .merge(
+            'location'      => 'the Moon',
+            'location_type' => Role::LocationTypes::IN_PERSON
+          )
       end
 
       it 'should return a passing result' do
-        expect(command.call(*items))
+        expect(command.call(attributes: attributes))
           .to be_a_passing_result
           .with_value(expected_value)
       end
     end
 
     describe 'with location_type: "remote"' do
-      let(:items) { %w[remote] }
+      let(:attributes) { super().merge('notes' => %w[remote]) }
       let(:expected_value) do
-        { 'location_type' => Role::LocationTypes::REMOTE }
+        attributes
+          .dup
+          .tap { |hsh| hsh.delete('notes') }
+          .merge('location_type' => Role::LocationTypes::REMOTE)
       end
 
       it 'should return a passing result' do
-        expect(command.call(*items))
+        expect(command.call(attributes: attributes))
           .to be_a_passing_result
           .with_value(expected_value)
       end
     end
 
     describe 'with mixed items' do
-      let(:items) do
-        [
-          'remote',
-          'www.example.com',
-          'Contract To Hire',
-          'This is an example of notes'
-        ]
+      let(:attributes) do
+        super().merge(
+          'notes' => [
+            'hybrid - Low Earth Orbit',
+            'www.example.com',
+            'Contract To Hire',
+            'This is an example of notes'
+          ]
+        )
       end
       let(:expected_value) do
         notes = <<~TEXT.strip
@@ -186,15 +226,16 @@ RSpec.describe Lanyard::Import::Roles::ParseNotes do
           This is an example of notes
         TEXT
 
-        {
+        attributes.merge(
           'contract_type' => Role::ContractTypes::CONTRACT_TO_HIRE,
-          'location_type' => Role::LocationTypes::REMOTE,
+          'location'      => 'Low Earth Orbit',
+          'location_type' => Role::LocationTypes::HYBRID,
           'notes'         => notes
-        }
+        )
       end
 
       it 'should return a passing result' do
-        expect(command.call(*items))
+        expect(command.call(attributes: attributes))
           .to be_a_passing_result
           .with_value(expected_value)
       end
