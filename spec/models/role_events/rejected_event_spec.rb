@@ -31,6 +31,7 @@ RSpec.describe RoleEvents::RejectedEvent, type: :model do
     include_examples 'should define immutable constant',
       :VALID_STATUSES,
       [
+        Role::Statuses::NEW,
         Role::Statuses::APPLIED,
         Role::Statuses::INTERVIEWING,
         Role::Statuses::OFFERED

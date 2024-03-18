@@ -41,7 +41,8 @@ RSpec.describe Lanyard::Models::RoleEvents::ListEventTypes do
           ['Closed',    RoleEvents::ClosedEvent.name],
           ['Contacted', RoleEvents::ContactedEvent.name],
           ['Expired',   RoleEvents::ExpiredEvent.name],
-          ['Pitched',   RoleEvents::PitchedEvent.name]
+          ['Pitched',   RoleEvents::PitchedEvent.name],
+          ['Rejected',  RoleEvents::RejectedEvent.name]
         ]
       end
 
