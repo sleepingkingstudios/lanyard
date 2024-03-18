@@ -231,6 +231,47 @@ RSpec.describe Lanyard::Models::Roles::GenerateSlug do
       end
     end
 
+    describe 'with attributes: { created_at: value }' do
+      let(:current_time) { Time.current }
+      let(:created_at)   { current_time - 7.days }
+      let(:attributes)   { super().merge('created_at' => created_at) }
+      let(:expected)     { created_at.strftime('%Y-%m-%d') }
+
+      before(:example) do
+        allow(Time).to receive(:current).and_return(current_time)
+
+        3.times do
+          FactoryBot.create(:role, :with_cycle, created_at: 1.day.ago)
+        end
+      end
+
+      context 'when there are no roles created on that date' do
+        let(:expected) { "#{super()}-0" }
+
+        it 'should return a passing result' do
+          expect(command.call(attributes: attributes))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+
+      context 'when there are many roles created on that date' do
+        let(:expected) { "#{super()}-3" }
+
+        before(:example) do
+          3.times do
+            FactoryBot.create(:role, :with_cycle, created_at: created_at)
+          end
+        end
+
+        it 'should return a passing result' do
+          expect(command.call(attributes: attributes))
+            .to be_a_passing_result
+            .with_value(expected)
+        end
+      end
+    end
+
     describe 'with attributes: { job_title: value }' do
       let(:job_title)  { 'Software Engineer' }
       let(:attributes) { super().merge('job_title' => job_title) }

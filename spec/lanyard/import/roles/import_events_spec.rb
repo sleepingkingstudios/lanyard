@@ -4,7 +4,7 @@ require 'rails_helper'
 
 require 'cuprum/rails/repository'
 
-RSpec.describe Lanyard::Import::Roles::GenerateEvents do
+RSpec.describe Lanyard::Import::Roles::ImportEvents do
   subject(:command) { described_class.new(repository: repository, **options) }
 
   let(:repository) { Cuprum::Rails::Repository.new }

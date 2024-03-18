@@ -39,19 +39,21 @@ module Lanyard::Models::Roles
     end
 
     def generate_slug_for(attributes)
+      created_at = attributes.fetch('created_at', Time.current)
+
       segments = [
-        generate_timestamp,
+        generate_timestamp(created_at),
         format_value(company_or_agency(attributes)),
         format_value(attributes['job_title'])
       ].compact
 
-      segments << role_index if segments.size == 1
+      segments << role_index(created_at) if segments.size == 1
 
       segments.join('-')
     end
 
-    def generate_timestamp
-      Time.current.strftime('%Y-%m-%d')
+    def generate_timestamp(created_at)
+      created_at.strftime('%Y-%m-%d')
     end
 
     def process(attributes:)
@@ -62,10 +64,11 @@ module Lanyard::Models::Roles
       generate_slug_for(attributes.stringify_keys)
     end
 
-    def role_index
+    def role_index(created_at)
       roles_collection
         .query
-        .where { { created_at: gte(Time.current.beginning_of_day) } }
+        .where { { created_at: gte(created_at.beginning_of_day) } }
+        .where { { created_at: lte(created_at.end_of_day) } }
         .count
     end
 

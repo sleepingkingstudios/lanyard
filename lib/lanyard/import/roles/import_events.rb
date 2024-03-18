@@ -4,7 +4,7 @@ require 'cuprum/rails/transaction'
 
 module Lanyard::Import::Roles
   # Creates lifecycle events from role attributes.
-  class GenerateEvents < Cuprum::Command
+  class ImportEvents < Cuprum::Command
     # @param repository [Cuprum::Collections::Repository] the repository for
     #   RoleEvent entities.
     # @param [Integer] the year for implicit date resolution.
