@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'cuprum/rails/transaction'
+
 module Lanyard::Models::Roles
   # Adds a new event to the role.
   class CreateEvent < Cuprum::Command
@@ -64,15 +66,7 @@ module Lanyard::Models::Roles
     end
 
     def transaction(&block)
-      result = nil
-
-      ActiveRecord::Base.transaction do
-        result = steps { block.call }
-
-        raise ActiveRecord::Rollback if result.failure?
-      end
-
-      result
+      Cuprum::Rails::Transaction.new.call(&block)
     end
 
     def update_role(role_event:)

@@ -7,6 +7,7 @@ class RoleEvents::RejectedEvent < RoleEvents::StatusEvent
 
   # The valid statuses for a role before applying the event.
   VALID_STATUSES = [
+    Role::Statuses::NEW,
     Role::Statuses::APPLIED,
     Role::Statuses::INTERVIEWING,
     Role::Statuses::OFFERED

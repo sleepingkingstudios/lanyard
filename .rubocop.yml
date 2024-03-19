@@ -72,6 +72,9 @@ Metrics/ModuleLength:
   Exclude:
     - spec/**/*_contract*.rb
 
+Naming/RescuedExceptionsVariableName:
+  PreferredName: exception
+
 RSpec/BeNil:
   Enabled: false
 

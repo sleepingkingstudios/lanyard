@@ -9,10 +9,10 @@ GIT
 
 GIT
   remote: https://github.com/sleepingkingstudios/cuprum-rails
-  revision: d7ca4a5be1e4ab3a6686f3f5282e178ae4fd4f15
+  revision: a8ea978f7912ac4974aacaee0984585d2c07ed56
   branch: main
   specs:
-    cuprum-rails (0.2.0)
+    cuprum-rails (0.3.0.alpha)
       cuprum (~> 1.2)
       cuprum-collections (~> 0.4)
       rails (>= 6.0, < 8)
@@ -333,7 +333,7 @@ DEPENDENCIES
   byebug
   cuprum (~> 1.2)
   cuprum-collections (>= 0.5.0.alpha)!
-  cuprum-rails!
+  cuprum-rails (>= 0.3.0.alpha)!
   debug
   factory_bot_rails (~> 6.2)
   importmap-rails
