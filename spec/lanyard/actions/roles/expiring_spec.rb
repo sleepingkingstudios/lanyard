@@ -28,31 +28,31 @@ RSpec.describe Lanyard::Actions::Roles::Expiring do
         :role,
         :new,
         cycle:         current_cycle,
-        last_event_at: 7.weeks.ago
+        last_event_at: (Role::EXPIRATION_TIME + 5.days).ago
       ),
       FactoryBot.build(
         :role,
         :applied,
         cycle:         current_cycle,
-        last_event_at: 6.weeks.ago
+        last_event_at: (Role::EXPIRATION_TIME + 4.days).ago
       ),
       FactoryBot.build(
         :role,
         :interviewing,
         cycle:         current_cycle,
-        last_event_at: 5.weeks.ago
+        last_event_at: (Role::EXPIRATION_TIME + 3.days).ago
       ),
       FactoryBot.build(
         :role,
         :offered,
         cycle:         current_cycle,
-        last_event_at: 4.weeks.ago
+        last_event_at: (Role::EXPIRATION_TIME + 2.days).ago
       ),
       FactoryBot.build(
         :role,
         :accepted,
         cycle:         current_cycle,
-        last_event_at: 3.weeks.ago
+        last_event_at: (Role::EXPIRATION_TIME + 1.day).ago
       )
     ]
   end
@@ -61,7 +61,7 @@ RSpec.describe Lanyard::Actions::Roles::Expiring do
       :role,
       :new,
       cycle:         current_cycle,
-      last_event_at: 1.week.ago
+      last_event_at: (Role::EXPIRATION_TIME - 1.day).ago
     )
   end
   let(:expected_roles) do
