@@ -26,6 +26,10 @@ RSpec.describe Role, type: :model do
     }
   end
 
+  describe '::EXPIRATION_TIME' do
+    include_examples 'should define constant', :EXPIRATION_TIME, -> { 4.weeks }
+  end
+
   describe '::EXPIRING' do
     let(:current_time) { Time.current }
     let(:scope)        { described_class::EXPIRING.call }
@@ -55,7 +59,7 @@ RSpec.describe Role, type: :model do
               :role,
               cycle:         cycle,
               status:        status,
-              last_event_at: 15.days.ago
+              last_event_at: (described_class::EXPIRATION_TIME + 1.day).ago
             )
           end
       end
@@ -65,13 +69,13 @@ RSpec.describe Role, type: :model do
             :role,
             cycle:         cycle,
             status:        described_class::Statuses::APPLIED,
-            last_event_at: 13.days.ago
+            last_event_at: (described_class::EXPIRATION_TIME - 1.day).ago
           ),
           FactoryBot.build(
             :role,
             cycle:         cycle,
             status:        described_class::Statuses::CLOSED,
-            last_event_at: 15.days.ago
+            last_event_at: (described_class::EXPIRATION_TIME + 1.day).ago
           )
         ]
       end
@@ -458,17 +462,21 @@ RSpec.describe Role, type: :model do
 
       it { expect(role.expiring?).to be false }
 
-      context 'when the last event is less than two weeks ago' do
+      context 'when the last event is less than the expiration time ago' do
         let(:attributes) do
-          super().merge(last_event_at: 13.days.ago)
+          super().merge(
+            last_event_at: (described_class::EXPIRATION_TIME - 1.day).ago
+          )
         end
 
         it { expect(role.expiring?).to be false }
       end
 
-      context 'when the last event is more than two weeks ago' do
+      context 'when the last event is more than the expiration time ago' do
         let(:attributes) do
-          super().merge(last_event_at: 15.days.ago)
+          super().merge(
+            last_event_at: (described_class::EXPIRATION_TIME + 1.day).ago
+          )
         end
 
         it { expect(role.expiring?).to be true }
@@ -482,9 +490,11 @@ RSpec.describe Role, type: :model do
 
       it { expect(role.expiring?).to be false }
 
-      context 'when the last event is more than two weeks ago' do
+      context 'when the last event is more than the expiration time ago' do
         let(:attributes) do
-          super().merge(last_event_at: 15.days.ago)
+          super().merge(
+            last_event_at: (described_class::EXPIRATION_TIME + 1.day).ago
+          )
         end
 
         it { expect(role.expiring?).to be false }
@@ -498,17 +508,21 @@ RSpec.describe Role, type: :model do
 
       it { expect(role.expiring?).to be false }
 
-      context 'when the last event is less than two weeks ago' do
+      context 'when the last event is less than the expiration time ago' do
         let(:attributes) do
-          super().merge(last_event_at: 13.days.ago)
+          super().merge(
+            last_event_at: (described_class::EXPIRATION_TIME - 1.day).ago
+          )
         end
 
         it { expect(role.expiring?).to be false }
       end
 
-      context 'when the last event is more than two weeks ago' do
+      context 'when the last event is more than the expiration time ago' do
         let(:attributes) do
-          super().merge(last_event_at: 15.days.ago)
+          super().merge(
+            last_event_at: (described_class::EXPIRATION_TIME + 1.day).ago
+          )
         end
 
         it { expect(role.expiring?).to be true }
@@ -522,17 +536,21 @@ RSpec.describe Role, type: :model do
 
       it { expect(role.expiring?).to be false }
 
-      context 'when the last event is less than two weeks ago' do
+      context 'when the last event is less than the expiration time ago' do
         let(:attributes) do
-          super().merge(last_event_at: 13.days.ago)
+          super().merge(
+            last_event_at: (described_class::EXPIRATION_TIME - 1.day).ago
+          )
         end
 
         it { expect(role.expiring?).to be false }
       end
 
-      context 'when the last event is more than two weeks ago' do
+      context 'when the last event is more than the expiration time ago' do
         let(:attributes) do
-          super().merge(last_event_at: 15.days.ago)
+          super().merge(
+            last_event_at: (described_class::EXPIRATION_TIME + 1.day).ago
+          )
         end
 
         it { expect(role.expiring?).to be true }
@@ -546,17 +564,21 @@ RSpec.describe Role, type: :model do
 
       it { expect(role.expiring?).to be false }
 
-      context 'when the last event is less than two weeks ago' do
+      context 'when the last event is less than the expiration time ago' do
         let(:attributes) do
-          super().merge(last_event_at: 13.days.ago)
+          super().merge(
+            last_event_at: (described_class::EXPIRATION_TIME - 1.day).ago
+          )
         end
 
         it { expect(role.expiring?).to be false }
       end
 
-      context 'when the last event is more than two weeks ago' do
+      context 'when the last event is more than the expiration time ago' do
         let(:attributes) do
-          super().merge(last_event_at: 15.days.ago)
+          super().merge(
+            last_event_at: (described_class::EXPIRATION_TIME + 1.day).ago
+          )
         end
 
         it { expect(role.expiring?).to be true }
