@@ -152,7 +152,7 @@ RSpec.describe Lanyard::View::Roles::ShowPage, type: :component do
           :with_cycle,
           :applied,
           slug:          'custom-role',
-          last_event_at: 3.weeks.ago
+          last_event_at: (Role::EXPIRATION_TIME + 1.day).ago
         )
       end
       let(:heading_snapshot) do

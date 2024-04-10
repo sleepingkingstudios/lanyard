@@ -6,6 +6,9 @@ require 'sleeping_king_studios/tools/toolbox/constant_map'
 class Role < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend Librum::Core::Models::DataProperties
 
+  # The time before a role is marked as expiring.
+  EXPIRATION_TIME = 4.weeks
+
   # Enumerates types of compensation for a role.
   CompensationTypes = SleepingKingStudios::Tools::Toolbox::ConstantMap.new(
     HOURLY:   'hourly',
@@ -52,11 +55,13 @@ class Role < ApplicationRecord # rubocop:disable Metrics/ClassLength
   ).freeze
 
   ### Scopes
+
+  # Scope for roles that are expiring, i.e. not closed but inactive.
   EXPIRING = lambda do
     Cuprum::Collections::Scope.new do
       {
         status:        not_equal(Statuses::CLOSED),
-        last_event_at: less_than_or_equal_to(2.weeks.ago)
+        last_event_at: less_than_or_equal_to(EXPIRATION_TIME.ago)
       }
     end
   end
@@ -131,7 +136,7 @@ class Role < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def expiring?
     return false unless last_event_at
 
-    status != Statuses::CLOSED && last_event_at < 2.weeks.ago
+    status != Statuses::CLOSED && last_event_at < EXPIRATION_TIME.ago
   end
 
   # @return [Boolean] true if the role is a full-time role; otherwise false.
