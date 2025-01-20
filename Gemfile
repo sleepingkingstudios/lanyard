@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 ruby '3.3.4'
 
-gem 'rails', '~> 7.0.7'
+gem 'rails', '~> 7.0.8'
 
 gem 'pg', '~> 1.5' # Use postgresql as the database for Active Record
 gem 'puma', '~> 5.0'
