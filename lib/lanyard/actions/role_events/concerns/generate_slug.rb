@@ -10,7 +10,7 @@ module Lanyard::Actions::RoleEvents::Concerns
         'slug' => step { generate_slug(attributes) }
       })
 
-      super(attributes: attributes)
+      super
     end
 
     def generate_slug(attributes)
@@ -26,7 +26,7 @@ module Lanyard::Actions::RoleEvents::Concerns
         })
       end
 
-      super(attributes: attributes)
+      super
     end
   end
 end

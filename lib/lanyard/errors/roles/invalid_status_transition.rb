@@ -28,7 +28,7 @@ module Lanyard::Errors::Roles
     private
 
     def as_json_data
-      super().merge(
+      super.merge(
         'current_status' => current_status.to_s,
         'valid_statuses' => valid_statuses.map(&:to_s)
       )

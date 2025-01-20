@@ -10,7 +10,7 @@ module Lanyard::Actions::RoleEvents::Concerns
         'event_index' => step { generate_index(attributes) }
       })
 
-      super(attributes: attributes)
+      super
     end
 
     def events_collection

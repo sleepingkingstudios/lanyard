@@ -3,6 +3,7 @@ require:
   - rubocop-rails
   - rubocop-rake
   - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
   NewCops: enable
@@ -97,7 +98,7 @@ RSpec/NamedSubject:
 RSpec/NestedGroups:
   Max: 5
 
-RSpec/Rails/InferredSpecType:
+RSpecRails/InferredSpecType:
   Enabled: false
 
 Style/ClassAndModuleChildren:
