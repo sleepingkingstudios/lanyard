@@ -10,7 +10,7 @@ module Lanyard::Actions::Cycles::Concerns
         'name' => step { generate_name(attributes) }
       })
 
-      super(attributes: attributes)
+      super
     end
 
     def generate_name(attributes)
@@ -26,7 +26,7 @@ module Lanyard::Actions::Cycles::Concerns
         })
       end
 
-      super(attributes: attributes)
+      super
     end
   end
 end

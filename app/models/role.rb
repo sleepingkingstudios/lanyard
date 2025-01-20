@@ -127,8 +127,10 @@ class Role < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # @return [Boolean] true if the role is a contract role; otherwise false.
   def contract?
+    # rubocop:disable Style/MultipleComparison
     contract_type == ContractTypes::CONTRACT ||
       contract_type == ContractTypes::CONTRACT_TO_HIRE
+    # rubocop:enable Style/MultipleComparison
   end
 
   # @return [Boolean] true if the role is active and last activity was two weeks
@@ -152,8 +154,10 @@ class Role < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # @return [Boolean] true if the role requires in-person attendance; otherwise
   #   false.
   def in_person?
+    # rubocop:disable Style/MultipleComparison
     location_type == LocationTypes::HYBRID ||
       location_type == LocationTypes::IN_PERSON
+    # rubocop:enable Style/MultipleComparison
   end
 
   # @return [Boolean] true if the role is fully remote; otherwise false.

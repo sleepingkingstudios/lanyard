@@ -8,7 +8,7 @@ module Lanyard::Actions::Roles
     def create_entity(attributes:)
       attributes = attributes.merge({ 'last_event_at' => Time.current })
 
-      super(attributes: attributes)
+      super
     end
   end
 end

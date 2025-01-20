@@ -2,8 +2,9 @@
 
 source 'https://rubygems.org'
 
-ruby '3.3.4'
+ruby '3.3.7'
 
+gem 'concurrent-ruby', '1.3.4' # @todo: Remove this when upgrading to Rails 7.1.
 gem 'rails', '~> 7.0.8'
 
 gem 'pg', '~> 1.5' # Use postgresql as the database for Active Record
@@ -52,10 +53,12 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.0'
   gem 'rspec-sleeping_king_studios', '~> 2.7'
 
-  gem 'rubocop', '~> 1.57', '>= 1.57.2'
-  gem 'rubocop-rails', '~> 2.22', '>= 2.22.1' # https://docs.rubocop.org/rubocop-rails/
+  gem 'rubocop', '~> 1.70'
+  gem 'rubocop-factory_bot', '~> 2.26'
+  gem 'rubocop-rails', '~> 2.29' # https://docs.rubocop.org/rubocop-rails/
   gem 'rubocop-rake', '~> 0.6'
-  gem 'rubocop-rspec', '~> 2.25' # https://docs.rubocop.org/rubocop-rspec/
+  gem 'rubocop-rspec', '~> 3.4' # https://docs.rubocop.org/rubocop-rspec/
+  gem 'rubocop-rspec_rails', '~> 2.30' # https://docs.rubocop.org/rubocop-rspec_rails/
 
   gem 'simplecov', '~> 0.22'
 end
