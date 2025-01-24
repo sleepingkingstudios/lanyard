@@ -68,12 +68,16 @@ FactoryBot.define do
       offered_at      { 1.day.ago }
     end
 
-    trait(:accepted) do
+    trait(:closed) do
       status          { Role::Statuses::CLOSED }
       applied_at      { 4.days.ago }
       interviewing_at { 3.days.ago }
       offered_at      { 2.days.ago }
       closed_at       { 1.day.ago }
+    end
+
+    trait(:accepted) do
+      closed
     end
   end
 end

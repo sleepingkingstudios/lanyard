@@ -18,6 +18,7 @@ RSpec.describe Lanyard::Models::RoleEvents::ListEventTypes do
         'Interview' => RoleEvents::InterviewEvent,
         'Offered'   => RoleEvents::OfferedEvent,
         'Pitched'   => RoleEvents::PitchedEvent,
+        'Referred'  => RoleEvents::ReferredEvent,
         'Rejected'  => RoleEvents::RejectedEvent,
         'Reopened'  => RoleEvents::ReopenedEvent,
         'Withdrawn' => RoleEvents::WithdrawnEvent
@@ -42,6 +43,7 @@ RSpec.describe Lanyard::Models::RoleEvents::ListEventTypes do
           ['Contacted', RoleEvents::ContactedEvent.name],
           ['Expired',   RoleEvents::ExpiredEvent.name],
           ['Pitched',   RoleEvents::PitchedEvent.name],
+          ['Referred',  RoleEvents::ReferredEvent.name],
           ['Rejected',  RoleEvents::RejectedEvent.name]
         ]
       end
@@ -62,6 +64,7 @@ RSpec.describe Lanyard::Models::RoleEvents::ListEventTypes do
           ['Contacted', RoleEvents::ContactedEvent.name],
           ['Expired',   RoleEvents::ExpiredEvent.name],
           ['Interview', RoleEvents::InterviewEvent.name],
+          ['Referred',  RoleEvents::ReferredEvent.name],
           ['Rejected',  RoleEvents::RejectedEvent.name],
           ['Withdrawn', RoleEvents::WithdrawnEvent.name]
         ]
@@ -84,6 +87,7 @@ RSpec.describe Lanyard::Models::RoleEvents::ListEventTypes do
           ['Expired',   RoleEvents::ExpiredEvent.name],
           ['Interview', RoleEvents::InterviewEvent.name],
           ['Offered',   RoleEvents::OfferedEvent.name],
+          ['Referred',  RoleEvents::ReferredEvent.name],
           ['Rejected',  RoleEvents::RejectedEvent.name],
           ['Withdrawn', RoleEvents::WithdrawnEvent.name]
         ]
