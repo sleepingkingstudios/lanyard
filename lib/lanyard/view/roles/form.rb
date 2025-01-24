@@ -34,6 +34,7 @@ module Lanyard::View::Roles
       cycles =
         data
         .fetch('cycles', [])
+        .sort { |u, v| v.created_at <=> u.created_at }
         .map { |cycle| { label: cycle.name, value: cycle.id } }
 
       render_form_field(

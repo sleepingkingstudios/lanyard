@@ -9,21 +9,24 @@ RSpec.describe Lanyard::View::Roles::Form, type: :component do
     [
       FactoryBot.create(
         :cycle,
-        id:     'ebb9e3bd-823d-469d-8912-ee3abb389a3c',
-        year:   '1996',
-        season: 'autumn'
+        id:         'ebb9e3bd-823d-469d-8912-ee3abb389a3c',
+        year:       '1996',
+        season:     'autumn',
+        created_at: 3.days.ago
       ),
       FactoryBot.create(
         :cycle,
-        id:     'ae4e7020-40f5-4787-8eca-96b6ba08f3bf',
-        year:   '1999',
-        season: 'autumn'
+        id:         'ae4e7020-40f5-4787-8eca-96b6ba08f3bf',
+        year:       '1999',
+        season:     'autumn',
+        created_at: 2.days.ago
       ),
       FactoryBot.create(
         :cycle,
-        id:     '2068aba3-e03c-4c58-9168-9a8fd526762e',
-        year:   '2000',
-        season: 'autumn'
+        id:         '2068aba3-e03c-4c58-9168-9a8fd526762e',
+        year:       '2000',
+        season:     'autumn',
+        created_at: 1.day.ago
       )
     ]
   end
@@ -121,11 +124,11 @@ RSpec.describe Lanyard::View::Roles::Form, type: :component do
                     <div class="control">
                       <div class="select">
                         <select name="role[cycle_id]" id="role_cycle_id">
-                          <option value="ebb9e3bd-823d-469d-8912-ee3abb389a3c">Autumn 1996</option>
+                          <option value="2068aba3-e03c-4c58-9168-9a8fd526762e">Autumn 2000</option>
 
                           <option value="ae4e7020-40f5-4787-8eca-96b6ba08f3bf">Autumn 1999</option>
 
-                          <option value="2068aba3-e03c-4c58-9168-9a8fd526762e">Autumn 2000</option>
+                          <option value="ebb9e3bd-823d-469d-8912-ee3abb389a3c">Autumn 1996</option>
                         </select>
                       </div>
                     </div>
