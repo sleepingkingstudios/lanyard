@@ -3,9 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Lanyard::Models::Roles::UpdateLastEvent do
-  subject(:command) { described_class.new(repository: repository) }
+  subject(:command) { described_class.new(repository: repository, **options) }
 
   let(:repository) { Cuprum::Rails::Repository.new }
+  let(:options)    { {} }
 
   describe '.new' do
     it 'should define the constructor' do
@@ -13,6 +14,7 @@ RSpec.describe Lanyard::Models::Roles::UpdateLastEvent do
         .to be_constructible
         .with(0).arguments
         .and_keywords(:repository)
+        .and_any_keywords
     end
   end
 
@@ -65,6 +67,16 @@ RSpec.describe Lanyard::Models::Roles::UpdateLastEvent do
           change { role.reload.updated_at.to_i }
           .to be == current_time.to_i
         )
+    end
+  end
+
+  describe '#options' do
+    include_examples 'should define reader', :options, -> { {} }
+
+    context 'when initialized with options: value' do
+      let(:options) { { option: 'value' } }
+
+      it { expect(command.options).to be == options }
     end
   end
 
