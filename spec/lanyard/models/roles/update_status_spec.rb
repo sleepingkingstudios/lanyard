@@ -3,9 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Lanyard::Models::Roles::UpdateStatus do
-  subject(:command) { described_class.new(repository: repository) }
+  subject(:command) { described_class.new(repository: repository, **options) }
 
   let(:repository) { Cuprum::Rails::Repository.new }
+  let(:options)    { {} }
 
   describe '.new' do
     it 'should define the constructor' do
@@ -137,6 +138,67 @@ RSpec.describe Lanyard::Models::Roles::UpdateStatus do
             .to be == current_time.to_i
           )
       end
+    end
+
+    context 'when initialized with options: { update_status: }' do
+      let(:update_status) { ->(**) {} }
+      let(:options)       { super().merge(update_status: update_status) }
+
+      it 'should yield the role and role event to the conditional' do # rubocop:disable RSpec/ExampleLength
+        spy = instance_double(Proc, call: nil)
+
+        described_class
+          .new(repository: repository, **options, update_status: spy)
+          .call(role: role, role_event: role_event)
+
+        expect(spy)
+          .to have_received(:call)
+          .with(role: role, role_event: role_event)
+      end
+
+      context 'when the conditional returns false' do
+        let(:update_status) { ->(**) { false } }
+
+        it 'should not set the role status' do
+          expect { command.call(role: role, role_event: role_event) }
+            .not_to(change { role.reload.status })
+        end
+
+        it 'should not set the role status timestamp' do
+          expect { command.call(role: role, role_event: role_event) }
+            .not_to(change { role.reload.applied_at })
+        end
+      end
+
+      context 'when the conditional returns true' do
+        let(:update_status) { ->(**) { true } }
+
+        it 'should set the role status' do
+          expect { command.call(role: role, role_event: role_event) }
+            .to(
+              change { role.reload.status }
+              .to be == role_event.status
+            )
+        end
+
+        it 'should set the role status timestamp' do
+          expect { command.call(role: role, role_event: role_event) }
+            .to(
+              change { role.reload.applied_at.to_i }
+              .to be == current_time.to_i
+            )
+        end
+      end
+    end
+  end
+
+  describe '#options' do
+    include_examples 'should define reader', :options, -> { {} }
+
+    context 'when initialized with options: value' do
+      let(:options) { { option: 'value' } }
+
+      it { expect(command.options).to be == options }
     end
   end
 

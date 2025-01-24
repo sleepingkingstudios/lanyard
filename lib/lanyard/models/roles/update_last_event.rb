@@ -5,11 +5,16 @@ module Lanyard::Models::Roles
   class UpdateLastEvent < Cuprum::Command
     # @param repository [Cuprum::Collections::Repository] the repository for
     #   Role entities.
-    def initialize(repository:)
+    # @param options [Hash] additional options for the command.
+    def initialize(repository:, **options)
       super()
 
+      @options    = options
       @repository = repository
     end
+
+    # @return [Hash] additional options for the command.
+    attr_reader :options
 
     # @return [Cuprum::Collections::Repository] the repository for Role
     #   entities.
