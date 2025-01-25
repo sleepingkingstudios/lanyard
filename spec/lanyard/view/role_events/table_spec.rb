@@ -13,6 +13,7 @@ RSpec.describe Lanyard::View::RoleEvents::Table, type: :component do
           :event,
           role:       role,
           slug:       '1996-09-28-event',
+          summary:    'Custom event summary',
           event_date: Date.new(1996, 9, 28)
         ),
         FactoryBot.build(
@@ -69,13 +70,15 @@ RSpec.describe Lanyard::View::RoleEvents::Table, type: :component do
 
               <th>Date</th>
 
+              <th>Summary</th>
+
               <th> </th>
             </tr>
           </thead>
 
           <tbody>
             <tr>
-              <td colspan="3">There are no events matching the criteria.</td>
+              <td colspan="4">There are no events matching the criteria.</td>
             </tr>
           </tbody>
         </table>
@@ -100,6 +103,8 @@ RSpec.describe Lanyard::View::RoleEvents::Table, type: :component do
 
                 <th>Date</th>
 
+                <th>Summary</th>
+
                 <th> </th>
               </tr>
             </thead>
@@ -117,6 +122,10 @@ RSpec.describe Lanyard::View::RoleEvents::Table, type: :component do
                 </td>
 
                 <td>
+                  Custom event summary
+                </td>
+
+                <td>
                   [actions]
                 </td>
               </tr>
@@ -130,6 +139,10 @@ RSpec.describe Lanyard::View::RoleEvents::Table, type: :component do
 
                 <td>
                   1996-09-29
+                </td>
+
+                <td>
+                  Applied directly for the role
                 </td>
 
                 <td>
