@@ -3,6 +3,11 @@
 module Lanyard::View::Roles
   # Renders a table of Role records.
   class Table < Librum::Core::View::Components::Resources::Table
+    COMPANY_NAME_VALUE = lambda do |item|
+      item.company_name.presence || item.agency_name.presence || '(unknown)'
+    end
+    private_constant :COMPANY_NAME_VALUE
+
     COLUMNS = lambda { # rubocop:disable Metrics/BlockLength
       [
         {
@@ -13,10 +18,10 @@ module Lanyard::View::Roles
           type:     :link
         },
         {
-          key:      'company_name',
-          label:    'Company',
-          default:  '(unknown)',
-          truncate: 25
+          key:     'company_name',
+          label:   'Company',
+          default: '(unknown)',
+          value:   COMPANY_NAME_VALUE
         },
         {
           key:   'contract?',
