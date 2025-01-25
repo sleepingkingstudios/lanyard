@@ -114,8 +114,8 @@ module Lanyard::Import::Roles
       repository.find_or_create(entity_class: Role)
     end
 
-    def transaction(&block)
-      Cuprum::Rails::Transaction.new.call(&block)
+    def transaction(&)
+      Cuprum::Rails::Transaction.new.call(&)
     end
   end
 end

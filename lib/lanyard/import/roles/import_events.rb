@@ -60,8 +60,8 @@ module Lanyard::Import::Roles
       end
     end
 
-    def transaction(&block)
-      Cuprum::Rails::Transaction.new.call(&block)
+    def transaction(&)
+      Cuprum::Rails::Transaction.new.call(&)
     end
   end
 end

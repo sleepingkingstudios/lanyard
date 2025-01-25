@@ -7,7 +7,7 @@ module Lanyard::Actions::Roles
 
     private
 
-    def find_entities(limit:, offset:, order:, &block)
+    def find_entities(limit:, offset:, order:, &)
       scoped =
         collection
         .with_scope(Role::EXPIRING.call)
@@ -17,7 +17,7 @@ module Lanyard::Actions::Roles
         limit:  limit,
         offset: offset,
         order:  order,
-        &block
+        &
       )
     end
   end

@@ -53,7 +53,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.0'
   gem 'rspec-sleeping_king_studios', '~> 2.7'
 
-  gem 'rubocop', '~> 1.70'
+  gem 'rubocop', '~> 1.71'
   gem 'rubocop-factory_bot', '~> 2.26'
   gem 'rubocop-rails', '~> 2.29' # https://docs.rubocop.org/rubocop-rails/
   gem 'rubocop-rake', '~> 0.6'
