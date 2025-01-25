@@ -60,7 +60,7 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
           cycle:         cycle,
           slug:          'research-assistant',
           job_title:     'Research Assistant',
-          company_name:  'Pallet Town Laboratory',
+          agency_name:   'Viridian Gym Consultancy',
           contract_type: Role::ContractTypes::CONTRACT_TO_HIRE,
           location_type: Role::LocationTypes::HYBRID,
           status:        Role::Statuses::CLOSED,
@@ -251,7 +251,7 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
                 </td>
 
                 <td>
-                  Indigo Plateau Constabula…
+                  Indigo Plateau Constabulary
                 </td>
 
                 <td>
@@ -335,7 +335,7 @@ RSpec.describe Lanyard::View::Roles::Table, type: :component do
                 </td>
 
                 <td>
-                  Pallet Town Laboratory
+                  Viridian Gym Consultancy
                 </td>
 
                 <td>
