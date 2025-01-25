@@ -3,7 +3,7 @@
 module Lanyard::View::RoleEvents
   # Renders a table of RoleEvent records.
   class Table < Librum::Core::View::Components::Resources::Table
-    COLUMNS = lambda {
+    COLUMNS = lambda { # rubocop:disable Metrics/BlockLength
       [
         {
           key:   'name',
@@ -15,6 +15,12 @@ module Lanyard::View::RoleEvents
           key:   'event_date',
           label: 'Date',
           value: ->(item) { item.event_date.iso8601 }
+        }.freeze,
+        {
+          key:      'summary',
+          label:    'Summary',
+          value:    ->(item) { item.summary },
+          truncate: 60
         }.freeze,
         {
           key:      'actions',
