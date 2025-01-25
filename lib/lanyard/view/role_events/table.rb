@@ -29,13 +29,13 @@ module Lanyard::View::RoleEvents
     # @param data [Array<RoleEvent>] the table data to render.
     # @param resource [Cuprum::Rails::Resource] the controller resource.
     # @param routes [Cuprum::Rails::Routes] the routes for the resource.
-    def initialize(data:, resource:, routes:, **options)
+    def initialize(data:, resource:, routes:, **)
       super(
         columns:  COLUMNS,
         data:     data,
         resource: resource,
         routes:   routes,
-        **options
+        **
       )
     end
   end

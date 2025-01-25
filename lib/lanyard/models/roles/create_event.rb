@@ -65,8 +65,8 @@ module Lanyard::Models::Roles
       repository.find_or_create(entity_class: RoleEvent)
     end
 
-    def transaction(&block)
-      Cuprum::Rails::Transaction.new.call(&block)
+    def transaction(&)
+      Cuprum::Rails::Transaction.new.call(&)
     end
 
     def update_role(role_event:)
