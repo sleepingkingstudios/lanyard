@@ -49,8 +49,8 @@ group :development, :test do
   # See https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md
   gem 'factory_bot_rails', '~> 6.2'
 
-  gem 'rspec', '~> 3.12'
-  gem 'rspec-rails', '~> 6.0'
+  gem 'rspec', '~> 3.13'
+  gem 'rspec-rails', '~> 7.0'
   gem 'rspec-sleeping_king_studios', '~> 2.7'
 
   gem 'rubocop', '~> 1.71'
