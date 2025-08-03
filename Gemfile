@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '3.3.8'
+ruby '3.3.9'
 
 gem 'concurrent-ruby', '1.3.4' # @todo: Remove this when upgrading to Rails 7.1.
 gem 'rails', '~> 7.0.8'
