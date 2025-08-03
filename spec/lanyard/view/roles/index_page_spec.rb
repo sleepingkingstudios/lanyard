@@ -41,25 +41,25 @@ RSpec.describe Lanyard::View::Roles::IndexPage, type: :component do
       <<~HTML.strip
         <div class="tabs">
           <ul>
-            <li#{action_name == 'index' ? ' class="is-active"' : ''}>
+            <li#{' class="is-active"' if action_name == 'index'}>
               <a class="has-text-link" href="/roles" target="_self">
                 All Roles
               </a>
             </li>
 
-            <li#{action_name == 'active' ? ' class="is-active"' : ''}>
+            <li#{' class="is-active"' if action_name == 'active'}>
               <a class="has-text-link" href="/roles/active" target="_self">
                 Active
               </a>
             </li>
 
-            <li#{action_name == 'inactive' ? ' class="is-active"' : ''}>
+            <li#{' class="is-active"' if action_name == 'inactive'}>
               <a class="has-text-link" href="/roles/inactive" target="_self">
                 Inactive
               </a>
             </li>
 
-            <li#{action_name == 'expiring' ? ' class="is-active"' : ''}>
+            <li#{' class="is-active"' if action_name == 'expiring'}>
               <a class="has-text-link" href="/roles/expiring" target="_self">
                 Expiring
               </a>
