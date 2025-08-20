@@ -5,17 +5,17 @@ source 'https://rubygems.org'
 ruby '3.3.9'
 
 gem 'concurrent-ruby', '1.3.4' # @todo: Remove this when upgrading to Rails 7.1.
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.1.5', '>= 7.1.5.2'
 
 gem 'pg', '~> 1.5' # Use postgresql as the database for Active Record
 gem 'puma', '~> 5.0'
 
 ### Engines
 gem 'librum-core',
-  branch: 'main',
+  branch: 'branch/compatibility',
   git:    'https://github.com/sleepingkingstudios/librum-core'
 gem 'librum-iam',
-  branch: 'main',
+  branch: 'branch/compatibility',
   git:    'https://github.com/sleepingkingstudios/librum-iam'
 
 ### Assets
