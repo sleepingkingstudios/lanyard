@@ -212,15 +212,16 @@ RSpec.describe Role, type: :model do
   describe '::Sources' do
     let(:expected_sources) do
       {
-        DICE:     'dice',
-        EMAIL:    'email',
-        HIRED:    'hired',
-        INDEED:   'indeed',
-        LINKEDIN: 'linkedin',
-        OTHER:    'other',
-        REFERRAL: 'referral',
-        UNKNOWN:  'unknown',
-        WEBSITE:  'website'
+        DICE:           'dice',
+        EMAIL:          'email',
+        HIRED:          'hired',
+        INDEED:         'indeed',
+        LINKEDIN:       'linkedin',
+        OTHER:          'other',
+        REFERRAL:       'referral',
+        RUBY_ON_REMOTE: 'ruby_on_remote',
+        UNKNOWN:        'unknown',
+        WEBSITE:        'website'
       }
     end
 
