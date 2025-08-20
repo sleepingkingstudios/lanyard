@@ -182,6 +182,8 @@ RSpec.describe Lanyard::View::Roles::Form, type: :component do
 
                           <option value="referral" selected="selected">Referral</option>
 
+                          <option value="ruby_on_remote">Ruby On Remote</option>
+
                           <option value="unknown">Unknown</option>
 
                           <option value="website">Website</option>
@@ -560,6 +562,8 @@ RSpec.describe Lanyard::View::Roles::Form, type: :component do
                           <option value="other">Other</option>
 
                           <option value="referral">Referral</option>
+
+                          <option value="ruby_on_remote">Ruby On Remote</option>
 
                           <option value="unknown" selected="selected">Unknown</option>
 
