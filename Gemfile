@@ -8,7 +8,7 @@ gem 'concurrent-ruby', '1.3.4' # @todo: Remove this when upgrading to Rails 7.1.
 gem 'rails', '~> 7.1.5', '>= 7.1.5.2'
 
 gem 'pg', '~> 1.5' # Use postgresql as the database for Active Record
-gem 'puma', '~> 5.0'
+gem 'puma', '~> 7.0'
 
 ### Engines
 gem 'librum-core',
