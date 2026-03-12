@@ -2,13 +2,15 @@
 
 source 'https://rubygems.org'
 
-ruby '3.3.9'
+ruby '3.3.10'
 
 gem 'concurrent-ruby', '1.3.4' # @todo: Remove this when upgrading to Rails 7.1.
 gem 'rails', '~> 7.1.5', '>= 7.1.5.2'
 
 gem 'pg', '~> 1.5' # Use postgresql as the database for Active Record
 gem 'puma', '~> 7.0'
+
+gem 'observer'
 
 ### Engines
 gem 'librum-core',
@@ -44,7 +46,7 @@ group :development, :test do
   gem 'byebug'
 
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'debug', platforms: %i[mri windows]
 
   # See https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md
   gem 'factory_bot_rails', '~> 6.2'

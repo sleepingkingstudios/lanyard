@@ -206,6 +206,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.9-x86_64-linux-gnu)
       racc (~> 1.4)
+    observer (0.1.2)
     parallel (1.27.0)
     parser (3.3.9.0)
       ast (~> 2.4.1)
@@ -381,6 +382,7 @@ DEPENDENCIES
   importmap-rails
   librum-core!
   librum-iam!
+  observer
   pg (~> 1.5)
   puma (~> 7.0)
   rails (~> 7.1.5, >= 7.1.5.2)
@@ -402,7 +404,7 @@ DEPENDENCIES
   web-console
 
 RUBY VERSION
-   ruby 3.3.9p170
+  ruby 3.3.10p183
 
 BUNDLED WITH
-   2.5.16
+  4.0.8
