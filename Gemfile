@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '3.3.10'
+ruby '3.3.11'
 
 gem 'concurrent-ruby', '1.3.4' # @todo: Remove this when upgrading to Rails 7.1.
 gem 'rails', '~> 7.1.5', '>= 7.1.5.2'
@@ -55,11 +55,11 @@ group :development, :test do
   gem 'rspec-rails', '~> 7.0'
   gem 'rspec-sleeping_king_studios', '~> 2.8'
 
-  gem 'rubocop', '~> 1.79'
-  gem 'rubocop-factory_bot', '~> 2.27'
-  gem 'rubocop-rails', '~> 2.32' # https://docs.rubocop.org/rubocop-rails/
+  gem 'rubocop', '~> 1.86'
+  gem 'rubocop-factory_bot', '~> 2.28'
+  gem 'rubocop-rails', '~> 2.34' # https://docs.rubocop.org/rubocop-rails/
   gem 'rubocop-rake', '~> 0.7'
-  gem 'rubocop-rspec', '~> 3.6' # https://docs.rubocop.org/rubocop-rspec/
+  gem 'rubocop-rspec', '~> 3.9' # https://docs.rubocop.org/rubocop-rspec/
   gem 'rubocop-rspec_rails', '~> 2.31' # https://docs.rubocop.org/rubocop-rspec_rails/
 
   gem 'simplecov', '~> 0.22'
