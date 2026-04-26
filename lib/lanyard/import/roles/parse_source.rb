@@ -20,7 +20,7 @@ module Lanyard::Import::Roles
       Role::Sources.each_value do |value|
         next unless normalized.start_with?(value)
 
-        remainder = raw_value[value.length..].sub(/\A[\- ]+/, '')
+        remainder = raw_value[value.length..].sub(/\A[- ]+/, '')
 
         return { 'source' => value } if remainder.empty?
 

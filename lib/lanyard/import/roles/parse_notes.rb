@@ -59,7 +59,7 @@ module Lanyard::Import::Roles
       match
         .strip
         .then { |str| str[location_type.length..] }
-        .then { |str| str.sub(/\A[\- ]+/, '') }
+        .then { |str| str.sub(/\A[- ]+/, '') }
     end
   end
 end
